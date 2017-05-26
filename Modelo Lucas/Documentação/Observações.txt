@@ -1,8 +1,0 @@
-﻿
-OBSERVAÇÕES:
-
-- Validações dos campos
-- Mascara de formatação dos campos
-- Criar as classes;
-- Criar as classes gestoras DAOs;
-- Criar as classes de interface;
