@@ -1,6 +1,3 @@
 # ProjetoCostura
-## ProjetoCostura
-### ProjetoCostura
-#### ProjetoCostura
-##### ProjetoCostura
-###### ProjetoCostura
+
+Repositório para o projeto de aprendizagem Costura.
