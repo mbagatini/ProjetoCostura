@@ -1,0 +1,25 @@
+// PROGRAMAÇÃO DE SOFTWARE BÁSICO
+
+//Compilar (na mesma pasta)
+gcc exmplo.c -o programa
+
+//Executar (na mesma pasta)
+./programa
+
+//Definindo variaveis, dando print dos valores e exemplo de programa
+
+#include <stdio.h>
+int main(void)
+{
+	int x.
+	float f;
+	int j = 122;
+	int valor;
+	
+	valor = 11;
+	x = 29;
+	
+	print("%d o valor de x eh %d e j %d\n", valor, x, j);
+	
+	return 0;
+}

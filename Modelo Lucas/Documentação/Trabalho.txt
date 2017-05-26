@@ -1,0 +1,13 @@
+
+TRABALHO DE PROGRAMAÇÃO DE APLICAÇÕES
+
+Programa para controle de uma pequena empresa de corte e costura,
+
+- Clientes
+- Produtos
+- Materias primas
+- Fornecedores
+- Funcionários
+- Pedidos
+- Pagamentos
+- Relatórios de gastos, receitas, lucro
