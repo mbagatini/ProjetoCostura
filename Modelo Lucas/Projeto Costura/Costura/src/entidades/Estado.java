@@ -10,10 +10,10 @@ package entidades;
  * @author Lucas
  */
 class Estado {
-    
+
     private int codigo;
     private String nome;
-    private String abreviacao;
+    private String sigla;
 
     /**
      * @return the codigo
@@ -44,24 +44,22 @@ class Estado {
     }
 
     /**
-     * @return the abreviacao
+     * @return the sigla
      */
-    public String getAbreviacao() {
-        return abreviacao;
+    public String getSigla() {
+        return sigla;
     }
 
     /**
-     * @param abreviacao the abreviacao to set
+     * @param sigla the sigla to set
      */
-    public void setAbreviacao(String abreviacao) {
-        this.abreviacao = abreviacao;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     @Override
     public String toString() {
-        return nome;
+        return sigla;
     }
-    
-    
-    
+
 }
