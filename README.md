@@ -1,3 +1,7 @@
 # ProjetoCostura
 
-Repositório para o projeto de aprendizagem Costura.
+Repositório para o projeto de programação web Costura.
+
+## Funcionalidades
+
+Em construção
