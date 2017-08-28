@@ -14,7 +14,7 @@
     <body>
         <h1>Cadastro de usuários</h1>
 
-        <form name="cadUsuario" action="/Costura/acao?parametro=cadUsuario" method="post">
+        <form name="cadastroUsuario" action="/Costura/acao?parametro=cadastroUsuario" method="post">
             <label>Nome</label>
             <br>
             <input type="text" name="nome">

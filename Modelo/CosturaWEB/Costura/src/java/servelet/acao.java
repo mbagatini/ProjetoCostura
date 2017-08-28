@@ -82,7 +82,7 @@ public class acao extends HttpServlet {
 
         String parametro = request.getParameter("parametro");
 
-        if (parametro.equals("cadUsuario")) {
+        if (parametro.equals("cadastroUsuario")) {
             Usuario u = new Usuario();
 
             u.setNome(request.getParameter("nome"));
