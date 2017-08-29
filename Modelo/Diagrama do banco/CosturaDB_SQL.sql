@@ -59,10 +59,10 @@ CREATE SEQUENCE usuario_codigo_seq;
 CREATE TABLE IF NOT EXISTS usuario (
   codigo INT NOT NULL DEFAULT nextval('usuario_codigo_seq'),
   nome VARCHAR(45) NOT NULL,
-  login VARCHAR(20) NOT NULL,
+  email VARCHAR(45) NOT NULL,
   senha VARCHAR(20) NOT NULL,
   PRIMARY KEY (codigo))
 ;
 ALTER SEQUENCE usuario_codigo_seq OWNED BY usuario.codigo;
 
-CREATE UNIQUE INDEX usu_login_UNIQUE ON usuario (login ASC);
+CREATE UNIQUE INDEX usu_email_UNIQUE ON usuario (email ASC);

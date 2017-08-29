@@ -23,8 +23,7 @@ public class UsuarioDAO implements IDAO<Usuario> {
             String sql = "INSERT INTO usuario VALUES (DEFAULT,"
                     + "'" + objeto.getNome() + "', "
                     + "'" + objeto.getEmail() + "',"
-                    + "'" + objeto.getSenha() + "',"
-                    + ")";
+                    + "'" + objeto.getSenha() + "')";
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
