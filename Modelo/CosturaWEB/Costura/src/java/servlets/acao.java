@@ -84,6 +84,9 @@ public class acao extends HttpServlet {
 
         if (parametro.equals("cadastroUsuario")) {
             Usuario u = new Usuario();
+            
+            // AQUI DEVE SER FEITA A VALIDACAO
+            // ANTES DE GRAVAR NO BANCO
 
             u.setNome(request.getParameter("nome"));
             u.setEmail(request.getParameter("email"));
