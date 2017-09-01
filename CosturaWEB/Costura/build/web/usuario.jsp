@@ -12,17 +12,28 @@
         <title>Usuários</title>
     </head>
     <body>
+        <%-- Carrega o objeto Usuario passado pelo metodo doGet do Controle --%>
+        <%
+            Usuario usuario = (Usuario) request.getAttribute("ObjUser");
+
+            if (usuario == null) {
+                usuario = new Usuario();
+            }
+        %>
+        
         <h1>Cadastro de usuários</h1>
 
         <form name="cadastroUsuario" action="/Costura/ControleUsuario?parametro=ins" method="post">
+            <input type="hidden" name="id" value="<%= usuario.getId()%>">
+            
             <label>Nome</label>
             <br>
-            <input type="text" name="nome">
+            <input type="text" name="nome" value="<%= usuario.getNome()%>">
             <br>
 
             <label>E-mail</label>
             <br>
-            <input type="email" name="email">
+            <input type="email" name="email" value="<%= usuario.getEmail()%>">
             <br>
 
             <label>Senha</label>

@@ -62,8 +62,32 @@ public class ControleUsuario extends HttpServlet {
 //        processRequest(request, response);
         System.out.println("Entrei no GET!");
 
-        String dado = request.getParameter("cor");
-        System.out.println("Dado que veio: " + dado);
+        String parametro = request.getParameter("parametro");
+        System.out.println("Parametro: " + parametro);
+        
+        if (parametro.equals("upd")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            Usuario usuario = (Usuario) new UsuarioDAO().consultarId(id);
+
+            request.setAttribute("ObjUser", usuario);
+
+            encaminharPagina("usuario.jsp", request, response);
+        }
+
+        if (parametro.equals("del")) {
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+
+            String retorno = new UsuarioDAO().excluir(id);
+
+            request.setAttribute("paginaOrigem", "usuario.jsp");
+            
+            if (retorno == null) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+        }
     }
 
     /**
@@ -86,6 +110,7 @@ public class ControleUsuario extends HttpServlet {
         // ANTES DE GRAVAR NO BANCO
 
         if (parametro.equals("ins")) {
+            
             Usuario u = new Usuario();
 
             u.setNome(request.getParameter("nome"));
@@ -100,7 +125,23 @@ public class ControleUsuario extends HttpServlet {
                 encaminharPagina("erro.jsp", request, response);
             }
 
-        } else if (parametro.equals("xxx")) {
+        } else if (parametro.equals("del")) {
+            
+            Usuario u = new Usuario();
+
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            u.setId(id);
+            u.setNome(request.getParameter("nome"));
+            u.setEmail(request.getParameter("email"));
+            u.setSenha(request.getParameter("senha"));
+
+            String retorno = new UsuarioDAO().excluir(u.getId());
+
+            if (retorno == null) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
 
         }
 

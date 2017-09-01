@@ -33,8 +33,8 @@
                 <td><%= usuarios.get(i).getId()%></td>
                 <td><%= usuarios.get(i).getNome()%></td>
                 <td><%= usuarios.get(i).getEmail()%></td>
-                <td><a href="/ProspexaoQ/ControleUsuario?parametro=upd&id=<%= usuarios.get(i).getId()%>">Editar</a></td>
-                <td><a href="/ProspexaoQ/ControleUsuario?parametro=del&id=<%= usuarios.get(i).getId()%>">Excluir</a></td>
+                <td><a href="/Costura/ControleUsuario?parametro=upd&id=<%= usuarios.get(i).getId()%>">Editar</a></td>
+                <td><a href="/Costura/ControleUsuario?parametro=del&id=<%= usuarios.get(i).getId()%>">Excluir</a></td>
             </tr>
             <%
                 }

@@ -15,6 +15,15 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    
+    // Construtor da classe - deve ter para que ao carregar os dados na tela, 
+    // os campos fiquem preenchidos corretamente
+    public Usuario () {
+        id = 0;
+        nome = "";
+        email ="";
+        senha = "";
+    }
 
     public int getId() {
         return id;

@@ -42,7 +42,18 @@ public class UsuarioDAO implements IDAO<Usuario> {
 
     @Override
     public String excluir(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            String sql = "DELETE FROM usuario "
+                    + "WHERE codigo = " + id;
+
+            int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar usuário: " + e);
+            return e.toString();
+        }
+        return null;
     }
 
     @Override
@@ -57,7 +68,7 @@ public class UsuarioDAO implements IDAO<Usuario> {
             while (resultado.next()) {                
                 Usuario u = new Usuario();
                 
-                u.setId(resultado.getInt("id"));
+                u.setId(resultado.getInt("codigo"));
                 u.setNome(resultado.getString("nome"));
                 u.setEmail(resultado.getString("email"));
                 
@@ -83,7 +94,28 @@ public class UsuarioDAO implements IDAO<Usuario> {
 
     @Override
     public Object consultarId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Usuario u = new Usuario();
+
+        try {
+            String sql = "SELECT * "
+                    + "FROM usuario "
+                    + "WHERE codigo = " + id;
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+
+                u.setId(resultado.getInt("codigo"));
+                u.setNome(resultado.getString("nome"));
+                u.setEmail(resultado.getString("email"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar usuário: " + e);
+        }
+
+        return u;
     }
 
     @Override
