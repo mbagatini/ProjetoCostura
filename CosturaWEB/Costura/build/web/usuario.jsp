@@ -14,7 +14,7 @@
     <body>
         <h1>Cadastro de usuários</h1>
 
-        <form name="cadastroUsuario" action="/Costura/acao?parametro=cadastroUsuario" method="post">
+        <form name="cadastroUsuario" action="/Costura/ControleUsuario?parametro=ins" method="post">
             <label>Nome</label>
             <br>
             <input type="text" name="nome">
@@ -33,5 +33,8 @@
 
             <input type="submit" name="enviar" value="Salvar">
         </form>
+        
+        <!-- Adiciona a listagem de usuários -->
+        <%@include file = "usuario_listagem.jsp" %>
     </body>
 </html>

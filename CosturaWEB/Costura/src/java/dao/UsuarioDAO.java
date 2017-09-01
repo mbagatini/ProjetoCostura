@@ -8,6 +8,7 @@ package dao;
 import apoio.ConexaoBD;
 import apoio.IDAO;
 import entidade.Usuario;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,7 @@ public class UsuarioDAO implements IDAO<Usuario> {
         try {
             String sql = "INSERT INTO usuario VALUES (DEFAULT,"
                     + "'" + objeto.getNome() + "', "
-                    + "'" + objeto.getEmail() + "',"
+                    + "'" + objeto.getEmail()+ "',"
                     + "'" + objeto.getSenha() + "')";
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
@@ -48,25 +49,24 @@ public class UsuarioDAO implements IDAO<Usuario> {
     public ArrayList<Usuario> consultarTodos() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
-//        try {
-//            String sql = "SELECT * FROM usuario";
-//
-//            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
-//
-//            while (resultado.next()) {                
-//                Usuario u = new Usuario();
-//                
-//                u.setId(resultado.getInt("id"));
-//                u.setNome(resultado.getString("nome"));
-//                u.setEmail(resultado.getString("e_mail"));
-//                u.setSituacao(resultado.getString("situacao").charAt(0));
-//                
-//                usuarios.add(u);
-//            }
-//            
-//        } catch (Exception e) {
-//            System.out.println("erro ao consultar usuários: " + e);
-//        }
+        try {
+            String sql = "SELECT * FROM usuario";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            while (resultado.next()) {                
+                Usuario u = new Usuario();
+                
+                u.setId(resultado.getInt("id"));
+                u.setNome(resultado.getString("nome"));
+                u.setEmail(resultado.getString("email"));
+                
+                usuarios.add(u);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar usuários: " + e);
+        }
 
         return usuarios;
     }

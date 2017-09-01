@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Morgana
  */
-public class acao extends HttpServlet {
+public class ControleUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -81,12 +81,12 @@ public class acao extends HttpServlet {
         System.out.println("Entrei no POST!");
 
         String parametro = request.getParameter("parametro");
+        
+        // AQUI DEVE SER FEITA A VALIDACAO
+        // ANTES DE GRAVAR NO BANCO
 
-        if (parametro.equals("cadastroUsuario")) {
+        if (parametro.equals("ins")) {
             Usuario u = new Usuario();
-            
-            // AQUI DEVE SER FEITA A VALIDACAO
-            // ANTES DE GRAVAR NO BANCO
 
             u.setNome(request.getParameter("nome"));
             u.setEmail(request.getParameter("email"));
