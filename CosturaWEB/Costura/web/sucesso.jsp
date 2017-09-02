@@ -13,5 +13,7 @@
     </head>
     <body>
         <h1>Cadastro realizado com sucesso!</h1>
+        
+        <a href="<%= request.getAttribute("paginaOrigem")%>">Voltar</a>
     </body>
 </html>

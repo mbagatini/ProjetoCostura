@@ -37,7 +37,20 @@ public class UsuarioDAO implements IDAO<Usuario> {
 
     @Override
     public String atualizar(Usuario o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "UPDATE usuario SET "
+                    + "nome = '" + o.getNome() + "', "
+                    + "email = '" + o.getEmail() + "',"
+                    + "senha = '" + o.getSenha() + "' "
+                    + "WHERE codigo = " + o.getId();
+
+            int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar usuário: " + e);
+            return e.toString();
+        }
+        return null;
     }
 
     @Override

@@ -23,7 +23,7 @@
         
         <h1>Cadastro de usuários</h1>
 
-        <form name="cadastroUsuario" action="/Costura/ControleUsuario?parametro=ins" method="post">
+        <form name="cadastroUsuario" action="/Costura/Controle?parametro=usuario&manut=ins" method="post">
             <input type="hidden" name="id" value="<%= usuario.getId()%>">
             
             <label>Nome</label>
@@ -46,6 +46,6 @@
         </form>
         
         <!-- Adiciona a listagem de usuários -->
-        <%@include file = "usuario_listagem.jsp" %>
+        <%@include file = "usuarioListagem.jsp" %>
     </body>
 </html>

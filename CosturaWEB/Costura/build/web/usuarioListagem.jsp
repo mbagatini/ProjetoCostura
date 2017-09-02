@@ -1,5 +1,5 @@
 <%-- 
-    Document   : usuario_listagem
+    Document   : usuarioListagem
     Created on : 31/08/2017, 22:03:52
     Author     : Morgana
 --%>
@@ -33,8 +33,8 @@
                 <td><%= usuarios.get(i).getId()%></td>
                 <td><%= usuarios.get(i).getNome()%></td>
                 <td><%= usuarios.get(i).getEmail()%></td>
-                <td><a href="/Costura/ControleUsuario?parametro=upd&id=<%= usuarios.get(i).getId()%>">Editar</a></td>
-                <td><a href="/Costura/ControleUsuario?parametro=del&id=<%= usuarios.get(i).getId()%>">Excluir</a></td>
+                <td><a href="/Costura/Controle?parametro=usuario&manut=upd&id=<%= usuarios.get(i).getId()%>">Editar</a></td>
+                <td><a href="/Costura/Controle?parametro=usuario&manut=del&id=<%= usuarios.get(i).getId()%>">Excluir</a></td>
             </tr>
             <%
                 }
