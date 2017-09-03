@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="dao.UsuarioDAO"%>
-<%@page import="dao.UsuarioDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="entidade.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,7 +15,7 @@
         <title>Costura</title>
     </head>
     <body>
-        <h1>Usuários Cadastrados</h1>
+        <h1>Usuários cadastrados</h1>
 
         <table>
             <tr>
@@ -30,11 +29,11 @@
                 for (int i = 0; i < usuarios.size(); i++) {
             %>
             <tr>
-                <td><%= usuarios.get(i).getId()%></td>
+                <td><%= usuarios.get(i).getCodigo()%></td>
                 <td><%= usuarios.get(i).getNome()%></td>
                 <td><%= usuarios.get(i).getEmail()%></td>
-                <td><a href="/Costura/Controle?parametro=usuario&manut=upd&id=<%= usuarios.get(i).getId()%>">Editar</a></td>
-                <td><a href="/Costura/Controle?parametro=usuario&manut=del&id=<%= usuarios.get(i).getId()%>">Excluir</a></td>
+                <td><a href="/Costura/Controle?parametro=usuario&manut=upd&id=<%= usuarios.get(i).getCodigo()%>">Editar</a></td>
+                <td><a href="/Costura/Controle?parametro=usuario&manut=del&id=<%= usuarios.get(i).getCodigo()%>">Excluir</a></td>
             </tr>
             <%
                 }

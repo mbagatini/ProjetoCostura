@@ -11,7 +11,7 @@ package entidade;
  */
 public class Usuario {
 
-    private int id;
+    private int codigo;
     private String nome;
     private String email;
     private String senha;
@@ -19,18 +19,18 @@ public class Usuario {
     // Construtor da classe - deve ter para que ao carregar os dados na tela, 
     // os campos fiquem preenchidos corretamente
     public Usuario () {
-        id = 0;
+        codigo = 0;
         nome = "";
         email ="";
         senha = "";
     }
 
-    public int getId() {
-        return id;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {

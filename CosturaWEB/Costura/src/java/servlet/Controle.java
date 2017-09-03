@@ -5,7 +5,9 @@
  */
 package servlet;
 
+import dao.CategoriaDAO;
 import dao.UsuarioDAO;
+import entidade.Categoria;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,8 +79,29 @@ public class Controle extends HttpServlet {
 
                 case "del":
                     String retorno = ControleUsuario.cadastro(manutencao, request);
-                    request.setAttribute("paginaOrigem", "usuario.jsp");
-                    
+                    request.setAttribute("paginaOrigem", "index.jsp");
+
+                    if (retorno == null) {
+                        encaminharPagina("sucesso.jsp", request, response);
+                    } else {
+                        encaminharPagina("erro.jsp", request, response);
+                    }
+                    break;
+            }
+        }
+        
+        if (parametro.equals("categoria")) {
+
+            switch (manutencao) {
+                case "upd":
+                    int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+                    Categoria categoria = (Categoria) new CategoriaDAO().consultarId(id);
+                    request.setAttribute("ObjUser", categoria);
+                    encaminharPagina("categoria.jsp", request, response);
+                    break;
+
+                case "del":
+                    String retorno = ControleCategoria.cadastro(manutencao, request);
                     request.setAttribute("paginaOrigem", "index.jsp");
 
                     if (retorno == null) {
@@ -122,6 +145,19 @@ public class Controle extends HttpServlet {
                 encaminharPagina("erro.jsp", request, response);
             }
         }
+        
+        if (parametro.equals("categoria")) {
+
+            String retorno = ControleCategoria.cadastro(manutencao, request);
+            
+            request.setAttribute("paginaOrigem", "index.jsp");
+
+            if (retorno == null) {
+                encaminharPagina("sucesso.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+        }
 
     }
 
@@ -140,8 +176,6 @@ public class Controle extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
             
-            rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }

@@ -5,48 +5,45 @@
  */
 package servlet;
 
-import dao.UsuarioDAO;
-import entidade.Usuario;
+import dao.CategoriaDAO;
+import entidade.Categoria;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author Morgana
  */
-public class ControleUsuario {
-
+public class ControleCategoria {
+    
     public static String cadastro(String manutencao, HttpServletRequest request) {
 
         String retorno = null;
-        Usuario u = new Usuario();
+        Categoria cat = new Categoria();
         int id;
 
         switch (manutencao) {
             case "ins":
                 id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                u.setCodigo(id);
-                u.setNome(request.getParameter("nome"));
-                u.setEmail(request.getParameter("email"));
-                u.setSenha(request.getParameter("senha"));
+                cat.setCodigo(id);
+                cat.setDescricao(request.getParameter("descricao"));
 
                 if (id == 0) {
-                    retorno = new UsuarioDAO().salvar(u);
+                    retorno = new CategoriaDAO().salvar(cat);
                 } else {
-                    retorno = new UsuarioDAO().atualizar(u);
+                    retorno = new CategoriaDAO().atualizar(cat);
                 }
                 break;
 
             case "del":
                 id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                u.setCodigo(id);
-                u.setNome(request.getParameter("nome"));
-                u.setEmail(request.getParameter("email"));
-                u.setSenha(request.getParameter("senha"));
+                cat.setCodigo(id);
+                cat.setDescricao(request.getParameter("descricao"));
 
-                retorno = new UsuarioDAO().excluir(u.getCodigo());
+                retorno = new CategoriaDAO().excluir(cat.getCodigo());
                 break;
         }
 
         return retorno;
     }
+    
 }

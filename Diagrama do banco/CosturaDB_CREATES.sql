@@ -66,3 +66,14 @@ CREATE TABLE IF NOT EXISTS usuario (
 ALTER SEQUENCE usuario_codigo_seq OWNED BY usuario.codigo;
 
 CREATE UNIQUE INDEX usu_email_UNIQUE ON usuario (email ASC);
+
+-- -----------------------------------------------------
+-- Table categoria
+-- -----------------------------------------------------
+CREATE SEQUENCE categoria_codigo_seq;
+CREATE TABLE IF NOT EXISTS categoria (
+  codigo INT NOT NULL DEFAULT nextval('categoria_codigo_seq'),
+  descricao VARCHAR(40) NOT NULL,
+  PRIMARY KEY (codigo))
+;
+ALTER SEQUENCE categoria_codigo_seq OWNED BY categoria.codigo;

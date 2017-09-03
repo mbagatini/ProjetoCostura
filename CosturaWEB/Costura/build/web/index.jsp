@@ -16,7 +16,7 @@
         
         <ul>
             <li><a href="usuario.jsp">Cadastro de usuários</a></li>
-            <li><a href="#">Cadastro xxx</a></li>
+            <li><a href="categoria.jsp">Cadastro de categorias</a></li>
             <li><a href="#">Cadastro yyy</a></li>
         </ul>
         

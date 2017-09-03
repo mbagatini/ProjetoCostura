@@ -12,7 +12,7 @@
         <title>Usuários</title>
     </head>
     <body>
-        <%-- Carrega o objeto Usuario passado pelo metodo doGet do Controle --%>
+        <%-- Carrega o objeto passado pelo metodo doGet do Controle --%>
         <%
             Usuario usuario = (Usuario) request.getAttribute("ObjUser");
 
@@ -24,7 +24,7 @@
         <h1>Cadastro de usuários</h1>
 
         <form name="cadastroUsuario" action="/Costura/Controle?parametro=usuario&manut=ins" method="post">
-            <input type="hidden" name="id" value="<%= usuario.getId()%>">
+            <input type="hidden" name="id" value="<%= usuario.getCodigo()%>">
             
             <label>Nome</label>
             <br>

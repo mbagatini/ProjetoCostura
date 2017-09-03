@@ -1,4 +1,4 @@
-   /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,46 +7,42 @@ package dao;
 
 import apoio.ConexaoBD;
 import apoio.IDAO;
-import entidade.Usuario;
+import entidade.Categoria;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
  *
- * @author fabricio.pretto
+ * @author Morgana
  */
-public class UsuarioDAO implements IDAO<Usuario> {
+public class CategoriaDAO implements IDAO<Categoria>{
 
     @Override
-    public String salvar(Usuario objeto) {
+    public String salvar(Categoria objeto) {
         try {
-            String sql = "INSERT INTO usuario VALUES (DEFAULT,"
-                    + "'" + objeto.getNome() + "', "
-                    + "'" + objeto.getEmail()+ "',"
-                    + "'" + objeto.getSenha() + "')";
+            String sql = "INSERT INTO categoria VALUES (DEFAULT,"
+                    + "'" + objeto.getDescricao()+ "')";
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar usuário: " + e);
+            System.out.println("Erro ao salvar categoria: " + e);
             return e.toString();
         }
         return null;
     }
 
     @Override
-    public String atualizar(Usuario o) {
+    public String atualizar(Categoria o) {
         try {
-            String sql = "UPDATE usuario SET "
-                    + "nome = '" + o.getNome() + "', "
-                    + "email = '" + o.getEmail() + "',"
-                    + "senha = '" + o.getSenha() + "' "
+            String sql = "UPDATE categoria SET "
+                    + "descricao = '" + o.getDescricao()+ "' "
                     + "WHERE codigo = " + o.getCodigo();
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar usuário: " + e);
+            System.out.println("Erro ao atualizar categoria:" + e);
             return e.toString();
         }
         return null;
@@ -55,81 +51,79 @@ public class UsuarioDAO implements IDAO<Usuario> {
     @Override
     public String excluir(int id) {
         try {
-            String sql = "DELETE FROM usuario "
+            String sql = "DELETE FROM categoria "
                     + "WHERE codigo = " + id;
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar usuário: " + e);
+            System.out.println("Erro ao salvar categoria: " + e);
             return e.toString();
         }
         return null;
     }
 
     @Override
-    public ArrayList<Usuario> consultarTodos() {
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+    public ArrayList<Categoria> consultarTodos() {
+        ArrayList<Categoria> categorias = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM usuario";
+            String sql = "SELECT * FROM categoria";
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
             while (resultado.next()) {                
-                Usuario u = new Usuario();
+                Categoria cat=  new Categoria();
                 
-                u.setCodigo(resultado.getInt("codigo"));
-                u.setNome(resultado.getString("nome"));
-                u.setEmail(resultado.getString("email"));
+                cat.setCodigo(resultado.getInt("codigo"));
+                cat.setDescricao(resultado.getString("descricao"));
                 
-                usuarios.add(u);
+                categorias.add(cat);
             }
             
         } catch (Exception e) {
-            System.out.println("Erro ao consultar usuários: " + e);
+            System.out.println("Erro ao consultar categorias: " + e);
         }
 
-        return usuarios;
+        return categorias;
     }
 
     @Override
-    public boolean registroUnico(Usuario o) {
+    public boolean registroUnico(Categoria o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Usuario> consultar(String criterio) {
+    public ArrayList<Categoria> consultar(String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object consultarId(int id) {
-        Usuario u = new Usuario();
-
+        Categoria cat = new Categoria();
+        
         try {
             String sql = "SELECT * "
-                    + "FROM usuario "
+                    + "FROM categoria "
                     + "WHERE codigo = " + id;
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
             if (resultado.next()) {
 
-                u.setCodigo(resultado.getInt("codigo"));
-                u.setNome(resultado.getString("nome"));
-                u.setEmail(resultado.getString("email"));
+                cat.setCodigo(resultado.getInt("codigo"));
+                cat.setDescricao(resultado.getString("descricao"));
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar usuário: " + e);
+            System.out.println("Erro ao consultar categoria: " + e);
         }
 
-        return u;
+        return cat;
     }
 
     @Override
-    public boolean consultar(Usuario o) {
+    public boolean consultar(Categoria o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
