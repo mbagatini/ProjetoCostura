@@ -36,3 +36,20 @@ insert into categoria (codigo, descricao) values (DEFAULT, 'Calça Jeans');
 insert into categoria (codigo, descricao) values (DEFAULT, 'Calça Esportiva');
 insert into categoria (codigo, descricao) values (DEFAULT, 'Camiseta Esportiva');
 insert into categoria (codigo, descricao) values (DEFAULT, 'Camisa Esportiva');
+
+-- -----------------------------------------------------
+-- Table tamanho
+-- -----------------------------------------------------
+insert into tamanho (codigo, tamanho) values (DEFAULT, 'PP');
+insert into tamanho (codigo, tamanho) values (DEFAULT, 'P');
+insert into tamanho (codigo, tamanho) values (DEFAULT, 'M');
+insert into tamanho (codigo, tamanho) values (DEFAULT, 'G');
+insert into tamanho (codigo, tamanho) values (DEFAULT, 'GG');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '36');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '38');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '40');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '42');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '44');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '46');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '48');
+insert into tamanho (codigo, tamanho) values (DEFAULT, '50');

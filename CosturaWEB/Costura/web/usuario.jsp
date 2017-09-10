@@ -14,7 +14,7 @@
     <body>
         <%-- Carrega o objeto passado pelo metodo doGet do Controle --%>
         <%
-            Usuario usuario = (Usuario) request.getAttribute("ObjUser");
+            Usuario usuario = (Usuario) request.getAttribute("atributo");
 
             if (usuario == null) {
                 usuario = new Usuario();
@@ -28,17 +28,17 @@
             
             <label>Nome</label>
             <br>
-            <input type="text" name="nome" value="<%= usuario.getNome()%>">
+            <input type="text" required="required" name="nome" value="<%= usuario.getNome()%>">
             <br>
 
             <label>E-mail</label>
             <br>
-            <input type="email" name="email" value="<%= usuario.getEmail()%>">
+            <input type="email" required="required" name="email" value="<%= usuario.getEmail()%>">
             <br>
 
             <label>Senha</label>
             <br>
-            <input type="password" name="senha">
+            <input type="password" required="required" name="senha">
             <br>
             <br>
 

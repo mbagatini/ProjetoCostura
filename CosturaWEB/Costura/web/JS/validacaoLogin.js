@@ -7,12 +7,12 @@
 function validar(){
    // so permitira o envio se os dados forem fornecidos
    if(document.login.emailUsuario.value == ""){
-     alert("Forneca o nome do usuario");
+     alert("Informe o nome do usuário");
      document.login.emailUsuario.focus();
      return false;
    }
    else if(document.login.senha.value == ""){
-     alert("Forneca a senha do usuario");
+     alert("Informe a senha do usuário");
      document.login.senha.focus();
      return false;
    }

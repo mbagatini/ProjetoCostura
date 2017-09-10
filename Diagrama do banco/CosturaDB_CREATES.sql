@@ -25,9 +25,7 @@ CREATE TABLE IF NOT EXISTS cidade (
   PRIMARY KEY (codigo),
   CONSTRAINT fk_cidades_estado1
     FOREIGN KEY (estado)
-    REFERENCES estado (codigo)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES estado (codigo))
 ;
 
 CREATE INDEX fk_cidades_estado1_idx ON cidade (estado ASC);
@@ -44,9 +42,7 @@ CREATE TABLE IF NOT EXISTS endereco (
   PRIMARY KEY (codigo),
   CONSTRAINT fk_endereco_cidade1
     FOREIGN KEY (cidade_codigo)
-    REFERENCES cidade (codigo)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES cidade (codigo))
 ;
 
 CREATE INDEX fk_endereco_cidade1_idx ON endereco (cidade_codigo ASC);
@@ -67,6 +63,7 @@ ALTER SEQUENCE usuario_codigo_seq OWNED BY usuario.codigo;
 
 CREATE UNIQUE INDEX usu_email_UNIQUE ON usuario (email ASC);
 
+
 -- -----------------------------------------------------
 -- Table categoria
 -- -----------------------------------------------------
@@ -77,3 +74,58 @@ CREATE TABLE IF NOT EXISTS categoria (
   PRIMARY KEY (codigo))
 ;
 ALTER SEQUENCE categoria_codigo_seq OWNED BY categoria.codigo;
+
+
+-- -----------------------------------------------------
+-- Table tamanho
+-- -----------------------------------------------------
+CREATE SEQUENCE tamanho_codigo_seq;
+CREATE TABLE IF NOT EXISTS tamanho (
+  codigo INT NOT NULL DEFAULT nextval('tamanho_codigo_seq'),
+  tamanho VARCHAR(5) NOT NULL,
+  PRIMARY KEY (codigo))
+;
+ALTER SEQUENCE tamanho_codigo_seq OWNED BY tamanho.codigo;
+
+
+-- -----------------------------------------------------
+-- Table produto
+-- -----------------------------------------------------
+CREATE SEQUENCE produto_codigo_seq;
+CREATE TABLE IF NOT EXISTS produto (
+  codigo INT NOT NULL DEFAULT nextval('produto_codigo_seq'),
+  refererencia SMALLINT NOT NULL,
+  descricao VARCHAR(100) NOT NULL,
+  preco DECIMAL(11,2) NOT NULL,
+  tamanho CHAR(2) NOT NULL,
+  genero CHAR(2) NOT NULL,
+  codigo_categoria INT NOT NULL,
+  PRIMARY KEY (codigo),
+  CONSTRAINT fk_produto_categoria1
+    FOREIGN KEY (codigo_categoria)
+    REFERENCES categoria (codigo))
+;
+
+CREATE INDEX fk_produto_categoria1_idx ON produto (codigo_categoria ASC);
+
+ALTER SEQUENCE produto_codigo_seq OWNED BY produto.codigo;
+
+
+-- -----------------------------------------------------
+-- Table tamanho_produto
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tamanho_produto (
+  codigo_produto INT NOT NULL,
+  codigo_tamanho INT NOT NULL,
+  PRIMARY KEY (codigo_produto, codigo_tamanho),
+  CONSTRAINT fk_tamanho_has_produto_produto1
+    FOREIGN KEY (codigo_produto)
+    REFERENCES produto (codigo),
+  CONSTRAINT fk_tamanho_produto_tamanho1
+    FOREIGN KEY (codigo_tamanho)
+    REFERENCES tamanho (codigo))
+;
+
+CREATE INDEX fk_tamanho_has_produto_produto1_idx ON tamanho_produto (codigo_produto ASC);
+
+CREATE INDEX fk_tamanho_produto_tamanho1_idx ON tamanho_produto (codigo_tamanho ASC);

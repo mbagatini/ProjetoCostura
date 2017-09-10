@@ -5,45 +5,74 @@
  */
 package servlet;
 
+import apoio.Constantes;
 import dao.CategoriaDAO;
 import entidade.Categoria;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import static servlet.Controle.encaminharPagina;
 
 /**
  *
  * @author Morgana
  */
 public class ControleCategoria {
-    
-    public static String cadastro(String manutencao, HttpServletRequest request) {
 
-        String retorno = null;
+    public static void cadastrar(HttpServletRequest request, HttpServletResponse response) {
+        
+        int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+        
         Categoria cat = new Categoria();
-        int id;
+        cat.setCodigo(id);
+        cat.setDescricao(request.getParameter("descricao"));
+        
+        String retorno = null;
 
-        switch (manutencao) {
-            case "ins":
-                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                cat.setCodigo(id);
-                cat.setDescricao(request.getParameter("descricao"));
-
-                if (id == 0) {
-                    retorno = new CategoriaDAO().salvar(cat);
-                } else {
-                    retorno = new CategoriaDAO().atualizar(cat);
-                }
-                break;
-
-            case "del":
-                id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-                cat.setCodigo(id);
-                cat.setDescricao(request.getParameter("descricao"));
-
-                retorno = new CategoriaDAO().excluir(cat.getCodigo());
-                break;
+        if (cat.getCodigo() == 0) { // é uma inserção
+            retorno = new CategoriaDAO().salvar(cat);
+        } else {
+            retorno = new CategoriaDAO().atualizar(cat);
         }
 
-        return retorno;
+        request.setAttribute("paginaRetorno", Constantes.CADASTRO_CATEGORIA);
+        
+        if (retorno == null) {
+            Controle.encaminharPagina(Constantes.PAGINA_SUCESSO, request, response);
+        } else {
+            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
+        }
     }
     
+    public static void editar(HttpServletRequest request, HttpServletResponse response) {
+
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        Categoria cat = (Categoria) new CategoriaDAO().consultarId(id);
+
+        if (cat != null) {
+            request.setAttribute("atributo", cat);
+            Controle.encaminharPagina(Constantes.CADASTRO_CATEGORIA, request, response);
+        } else {
+            request.setAttribute("paginaRetorno", Constantes.LISTAGEM_CATEGORIA);
+            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
+        }
+
+    }
+    
+    public static void excluir(HttpServletRequest request, HttpServletResponse response) {
+
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        String retorno = new CategoriaDAO().excluir(id);
+
+        request.setAttribute("paginaRetorno", Constantes.LISTAGEM_CATEGORIA);
+
+        if (retorno == null) {
+            encaminharPagina(Constantes.CADASTRO_CATEGORIA, request, response);
+        } else {
+            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
+        }
+
+    }
+
 }

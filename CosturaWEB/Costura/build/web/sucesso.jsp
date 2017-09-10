@@ -14,6 +14,6 @@
     <body>
         <h1>Cadastro realizado com sucesso!</h1>
         
-        <a href="<%= request.getAttribute("paginaOrigem")%>">Voltar</a>
+        <a href="<%= request.getAttribute("paginaRetorno")%>">Voltar</a>
     </body>
 </html>

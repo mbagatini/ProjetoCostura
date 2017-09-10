@@ -15,7 +15,7 @@
     <body>
         <%-- Carrega o objeto passado pelo metodo doGet do Controle --%>
         <%
-            Categoria categoria = (Categoria) request.getAttribute("ObjUser");
+            Categoria categoria = (Categoria) request.getAttribute("atributo");
 
             if (categoria == null) {
                 categoria = new Categoria();
@@ -29,7 +29,7 @@
             
             <label>Descrição</label>
             <br>
-            <input type="text" name="descricao" value="<%= categoria.getDescricao()%>">
+            <input type="text" required="required" name="descricao" value="<%= categoria.getDescricao()%>">
             <br>
             <br>
 

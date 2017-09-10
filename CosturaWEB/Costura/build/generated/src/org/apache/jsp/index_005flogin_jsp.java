@@ -53,7 +53,7 @@ public final class index_005flogin_jsp extends org.apache.jasper.runtime.HttpJsp
       out.write("        <link href=\"boots/css/signin.css\" rel=\"stylesheet\">\r\n");
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
-      out.write("        <h1 style=\"text-align:center;\">Bem-vindo ao Projeto Costura</h1>\r\n");
+      out.write("        <h1 style=\"text-align:center;\">Sistema Costura</h1>\r\n");
       out.write("        <div class=\"container\">\r\n");
       out.write("            <form name=\"login\" method=\"post\" action=\"/Costura/acao?parametro=login\" class=\"form-signin\" onsubmit=\"return validar()\">\r\n");
       out.write("                <br>\r\n");

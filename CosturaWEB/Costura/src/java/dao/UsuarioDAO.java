@@ -72,7 +72,8 @@ public class UsuarioDAO implements IDAO<Usuario> {
         ArrayList<Usuario> usuarios = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM usuario";
+            String sql = "SELECT * FROM usuario"
+                    + " ORDER BY nome ";
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
@@ -130,7 +131,25 @@ public class UsuarioDAO implements IDAO<Usuario> {
 
     @Override
     public boolean consultar(Usuario o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario u = (Usuario) o;
+        try {
+
+            String sql = "SELECT * "
+                    + " FROM usuario "
+                    + "WHERE email = '" + u.getEmail() + "' "
+                    + "  AND senha = '" + u.getSenha() + "'";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao validar usuário: " + e);
+        }
+
+        return false;
     }
 
 }
