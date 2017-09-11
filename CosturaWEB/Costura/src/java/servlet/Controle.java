@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Morgana
  */
 public class Controle extends HttpServlet {
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +65,7 @@ public class Controle extends HttpServlet {
             throws ServletException, IOException {
 //        processRequest(request, response);
         System.out.println("Entrei no GET!");
-        
+
         String parametro = request.getParameter("parametro");
         String manutencao = request.getParameter("manut");
 
@@ -73,16 +73,16 @@ public class Controle extends HttpServlet {
             if (manutencao.equals("upd")) {
                 ControleUsuario.editar(request, response);
             } else if (manutencao.equals("del")) {
-                ControleUsuario.excluir(request, response); 
-           }
+                ControleUsuario.excluir(request, response);
+            }
         }
-        
+
         if (parametro.equals("categoria")) {
             if (manutencao.equals("upd")) {
                 ControleCategoria.editar(request, response);
             } else if (manutencao.equals("del")) {
                 ControleCategoria.excluir(request, response);
-           }
+            }
         }
     }
 
@@ -99,21 +99,20 @@ public class Controle extends HttpServlet {
             throws ServletException, IOException {
 
         System.out.println("Entrei no POST!");
-        
+
         String parametro = request.getParameter("parametro");
         String manutencao = request.getParameter("manut");
 
         // AQUI DEVE SER FEITA A VALIDACAO
         // ANTES DE GRAVAR NO BANCO
-        
         if (parametro.equals("login")) {
             validarLogin(request, response);
         }
-        
+
         if (parametro.equals("usuario")) {
             ControleUsuario.cadastrar(request, response);
         }
-        
+
         if (parametro.equals("categoria")) {
             ControleCategoria.cadastrar(request, response);
         }
@@ -134,12 +133,12 @@ public class Controle extends HttpServlet {
         try {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
-            
+
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }
     }
-    
+
     private void validarLogin(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -155,7 +154,7 @@ public class Controle extends HttpServlet {
             sessao.setAttribute("usuarioLogado", usuario);
             encaminharPagina(Constantes.PAGINA_MENU, request, response);
         } else {
-            encaminharPagina(Constantes.PAGINA_ERRO, request, response);
+            encaminharPagina(Constantes.PAGINA_LOGIN, request, response);
         }
     }
 
