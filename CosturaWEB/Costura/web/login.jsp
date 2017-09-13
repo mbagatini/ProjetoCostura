@@ -37,7 +37,7 @@
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
-                <p><b> Sistema Costura </b></p>
+                <p>Sistema <b> Costura </b></p>
             </div>
 
             <!-- /.login-logo -->
