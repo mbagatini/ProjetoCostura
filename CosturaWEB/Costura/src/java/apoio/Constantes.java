@@ -15,7 +15,7 @@ public class Constantes {
     public static final String PAGINA_SUCESSO   = "sucesso.jsp";
     public static final String PAGINA_MENU      = "menu.jsp";
     public static final String PAGINA_NAVEGACAO = "navegacao.jsp";
-    public static final String PAGINA_LOGIN     = "index.jsp";
+    public static final String PAGINA_LOGIN     = "login.jsp";
     
     public static final String EXIBIR_JOGADOR = "exibirJogador.jsp";
     public static final String FINALIZAR_JOGO = "cadastroPontosJogo.jsp";
