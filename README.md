@@ -1,6 +1,6 @@
 # ProjetoCostura
 
-Repositório para o projeto de programação web Costura.
+Arquivos do projeto Costura.
 
 Arquivo para documentação do projeto da aplicação web.</br>
 Você encontrará dicas de como editar esse arquivo [aqui](http://blog.da2k.com.br/2015/02/08/aprenda-markdown/).
