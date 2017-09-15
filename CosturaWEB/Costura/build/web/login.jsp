@@ -42,7 +42,7 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Entre para iniciar a sessão</p>
+                <p class="login-box-msg">Autenticação</p>
 
                 <form name="login" method="post" action="/Costura/Controle?parametro=login" onsubmit="return validar()">
                     <div class="form-group has-feedback">

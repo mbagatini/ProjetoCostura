@@ -142,6 +142,9 @@ public class UsuarioDAO implements IDAO<Usuario> {
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
             if (resultado.next()) {
+                u.setCodigo(resultado.getInt("codigo"));
+                u.setNome(resultado.getString("nome"));
+                u.setEmail(resultado.getString("email"));
                 return true;
             }
 
