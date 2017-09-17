@@ -45,26 +45,45 @@
                 <p class="login-box-msg">Autenticação</p>
 
                 <form name="login" method="post" action="/Costura/Controle?parametro=login" onsubmit="return validar()">
+
+                    <%
+                        // verifica se o login nao foi validado com sucesso e estiliza os campos
+                        boolean falha = false;
+
+                        if (session.getAttribute("falhaLogin") != null) {
+                            falha = (boolean) session.getAttribute("falhaLogin");
+                        }
+
+                        if (falha) {
+
+                    %>   
+
+                    <div class="form-group has-error">
+                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> E-mail ou senha inválidos</label>
+                        <input type="email" name="email" class="form-control" id="inputError" placeholder="E-mail" required>
+                    </div>
+
+                    <div class="form-group has-error">
+                        <input type="password" name="senha" class="form-control" id="inputError" placeholder="Senha" required>
+                    </div>
+
+                    <% } else { %>
+
                     <div class="form-group has-feedback">
                         <input type="email" name="email" class="form-control" placeholder="E-mail" required>
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
                         <input type="password" name="senha" class="form-control" placeholder="Senha" required>
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
+                    <%
+                        }
+                    %>
+
                     <div class="row">
-                        <div class="col-xs-8">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox"> Lembrar-me
-                                </label>
-                            </div>
-                        </div>
                         <!-- /.col -->
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 center-block">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                         </div>
                         <!-- /.col -->

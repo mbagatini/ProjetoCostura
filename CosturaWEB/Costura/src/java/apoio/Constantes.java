@@ -17,12 +17,11 @@ public class Constantes {
     public static final String PAGINA_NAVEGACAO = "navegacao.jsp";
     public static final String PAGINA_LOGIN     = "login.jsp";
     
-    public static final String EXIBIR_JOGADOR = "exibirJogador.jsp";
-    public static final String FINALIZAR_JOGO = "cadastroPontosJogo.jsp";
-
     public static final String CADASTRO_USUARIO   = "usuario.jsp";
     public static final String CADASTRO_CATEGORIA = "categoria.jsp";
+    public static final String CADASTRO_TAMANHO   = "tamanho.jsp";
     
     public static final String LISTAGEM_USUARIO   = "usuarioListagem.jsp";
     public static final String LISTAGEM_CATEGORIA = "categoriaListagem.jsp";
+    public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
 }

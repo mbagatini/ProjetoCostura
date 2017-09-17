@@ -8,9 +8,7 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
-import dao.CategoriaDAO;
 import dao.UsuarioDAO;
-import entidade.Categoria;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,10 +46,18 @@ public class Controle extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        
         System.out.println("Entrei no GET!");
 
         String parametro = request.getParameter("parametro");
         String manutencao = request.getParameter("manut");
+        
+        if (parametro.equals("logout")) {
+            HttpSession sessao = request.getSession();
+            sessao.invalidate();
+            response.sendRedirect("login.jsp");
+        }
 
         if (parametro.equals("usuario")) {
             if (manutencao.equals("upd")) {
@@ -73,6 +79,8 @@ public class Controle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        request.setCharacterEncoding("UTF-8");
 
         System.out.println("Entrei no POST!");
 
@@ -117,14 +125,17 @@ public class Controle extends HttpServlet {
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setSenha(senha);
+        
+        HttpSession sessao = request.getSession();
 
         if (new UsuarioDAO().consultar(usuario)) {
             // usuario validado: cria coloca seu nome na sessao
-            HttpSession sessao = request.getSession();
             // setando um atributo da sessao
             sessao.setAttribute("usuarioLogado", usuario);
             encaminharPagina(Constantes.PAGINA_MENU, request, response);
         } else {
+            // setando um atributo da sessao
+            sessao.setAttribute("falhaLogin", true);
             encaminharPagina(Constantes.PAGINA_LOGIN, request, response);
         }
     }
