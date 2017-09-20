@@ -60,7 +60,7 @@
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini">S<b>C</b></span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg">Sistema <b>Costura</b></span>
+                    <span class="logo-lg">Sistema<b>Costura</b></span>
                 </a>
 
                 <!-- Header Navbar: style can be found in header.less -->
@@ -147,9 +147,11 @@
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <!-- categorias -->
                             <ul class="treeview-menu">
                                 <li><a href="<%= Constantes.CADASTRO_CATEGORIA%>"><i class="fa fa-circle-o"></i> Categorias </a></li>
                             </ul>
+                            <!-- tamanhos -->
                             <ul class="treeview-menu">
                                 <li><a href="<%= Constantes.CADASTRO_TAMANHO%>"><i class="fa fa-circle-o"></i> Tamanhos </a></li>
                             </ul>

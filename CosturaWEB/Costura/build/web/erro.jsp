@@ -27,8 +27,8 @@
             }
         </style>
     </head>
-    
-     <body class="hold-transition skin-red sidebar-mini">
+
+    <body class="hold-transition skin-red sidebar-mini">
         <div class="wrapper">
 
             <!-- Content Wrapper. Contains page content -->
@@ -36,16 +36,16 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="example-modal">
-                        <div class="modal modal-success">
+                        <div class="modal modal-danger">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Sucesso!</h4>
+                                        <h4 class="modal-title">Ops&hellip;</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Operação concluída com sucesso&hellip;</p>
+                                        <p>Não foi possível concluir a operação. Tente novamente.</p>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="<%= request.getAttribute("paginaRetorno")%>" type="button" class="btn btn-outline" >Voltar</a>
@@ -57,7 +57,7 @@
                         </div>
                         <!-- /.modal -->
                     </div>
-                    <!-- /.example-modal -->
+                    <!-- /.example-modal --> 
                 </section>
                 <!-- /.content -->
             </div>

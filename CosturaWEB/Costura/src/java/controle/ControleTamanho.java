@@ -5,30 +5,31 @@
  */
 package controle;
 
-import dao.CategoriaDAO;
-import entidade.Categoria;
+import dao.TamanhoDAO;
+import entidade.Tamanho;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author Morgana
  */
-public class ControleCategoria {
+public class ControleTamanho {
 
     public boolean cadastrar(HttpServletRequest request) {
-        
+
         int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
-        
-        Categoria cat = new Categoria();
-        cat.setCodigo(id);
-        cat.setDescricao(request.getParameter("descricao"));
-        
+
+        Tamanho t = new Tamanho();
+
+        t.setCodigo(id);
+        t.setTamanho(String.valueOf(request.getParameter("tamanho")));
+
         String retorno = null;
 
-        if (cat.getCodigo() == 0) { // é uma inserção
-            retorno = new CategoriaDAO().salvar(cat);
+        if (t.getCodigo() == 0) { // é uma inserção
+            retorno = new TamanhoDAO().salvar(t);
         } else {
-            retorno = new CategoriaDAO().atualizar(cat);
+            retorno = new TamanhoDAO().atualizar(t);
         }
 
         return (retorno == null);
@@ -37,21 +38,21 @@ public class ControleCategoria {
     public HttpServletRequest editar(HttpServletRequest request) {
 
         int id = Integer.parseInt(request.getParameter("id"));
-
-        Categoria cat = (Categoria) new CategoriaDAO().consultarId(id);
-
-        if (cat != null) {
-            request.setAttribute("atributo", cat);
-        }
+        
+        Tamanho t = (Tamanho) new TamanhoDAO().consultarId(id);
+        
+        if (t != null) {
+            request.setAttribute("atributo", t);
+        } 
         
         return request;
     }
-    
+
     public boolean excluir(HttpServletRequest request) {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        String retorno = new CategoriaDAO().excluir(id);
+        String retorno = new TamanhoDAO().excluir(id);
 
         return (retorno == null);
     }

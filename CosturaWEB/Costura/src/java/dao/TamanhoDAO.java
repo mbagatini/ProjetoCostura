@@ -7,7 +7,7 @@ package dao;
 
 import apoio.ConexaoBD;
 import apoio.IDAO;
-import entidade.Categoria;
+import entidade.Tamanho;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -15,34 +15,34 @@ import java.util.ArrayList;
  *
  * @author Morgana
  */
-public class CategoriaDAO implements IDAO<Categoria>{
+public class TamanhoDAO implements IDAO<Tamanho> {
 
     @Override
-    public String salvar(Categoria objeto) {
+    public String salvar(Tamanho objeto) {
         try {
-            String sql = "INSERT INTO categoria VALUES (DEFAULT,"
-                    + "'" + objeto.getDescricao()+ "')";
+            String sql = "INSERT INTO tamanho VALUES (DEFAULT,"
+                    + "'" + objeto.getTamanho() + "')";
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar categoria: " + e);
+            System.out.println("Erro ao salvar tamanho: " + e);
             return e.toString();
         }
         return null;
     }
 
     @Override
-    public String atualizar(Categoria o) {
+    public String atualizar(Tamanho o) {
         try {
-            String sql = "UPDATE categoria SET "
-                    + "descricao = '" + o.getDescricao()+ "' "
+            String sql = "UPDATE tamanho SET "
+                    + "tamanho = '" + o.getTamanho() + "' "
                     + "WHERE codigo = " + o.getCodigo();
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar categoria:" + e);
+            System.out.println("Erro ao atualizar tamanho:" + e);
             return e.toString();
         }
         return null;
@@ -51,79 +51,79 @@ public class CategoriaDAO implements IDAO<Categoria>{
     @Override
     public String excluir(int id) {
         try {
-            String sql = "DELETE FROM categoria "
+            String sql = "DELETE FROM tamanho "
                     + "WHERE codigo = " + id;
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar categoria: " + e);
+            System.out.println("Erro ao salvar tamanho: " + e);
             return e.toString();
         }
         return null;
     }
 
     @Override
-    public ArrayList<Categoria> consultarTodos() {
-        ArrayList<Categoria> categorias = new ArrayList<>();
+    public ArrayList<Tamanho> consultarTodos() {
+        ArrayList<Tamanho> tamanhos = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM categoria ORDER BY descricao";
+            String sql = "SELECT * FROM tamanho ORDER BY tamanho";
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
-            while (resultado.next()) {                
-                Categoria cat=  new Categoria();
-                
-                cat.setCodigo(resultado.getInt("codigo"));
-                cat.setDescricao(resultado.getString("descricao"));
-                
-                categorias.add(cat);
+            while (resultado.next()) {
+                Tamanho tam = new Tamanho();
+
+                tam.setCodigo(resultado.getInt("codigo"));
+                tam.setTamanho(resultado.getString("tamanho"));
+
+                tamanhos.add(tam);
             }
-            
+
         } catch (Exception e) {
-            System.out.println("Erro ao consultar categorias: " + e);
+            System.out.println("Erro ao consultar tamanhos: " + e);
         }
 
-        return categorias;
+        return tamanhos;
     }
 
     @Override
-    public boolean registroUnico(Categoria o) {
+    public boolean registroUnico(Tamanho o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Categoria> consultar(String criterio) {
+    public ArrayList<Tamanho> consultar(String criterio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object consultarId(int id) {
-        Categoria cat = new Categoria();
+        Tamanho tam = new Tamanho();
         
         try {
             String sql = "SELECT * "
-                    + "FROM categoria "
+                    + "FROM tamanho "
                     + "WHERE codigo = " + id;
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
             if (resultado.next()) {
 
-                cat.setCodigo(resultado.getInt("codigo"));
-                cat.setDescricao(resultado.getString("descricao"));
+                tam.setCodigo(resultado.getInt("codigo"));
+                tam.setTamanho(resultado.getString("tamanho"));
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao consultar categoria: " + e);
+            System.out.println("Erro ao consultar tamanho: " + e);
         }
 
-        return cat;
+        return tam;
     }
 
     @Override
-    public boolean consultar(Categoria o) {
+    public boolean consultar(Tamanho o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

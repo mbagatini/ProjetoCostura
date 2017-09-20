@@ -55,11 +55,10 @@
                         }
 
                         if (falha) {
-
                     %>   
 
                     <div class="form-group has-error">
-                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> E-mail ou senha inválidos</label>
+                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> E-mail ou senha não conferem</label>
                         <input type="email" name="email" class="form-control" id="inputError" placeholder="E-mail" required>
                     </div>
 
@@ -90,6 +89,7 @@
                     </div>
                 </form>
 
+                <br>
                 <a href="#">Esqueci minha senha</a><br>
                 <a href="register.html" class="text-center">Registrar-se</a>
 

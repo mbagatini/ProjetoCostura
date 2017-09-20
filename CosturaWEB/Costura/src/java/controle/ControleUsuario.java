@@ -9,9 +9,6 @@ import apoio.Constantes;
 import dao.UsuarioDAO;
 import entidade.Usuario;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import servlet.Controle;
-import static servlet.Controle.encaminharPagina;
 
 /**
  *
@@ -19,7 +16,7 @@ import static servlet.Controle.encaminharPagina;
  */
 public class ControleUsuario {
 
-    public static void cadastrar(HttpServletRequest request, HttpServletResponse response) {
+    public boolean cadastrar(HttpServletRequest request) {
 
         int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
         
@@ -36,18 +33,11 @@ public class ControleUsuario {
         } else {
             retorno = new UsuarioDAO().atualizar(u);
         }
-
-        request.setAttribute("paginaRetorno", Constantes.CADASTRO_USUARIO);
         
-        if (retorno == null) {
-            Controle.encaminharPagina(Constantes.PAGINA_SUCESSO, request, response);
-        } else {
-            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
-        }
-
+        return (retorno == null);
     }
 
-    public static void editar(HttpServletRequest request, HttpServletResponse response) {
+    public HttpServletRequest editar(HttpServletRequest request) {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
@@ -55,27 +45,17 @@ public class ControleUsuario {
 
         if (usuario != null) {
             request.setAttribute("atributo", usuario);
-            Controle.encaminharPagina(Constantes.CADASTRO_USUARIO, request, response);
-        } else {
-            request.setAttribute("paginaRetorno", Constantes.LISTAGEM_USUARIO);
-            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
         }
-
+        
+        return request;
     }
 
-    public static void excluir(HttpServletRequest request, HttpServletResponse response) {
+    public boolean excluir(HttpServletRequest request) {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
         String retorno = new UsuarioDAO().excluir(id);
 
-        request.setAttribute("paginaRetorno", Constantes.LISTAGEM_USUARIO);
-
-        if (retorno == null) {
-            encaminharPagina(Constantes.CADASTRO_USUARIO, request, response);
-        } else {
-            Controle.encaminharPagina(Constantes.PAGINA_ERRO, request, response);
-        }
-
+        return (retorno == null);
     }
 }

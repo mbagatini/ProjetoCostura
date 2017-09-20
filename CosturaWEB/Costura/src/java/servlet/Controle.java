@@ -8,6 +8,7 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
+import controle.ControleTamanho;
 import dao.UsuarioDAO;
 import entidade.Usuario;
 import java.io.IOException;
@@ -61,17 +62,28 @@ public class Controle extends HttpServlet {
 
         if (parametro.equals("usuario")) {
             if (manutencao.equals("upd")) {
-                ControleUsuario.editar(request, response);
+                encaminharPagina(Constantes.CADASTRO_USUARIO, new ControleUsuario().editar(request), response);
             } else if (manutencao.equals("del")) {
-                ControleUsuario.excluir(request, response);
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_USUARIO);
+                encaminharPagina(retornaPagina(new ControleUsuario().excluir(request)), request, response);
             }
         }
 
         if (parametro.equals("categoria")) {
             if (manutencao.equals("upd")) {
-                ControleCategoria.editar(request, response);
+                encaminharPagina(Constantes.CADASTRO_CATEGORIA, new ControleCategoria().editar(request), response);
             } else if (manutencao.equals("del")) {
-                ControleCategoria.excluir(request, response);
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_CATEGORIA);
+                encaminharPagina(retornaPagina(new ControleCategoria().excluir(request)), request, response);
+            }
+        }
+        
+        if (parametro.equals("tamanho")) {
+            if (manutencao.equals("upd")) {
+                encaminharPagina(Constantes.CADASTRO_TAMANHO, new ControleTamanho().editar(request), response);
+            } else if (manutencao.equals("del")) {
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_TAMANHO);
+                encaminharPagina(retornaPagina(new ControleTamanho().excluir(request)), request, response);
             }
         }
     }
@@ -94,12 +106,19 @@ public class Controle extends HttpServlet {
         }
 
         if (parametro.equals("usuario")) {
-            ControleUsuario.cadastrar(request, response);
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_USUARIO);
+            encaminharPagina(retornaPagina(new ControleUsuario().cadastrar(request)), request, response);
         }
 
         if (parametro.equals("categoria")) {
-            ControleCategoria.cadastrar(request, response);
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_CATEGORIA);
+            encaminharPagina(retornaPagina(new ControleCategoria().cadastrar(request)), request, response);
         }
+        
+        if (parametro.equals("tamanho")) {
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_TAMANHO);
+            encaminharPagina(retornaPagina(new ControleTamanho().cadastrar(request)), request, response);
+       }
 
     }
 
@@ -116,6 +135,18 @@ public class Controle extends HttpServlet {
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }
+    }
+    
+    private String retornaPagina(boolean flag) {
+        String pagina;
+        
+        if (flag) {
+            pagina = Constantes.PAGINA_SUCESSO;
+        } else {
+            pagina = Constantes.PAGINA_ERRO;
+        }
+        
+        return pagina;
     }
 
     private void validarLogin(HttpServletRequest request, HttpServletResponse response) {
