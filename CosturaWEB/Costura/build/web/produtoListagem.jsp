@@ -33,6 +33,9 @@
                             <tr>
                                 <th>Referência</th>
                                 <th>Descrição</th>
+                                <th>Preço</th>
+                                <th>Gênero</th>
+                                <th>Categoria</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
@@ -46,6 +49,9 @@
                             <tr>
                                 <td><%= produtos.get(i).getReferencia()%></td>
                                 <td><%= produtos.get(i).getDescricao()%></td>
+                                <td><%= produtos.get(i).getPreco()%></td>
+                                <td><%= produtos.get(i).getGenero()%></td>
+                                <td><%= produtos.get(i).getCategoria().getDescricao()%></td>
                                 <td><a href="/Costura/Controle?parametro=categoria&manut=upd&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
                                 <td><a href="/Costura/Controle?parametro=categoria&manut=del&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
                             </tr>

@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS produto (
   referencia SMALLINT NOT NULL,
   descricao VARCHAR(100) NOT NULL,
   preco DECIMAL(11,2) NOT NULL,
-  genero CHAR(2) NOT NULL,
+  genero VARCHAR(50) NOT NULL,
   codigo_categoria INT NOT NULL,
   PRIMARY KEY (codigo),
   CONSTRAINT fk_produto_categoria1

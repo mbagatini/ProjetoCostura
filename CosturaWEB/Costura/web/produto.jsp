@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Referência</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="referencia" value="<%= produto.getReferencia()%>" required placeholder="Referência">
+                                        <input type="number" class="form-control" name="referencia" value="<%= (produto.getReferencia() == 0) ? "" : produto.getReferencia() %>" required placeholder="Referência">
                                     </div>
                                 </div>
 
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Preço</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="preco" value="<%= produto.getPreco()%>" required placeholder="Preço">
+                                        <input type="number" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco() %>" required placeholder="Preço">
                                     </div>
                                 </div>
 
