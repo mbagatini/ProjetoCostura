@@ -94,10 +94,9 @@ ALTER SEQUENCE tamanho_codigo_seq OWNED BY tamanho.codigo;
 CREATE SEQUENCE produto_codigo_seq;
 CREATE TABLE IF NOT EXISTS produto (
   codigo INT NOT NULL DEFAULT nextval('produto_codigo_seq'),
-  refererencia SMALLINT NOT NULL,
+  referencia SMALLINT NOT NULL,
   descricao VARCHAR(100) NOT NULL,
   preco DECIMAL(11,2) NOT NULL,
-  tamanho CHAR(2) NOT NULL,
   genero CHAR(2) NOT NULL,
   codigo_categoria INT NOT NULL,
   PRIMARY KEY (codigo),

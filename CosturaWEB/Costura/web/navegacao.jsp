@@ -147,6 +147,10 @@
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
+                            <!-- produtos -->
+                            <ul class="treeview-menu">
+                                <li><a href="<%= Constantes.CADASTRO_PRODUTO %>"><i class="fa fa-circle-o"></i> Produtos </a></li>
+                            </ul>
                             <!-- categorias -->
                             <ul class="treeview-menu">
                                 <li><a href="<%= Constantes.CADASTRO_CATEGORIA%>"><i class="fa fa-circle-o"></i> Categorias </a></li>

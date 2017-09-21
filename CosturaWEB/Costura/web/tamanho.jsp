@@ -4,7 +4,6 @@
     Author     : Morgana
 --%>
 
-
 <%@page import="entidade.Tamanho"%>
 <%@page import="apoio.Constantes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -80,17 +79,9 @@
             </div>
             <!-- /.content-wrapper -->
 
-            <!-- footer -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Versão</b> 1.0
-                </div>
-                <strong>Copyright &copy; 2017 </strong>
-            </footer>     
-            <!-- /.footer -->
+            <!-- Adiciona o footer -->
+            <%@include file = "footer.jsp" %>
         </div>
         <!-- ./wrapper -->
     </body>
-
-
 </html>

@@ -53,3 +53,8 @@ insert into tamanho (codigo, tamanho) values (DEFAULT, '44');
 insert into tamanho (codigo, tamanho) values (DEFAULT, '46');
 insert into tamanho (codigo, tamanho) values (DEFAULT, '48');
 insert into tamanho (codigo, tamanho) values (DEFAULT, '50');
+
+-- -----------------------------------------------------
+-- Table produto
+-- -----------------------------------------------------
+insert into produto (codigo, referencia, descricao, preco, genero, codigo_categoria) values (DEFAULT, 10, 'Produto teste', '35,50', 'Unisex', 3);
