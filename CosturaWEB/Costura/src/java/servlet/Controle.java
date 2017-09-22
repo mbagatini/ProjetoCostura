@@ -8,6 +8,7 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
+import controle.ControleProduto;
 import controle.ControleTamanho;
 import dao.UsuarioDAO;
 import entidade.Usuario;
@@ -68,6 +69,15 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleUsuario().excluir(request)), request, response);
             }
         }
+        
+        if (parametro.equals("produto")) {
+            if (manutencao.equals("upd")) {
+                encaminharPagina(Constantes.CADASTRO_PRODUTO, new ControleProduto().editar(request), response);
+            } else if (manutencao.equals("del")) {
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_PRODUTO);
+                encaminharPagina(retornaPagina(new ControleProduto().excluir(request)), request, response);
+            }
+        }
 
         if (parametro.equals("categoria")) {
             if (manutencao.equals("upd")) {
@@ -108,6 +118,11 @@ public class Controle extends HttpServlet {
         if (parametro.equals("usuario")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_USUARIO);
             encaminharPagina(retornaPagina(new ControleUsuario().cadastrar(request)), request, response);
+        }
+        
+        if (parametro.equals("produto")) {
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PRODUTO);
+            encaminharPagina(retornaPagina(new ControleProduto().cadastrar(request)), request, response);
         }
 
         if (parametro.equals("categoria")) {

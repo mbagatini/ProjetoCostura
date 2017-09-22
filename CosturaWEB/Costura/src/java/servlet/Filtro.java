@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Esse trecho de código deve existir para aplicar o filtro para as paginas
  */
-//@WebFilter("/*")
+@WebFilter("/*")
 
 public class Filtro extends HttpServlet implements Filter {
 
@@ -37,13 +37,12 @@ public class Filtro extends HttpServlet implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         urls.add("/Costura/");
         urls.add("/Costura/Controle");
+        urls.add("/Costura/");
         urls.add("/Costura/index.jsp");
         urls.add("/Costura/login.jsp");
-        urls.add("/Costura/login.jsp");
-        urls.add("/Costura/bootstrap/*");
-        urls.add("/Costura/build/*");
-        urls.add("/Costura/dist/*");
-        urls.add("/Costura/plugins/*");
+        urls.add("/Costura/bootstrap/css/bootstrap.min.css");
+        urls.add("/Costura/dist/css/AdminLTE.min.css");
+        urls.add("/Costura/dist/css/skins/_all-skins.min.css");
     }
 
     @Override

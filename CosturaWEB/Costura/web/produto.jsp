@@ -59,10 +59,11 @@
                         <form class="form-horizontal" name="cadastroProduto" action="/Costura/Controle?parametro=produto&manut=ins" method="post">
                             <div class="box-body">
                                 <input type="hidden" name="id" value="<%= produto.getCodigo()%>">
+                                
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Referência</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="referencia" value="<%= (produto.getReferencia() == 0) ? "" : produto.getReferencia() %>" required placeholder="Referência">
+                                        <input type="number" min="1" class="form-control" name="referencia" value="<%= (produto.getReferencia() == 0) ? "" : produto.getReferencia()%>" required placeholder="Referência">
                                     </div>
                                 </div>
 
@@ -76,7 +77,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Preço</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco() %>" required placeholder="Preço">
+                                        <input type="number" min="1" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco()%>" required placeholder="Preço">
                                     </div>
                                 </div>
 
@@ -84,11 +85,11 @@
                                     <label class="col-sm-1 control-label">Gênero</label>
                                     <div class="col-sm-10">
                                         <!-- select -->
-                                        <select class="form-control" name="genero" value="<%= produto.getGenero()%>" required placeholder="Gênero">
+                                        <select class="form-control" name="genero" required placeholder="Gênero">
                                             <option value="0">Selecione</option>
-                                            <option>Feminino</option>
-                                            <option>Masculino</option>
-                                            <option>Unisex</option>
+                                            <option value="Feminino" <%= produto.getGenero().equals("Feminino") ? "selected" : ""%>>Feminino</option>
+                                            <option value="Masculino" <%= produto.getGenero().equals("Masculino") ? "selected" : ""%>>Masculino</option>
+                                            <option value="Unisex" <%= produto.getGenero().equals("Unisex") ? "selected" : ""%>>Unisex</option>
                                         </select>
                                         <!-- /.select -->
                                     </div>
@@ -98,15 +99,19 @@
                                     <label class="col-sm-1 control-label">Categoria</label>
                                     <div class="col-sm-10">
                                         <!-- select -->
-                                        <select class="form-control" name="categoria"  required placeholder="Categoria">
+                                        <select class="form-control" name="categoria" required placeholder="Categoria">
                                             <option value="0">Selecione</option>
 
                                             <%
                                                 ArrayList<Categoria> cat = new CategoriaDAO().consultarTodos();
                                                 for (int i = 0; i < cat.size(); i++) {
                                             %>
-                                            <option value="<%= cat.get(i).getCodigo()%>"><%= cat.get(i).getDescricao()%></option>
-                                            <%  }  %>
+                                            <option 
+                                                value="<%= cat.get(i).getCodigo()%>"  
+                                                <%= produto.getCategoria().getCodigo() == cat.get(i).getCodigo() ? "selected" : ""%> >
+                                                <%= cat.get(i).getDescricao()%> 
+                                            </option>
+                                            <%  }%>
                                         </select>
                                         <!-- /.select -->
                                     </div>

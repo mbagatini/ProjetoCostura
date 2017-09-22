@@ -20,9 +20,11 @@ public class Produto {
 
     public Produto() {
         codigo = 0;
+        referencia = 0;
         descricao = "";
         preco = 0;
         genero = "";
+        categoria = new Categoria();
     }
 
     public int getCodigo() {

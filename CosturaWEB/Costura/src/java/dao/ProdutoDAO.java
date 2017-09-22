@@ -45,9 +45,9 @@ public class ProdutoDAO implements IDAO<Produto> {
             String sql = "UPDATE produto SET "
                     + "referencia = " + o.getReferencia() + ", "
                     + "descricao = '" + o.getDescricao()+ "', "
-                    + "preco = " + o.getPreco()+ ", "
+                    + "preco = " + o.getPreco() + ", "
                     + "genero = '" + o.getGenero()+ "', "
-                    + "categoria = " + o.getCategoria().getCodigo()
+                    + "codigo_categoria = " + o.getCategoria().getCodigo()
                     + "WHERE codigo = " + o.getCodigo();
 
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
@@ -91,7 +91,7 @@ public class ProdutoDAO implements IDAO<Produto> {
                 pro.setCodigo(resultado.getInt("codigo"));
                 pro.setReferencia(resultado.getInt("referencia"));
                 pro.setDescricao(resultado.getString("descricao"));
-                pro.setPreco(resultado.getFloat("preco"));
+                pro.setPreco(resultado.getDouble("preco"));
                 pro.setGenero(resultado.getString("genero"));
                 pro.setCategoria((Categoria) new CategoriaDAO().consultarId(resultado.getInt("codigo_categoria")));
 
@@ -117,7 +117,29 @@ public class ProdutoDAO implements IDAO<Produto> {
 
     @Override
     public Object consultarId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produto pro = new Produto();
+        
+        try {
+            String sql = "SELECT * "
+                    + "FROM produto "
+                    + "WHERE codigo = " + id;
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                pro.setCodigo(resultado.getInt("codigo"));
+                pro.setReferencia(resultado.getInt("referencia"));
+                pro.setDescricao(resultado.getString("descricao"));
+                pro.setPreco(resultado.getDouble("preco"));
+                pro.setGenero(resultado.getString("genero"));
+                pro.setCategoria((Categoria) new CategoriaDAO().consultarId(resultado.getInt("codigo_categoria")));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar produto: " + e);
+        }
+
+        return pro;
     }
 
     @Override

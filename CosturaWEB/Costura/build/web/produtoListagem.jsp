@@ -52,8 +52,8 @@
                                 <td><%= produtos.get(i).getPreco()%></td>
                                 <td><%= produtos.get(i).getGenero()%></td>
                                 <td><%= produtos.get(i).getCategoria().getDescricao()%></td>
-                                <td><a href="/Costura/Controle?parametro=categoria&manut=upd&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
-                                <td><a href="/Costura/Controle?parametro=categoria&manut=del&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
+                                <td><a href="/Costura/Controle?parametro=produto&manut=upd&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
+                                <td><a href="/Costura/Controle?parametro=produto&manut=del&id=<%= produtos.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
                             </tr>
                             <%
                                 }

@@ -89,15 +89,9 @@
                                     </li>
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
-                                        <div class="pull-right">
-                                            <a href="/Costura/Controle?parametro=logout" class="btn btn-default btn-flat">Sair</a>
-                                        </div>
+                                        <a href="/Costura/Controle?parametro=logout" class="btn btn-default btn-block btn-flat">Sair</a>
                                     </li>
                                 </ul>
-                            </li>
-                            <!-- Control Sidebar Toggle Button -->
-                            <li>
-                                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -145,18 +139,41 @@
                             </ul>
                         </li>
 
-                        <!-- usuarios -->
+                        <!-- clientes -->
                         <li>
-                            <a href="<%= Constantes.CADASTRO_USUARIO%>">
-                                <i class="fa fa-users"></i> <span>Usuários</span>
+                            <a href="#">
+                                <i class="fa fa-users"></i> 
+                                <span>Clientes</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                             </a>
                         </li>
 
-                        <!-- teste -->
+                        <!-- pedidos -->
                         <li>
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
-                                Launch Success Modal
-                            </button>
+                            <a href="#">
+                                <i class="fa  fa-cubes"></i> 
+                                <span>Pedidos</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- notas fiscais -->
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-money"></i> 
+                                <span>Notas fiscais</span>
+                            </a>
+                        </li>
+
+                        <!-- vendas -->
+                        <li>
+                            <a href="<%= Constantes.CADASTRO_USUARIO%>">
+                                <i class="fa  fa-user-plus"></i> <span>Usuários</span>
+                            </a>
                         </li>
                     </ul>
 
@@ -165,76 +182,6 @@
             </aside>
 
             <!-- =============================================== -->
-
-            <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
-                <!-- Create the tabs -->
-                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <!-- Stats tab content -->
-                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-                    <!-- /.tab-pane -->
-                    <!-- Settings tab content -->
-                    <div class="tab-pane" id="control-sidebar-settings-tab">
-                        <form method="post">
-                            <h3 class="control-sidebar-heading">Configurações gerais</h3>
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Check box aqui
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-
-                                <p>
-                                    Some information about this general settings option
-                                </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Check box aqui
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-
-                                <p>
-                                    Other sets of options are available
-                                </p>
-                            </div>
-                            <!-- /.form-group -->
-                        </form>
-                    </div>
-                    <!-- /.tab-pane -->
-                </div>
-
-            </aside>
-            <!-- /.control-sidebar -->
-
-            <!-- JANELA MODAAAAAAAAAAAAAAAAAAAAAAAAAL -->
-            <div class="modal modal-success fade" id="modal-success">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Success Modal</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>One fine body&hellip;</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-outline">Save changes</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
 
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
