@@ -1,0 +1,1 @@
+ALTER TABLE usuario ALTER senha TYPE VARCHAR(70)
