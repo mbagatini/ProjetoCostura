@@ -55,7 +55,7 @@
                                 <input type="hidden" name="id" value="<%= usuario.getCodigo()%>">
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">Nome</label>
+                                    <label class="col-sm-1 control-label">Nome*</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="nome" value="<%= usuario.getNome()%>" required placeholder="Nome">
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">E-mail</label>
+                                    <label class="col-sm-1 control-label">E-mail*</label>
 
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" name="email" value="<%= usuario.getEmail()%>" required placeholder="E-mail">
@@ -71,7 +71,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">Senha</label>
+                                    <label class="col-sm-1 control-label">Senha*</label>
 
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" name="senha" required placeholder="Senha">

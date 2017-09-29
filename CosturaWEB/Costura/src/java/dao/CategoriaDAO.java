@@ -90,7 +90,21 @@ public class CategoriaDAO implements IDAO<Categoria>{
 
     @Override
     public boolean registroUnico(Categoria o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT * "
+                    + "FROM categoria "
+                    + "WHERE UPPER(descricao) = UPPER('" + o.getDescricao() + "')";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar categoria: " + e);
+        }
+        return false;
     }
 
     @Override

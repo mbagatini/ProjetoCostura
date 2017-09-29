@@ -107,7 +107,21 @@ public class ProdutoDAO implements IDAO<Produto> {
 
     @Override
     public boolean registroUnico(Produto o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT * "
+                    + "FROM produto "
+                    + "WHERE UPPER(descricao) = UPPER('" + o.getDescricao() + "')";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar produto: " + e);
+        }
+        return false;
     }
 
     @Override

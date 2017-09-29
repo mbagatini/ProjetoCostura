@@ -25,18 +25,11 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
     </head>
 
     <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
     <!-- the fixed layout is not compatible with sidebar-mini -->
-    <body class="hold-transition skin-red fixed sidebar-mini">
+    <body class="hold-transition skin-yellow fixed sidebar-mini">
 
         <%
             // verifica se tem um atributo login na sessao, se houver vai continuar e mostrar a pagina
@@ -169,11 +162,18 @@
                             </a>
                         </li>
 
-                        <!-- vendas -->
-                        <li>
-                            <a href="<%= Constantes.CADASTRO_USUARIO%>">
-                                <i class="fa  fa-user-plus"></i> <span>Usuários</span>
+                        <!-- configuracoes -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-gears"></i> 
+                                <span>Configurações</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<%= Constantes.CADASTRO_USUARIO%>"><i class="fa fa-user-plus"></i> Usuários </a></li>
+                            </ul>
                         </li>
                     </ul>
 
@@ -185,7 +185,7 @@
 
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>        
+            <div class="control-sidebar-bg"></div>     
 
         </div>
         <!-- ./wrapper -->

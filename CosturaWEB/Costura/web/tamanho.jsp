@@ -52,11 +52,11 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" name="cadastroTamanho" action="/Costura/Controle?parametro=tamanho&manut=ins" method="post">
+                        <form class="form-horizontal" name="cadastroTamanho" action="/Costura/Controle?parametro=tamanho&manut=ins" method="post" onsubmit="return validar()">
                             <div class="box-body">
                                 <input type="hidden" name="id" value="<%= tamanho.getCodigo()%>">
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">Tamanho</label>
+                                    <label class="col-sm-1 control-label">Tamanho*</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="tamanho" value="<%= tamanho.getTamanho()%>" required placeholder="Tamanho">
@@ -84,4 +84,7 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    
+    <!-- Importacao do arquivo de validacao -->
+    <script language="JavaScript" src="JS/validacao.js"></script>
 </html>

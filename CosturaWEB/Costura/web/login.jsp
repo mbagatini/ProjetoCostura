@@ -44,7 +44,7 @@
             <div class="login-box-body">
                 <p class="login-box-msg">Autenticação</p>
 
-                <form name="login" method="post" action="/Costura/Controle?parametro=login" onsubmit="return validar()">
+                <form name="login" method="post" action="/Costura/Controle?parametro=login">
 
                     <%
                         // verifica se o login nao foi validado com sucesso e estiliza os campos

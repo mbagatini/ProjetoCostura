@@ -8,8 +8,8 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS estado (
   codigo INT NOT NULL,
-  nome VARCHAR(45) NOT NULL,
-  sigla VARCHAR(45) NOT NULL,
+  sigla VARCHAR(2) NOT NULL,
+  nome VARCHAR(50) NOT NULL,
   PRIMARY KEY (codigo))
 ;
 
@@ -20,15 +20,14 @@ CREATE TABLE IF NOT EXISTS estado (
 CREATE TABLE IF NOT EXISTS cidade (
   codigo INT NOT NULL,
   nome VARCHAR(30) NOT NULL,
-  cep VARCHAR(9) NOT NULL,
-  estado INT NOT NULL,
+  estado_codigo INT NOT NULL,
   PRIMARY KEY (codigo),
   CONSTRAINT fk_cidades_estado1
-    FOREIGN KEY (estado)
+    FOREIGN KEY (estado_codigo)
     REFERENCES estado (codigo))
 ;
 
-CREATE INDEX fk_cidades_estado1_idx ON cidade (estado ASC);
+CREATE INDEX fk_cidades_estado1_idx ON cidade (estado_codigo ASC);
 
 
 -- -----------------------------------------------------

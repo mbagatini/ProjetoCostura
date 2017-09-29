@@ -96,7 +96,21 @@ public class UsuarioDAO implements IDAO<Usuario> {
 
     @Override
     public boolean registroUnico(Usuario o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT * "
+                    + "FROM usuario "
+                    + "WHERE UPPER(email) = UPPER('" + o.getEmail()+ "')";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar usuario: " + e);
+        }
+        return false;
     }
 
     @Override

@@ -56,7 +56,7 @@
                             <div class="box-body">
                                 <input type="hidden" name="id" value="<%= categoria.getCodigo()%>">
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">Descrição</label>
+                                    <label class="col-sm-1 control-label">Descrição*</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="descricao" value="<%= categoria.getDescricao()%>" required placeholder="Descrição">

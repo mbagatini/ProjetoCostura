@@ -90,7 +90,21 @@ public class TamanhoDAO implements IDAO<Tamanho> {
 
     @Override
     public boolean registroUnico(Tamanho o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT * "
+                    + "FROM tamanho "
+                    + "WHERE UPPER(tamanho) = UPPER('" + o.getTamanho()+ "')";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar tamanho: " + e);
+        }
+        return false;
     }
 
     @Override
