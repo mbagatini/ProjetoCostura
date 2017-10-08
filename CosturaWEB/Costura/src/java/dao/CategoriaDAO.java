@@ -57,7 +57,7 @@ public class CategoriaDAO implements IDAO<Categoria>{
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar categoria: " + e);
+            System.out.println("Erro ao excluir categoria: " + e);
             return e.toString();
         }
         return null;

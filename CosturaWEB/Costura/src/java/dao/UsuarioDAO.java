@@ -61,7 +61,7 @@ public class UsuarioDAO implements IDAO<Usuario> {
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar usuário: " + e);
+            System.out.println("Erro ao excluir usuário: " + e);
             return e.toString();
         }
         return null;
