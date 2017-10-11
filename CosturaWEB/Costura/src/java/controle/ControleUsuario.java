@@ -6,15 +6,35 @@
 package controle;
 
 import apoio.Constantes;
+import apoio.Criptografia;
 import dao.UsuarioDAO;
 import entidade.Usuario;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import static servlet.Controle.encaminharPagina;
 
 /**
  *
  * @author Morgana
  */
 public class ControleUsuario {
+    
+    public Usuario validarLogin(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        String senha = Criptografia.codificarSenha(request.getParameter("senha"));
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        
+        if (new UsuarioDAO().consultar(usuario)){
+            return usuario;
+        } else {
+            return null;
+        }
+                
+    }
 
     public boolean cadastrar(HttpServletRequest request) {
 
@@ -24,7 +44,7 @@ public class ControleUsuario {
         u.setCodigo(id);
         u.setNome(request.getParameter("nome"));
         u.setEmail(request.getParameter("email"));
-        u.setSenha(request.getParameter("senha"));
+        u.setSenha(Criptografia.codificarSenha(request.getParameter("senha")));
         
         String retorno = null;
         

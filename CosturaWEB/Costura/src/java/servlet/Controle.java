@@ -8,6 +8,7 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
+import apoio.Criptografia;
 import controle.ControleProduto;
 import controle.ControleTamanho;
 import dao.UsuarioDAO;
@@ -112,7 +113,20 @@ public class Controle extends HttpServlet {
         // AQUI DEVE SER FEITA A VALIDACAO
         // ANTES DE GRAVAR NO BANCO
         if (parametro.equals("login")) {
-            validarLogin(request, response);
+            Usuario user = new ControleUsuario().validarLogin(request, response);
+
+            if (user != null) {
+                // usuario validado: cria coloca seu nome na sessao
+                // setando um atributo da sessao
+                HttpSession sessao = request.getSession();
+                // setando um atributo da sessao
+                sessao.setAttribute("usuarioLogado", user);
+                encaminharPagina(Constantes.PAGINA_MENU, request, response);
+            } else {
+                // setando um atributo da sessao
+                request.setAttribute("falhaLogin", true);
+                encaminharPagina(Constantes.PAGINA_LOGIN, request, response);
+            }
         }
 
         if (parametro.equals("usuario")) {
@@ -146,7 +160,6 @@ public class Controle extends HttpServlet {
         try {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
-
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }
@@ -163,27 +176,4 @@ public class Controle extends HttpServlet {
         
         return pagina;
     }
-
-    private void validarLogin(HttpServletRequest request, HttpServletResponse response) {
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-
-        Usuario usuario = new Usuario();
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        
-        HttpSession sessao = request.getSession();
-
-        if (new UsuarioDAO().consultar(usuario)) {
-            // usuario validado: cria coloca seu nome na sessao
-            // setando um atributo da sessao
-            sessao.setAttribute("usuarioLogado", usuario);
-            encaminharPagina(Constantes.PAGINA_MENU, request, response);
-        } else {
-            // setando um atributo da sessao
-            sessao.setAttribute("falhaLogin", true);
-            encaminharPagina(Constantes.PAGINA_LOGIN, request, response);
-        }
-    }
-
 }

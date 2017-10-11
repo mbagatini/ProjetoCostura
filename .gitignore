@@ -7,3 +7,6 @@ Projeto Costura/Costura/nbproject/
 *.class
 
 CosturaWEB/Costura/nbproject/private/private.xml
+CosturaWEB/Costura/nbproject/ant-deploy.xml
+CosturaWEB/Costura/nbproject/private/private.properties
+CosturaWEB/Costura/src/java/apoio/db.properties
