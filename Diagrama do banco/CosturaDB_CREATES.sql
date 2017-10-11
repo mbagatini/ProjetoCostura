@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS usuario (
   codigo INT NOT NULL DEFAULT nextval('usuario_codigo_seq'),
   nome VARCHAR(45) NOT NULL,
   email VARCHAR(45) NOT NULL,
-  senha VARCHAR(20) NOT NULL,
+  senha VARCHAR(70) NOT NULL,
   PRIMARY KEY (codigo))
 ;
 ALTER SEQUENCE usuario_codigo_seq OWNED BY usuario.codigo;
