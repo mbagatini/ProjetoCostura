@@ -146,7 +146,7 @@
                         </li>
 
                         <!-- configuracoes -->
-                        <li class="treeview">
+                        <li class="treeview active">
                             <a href="#">
                                 <i class="fa fa-gears"></i> 
                                 <span>Configurações</span>

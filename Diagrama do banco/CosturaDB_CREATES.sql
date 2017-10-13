@@ -44,8 +44,9 @@ CREATE INDEX fk_cidades_estado1_idx ON cidade (codigo_estado ASC);
 -- -----------------------------------------------------
 -- Table endereco
 -- -----------------------------------------------------
+CREATE SEQUENCE endereco_codigo_seq;
 CREATE TABLE IF NOT EXISTS endereco (
-  codigo INT NOT NULL,
+  codigo INT NOT NULL DEFAULT nextval('endereco_codigo_seq'),
   logradouro VARCHAR(200) NOT NULL,
   bairro VARCHAR(100) NOT NULL,
   codigo_cidade INT NOT NULL,
@@ -56,6 +57,8 @@ CREATE TABLE IF NOT EXISTS endereco (
 ;
 
 CREATE INDEX fk_endereco_cidade1_idx ON endereco (codigo_cidade ASC);
+
+ALTER SEQUENCE endereco_codigo_seq OWNED BY endereco.codigo;
 
 
 -- -----------------------------------------------------

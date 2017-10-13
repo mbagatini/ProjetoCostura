@@ -4,6 +4,9 @@
     Author     : Morgana
 --%>
 
+<%@page import="dao.CidadeDAO"%>
+<%@page import="entidade.Cidade"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="apoio.Constantes"%>
 <%@page import="entidade.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,6 +17,11 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+
     </head>
 
     <%-- Carrega o objeto passado pelo metodo doGet do Controle --%>
@@ -45,7 +53,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Cadastro</h3>
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar/Maximizar">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Expandir/Contrair">
                                     <i class="fa fa-minus"></i></button>
                             </div>
                         </div>
@@ -68,31 +76,30 @@
                                     <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" id="tipo_pessoa" name="tipo_pessoa" required onchange="exibir_ocultar()">
-                                            <option value="0">Selecione</option>
+                                            <option value="-1" disabled selected>Selecione</option>
                                             <option value="juridica" <%= !cliente.getCnpj().trim().equals("") ? "selected" : ""%>>Pessoa jurídica</option>
                                             <option value="fisica" <%= !cliente.getCpf().trim().equals("") ? "selected" : ""%>>Pessoa física</option>
                                         </select>
                                         <!-- /.select -->
                                     </div>
 
-                                    <div id="cnpj">
+                                    <div id="grupo_cnpj">
                                         <label class="col-sm-1 control-label">CNPJ*</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="cnpj" value="<%= cliente.getCnpj()%>" required placeholder="CNPJ">
+                                            <input type="text" class="form-control" name="cnpj" id="cnpj" value="<%= cliente.getCnpj()%>" data-inputmask='"mask": "99.999.999/9999-99"' data-mask>
                                         </div>
                                     </div>
 
-                                    <div id="cpf">
+                                    <div id="grupo_cpf">
                                         <label class="col-sm-1 control-label">CPF*</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="cpf" value="<%= cliente.getCpf()%>" required placeholder="CPF">
+                                            <input type="text" class="form-control" name="cpf" id="cpf" value="<%= cliente.getCpf()%>" data-inputmask='"mask": "999.999.999-99"' data-mask>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Endereço*</label>
-
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="endereco" value="<%= cliente.getEndereco().getLogradouro()%>" required placeholder="Rua, avenida...">
                                     </div>
@@ -106,12 +113,22 @@
 
                                     <label class="col-sm-1 control-label">Cidade*</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" name="cidade" value="<%= cliente.getEndereco().getBairro()%>" required>
-                                    </div>
+                                        <!-- select -->
+                                        <select class="form-control select2" name="cidade" required style="width: 100%;">
+                                            <option value="-1" disabled selected>Selecione</option>
 
-                                    <label class="col-sm-1 control-label">Estado*</label>
-                                    <div class="col-sm-1">
-                                        <input type="text" class="form-control" name="estado" value="<%= cliente.getEndereco().getCidade().getEstado().getSigla()%>" required>
+                                            <%
+                                                ArrayList<Cidade> cid = new CidadeDAO().consultarTodos();
+                                                for (int i = 0; i < cid.size(); i++) {
+                                            %>
+                                            <option 
+                                                value="<%= cid.get(i).getCodigo()%>"  
+                                                <%= cliente.getEndereco().getCidade().getCodigo() == cid.get(i).getCodigo() ? "selected" : ""%> >
+                                                <%= cid.get(i).getNome() + " - " + cid.get(i).getEstado().getSigla()%> 
+                                            </option>
+                                            <%  }%>
+                                        </select>
+                                        <!-- /.select -->
                                     </div>
                                 </div>
 
@@ -138,6 +155,14 @@
                                         <!-- /.input group -->
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">E-mail*</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="email" value="<%= cliente.getEmail()%>" placeholder="E-mail">
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -148,7 +173,8 @@
                     </div>
                     <!-- /.box -->
 
-                    <!-- Adiciona a listagem  -->
+                    <!-- Adiciona a listagem -->
+                    <%@include file = "clienteListagem.jsp" %>
                 </section>
                 <!-- /.content -->
             </div>
@@ -158,40 +184,46 @@
             <%@include file = "footer.jsp" %>
         </div>
         <!-- ./wrapper -->
-
-        <!-- page script -->
-        <!-- Select2 -->
-        <script src="plugins/select2/select2.full.min.js"></script>
-        <!-- InputMask -->
-        <script src="plugins/input-mask/jquery.inputmask.js"></script>
-        <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-        <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-        <!-- Page script -->
-        <script>
-            $(function () {
-                //Initialize Select2 Elements
-                $(".select2").select2();
-
-                //Money Euro
-                $("[data-mask]").inputmask();
-                
-                //Ajusta o CNPJ/CPF conforme o tipo de pessoa
-                exibir_ocultar();
-             });
-        </script>
-        <script>
-            function exibir_ocultar() {
-                var valor = $("#tipo_pessoa").val();
-
-                if (valor == 'fisica') {
-                    $("#cnpj").hide();
-                    $("#cpf").show();
-                } else {
-                    $("#cnpj").show();
-                    $("#cpf").hide();
-                }
-            }
-            ;
-        </script>
     </body>
+
+    <!-- page script -->
+    <!-- Select2 -->
+    <script src="plugins/select2/select2.full.min.js"></script>
+    <!-- InputMask -->
+    <script src="plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- Page script -->
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+
+            //Money Euro
+            $("[data-mask]").inputmask();
+            
+            //Desabilita e habilita conforme a manutencao
+
+            //Ajusta o CNPJ/CPF conforme o tipo de pessoa
+            exibir_ocultar();
+        });
+
+        function exibir_ocultar() {
+            var valor = $("#tipo_pessoa").val();
+
+            if (valor == 'fisica') {
+                $("#grupo_cnpj").hide();
+                $("#grupo_cpf").show();
+                $("#cnpj").prop('required',false);
+                $("#cpf").prop('required',true);
+            } else {
+                $("#grupo_cnpj").show();
+                $("#grupo_cpf").hide();
+                $("#cnpj").prop('required',true);
+                $("#cpf").prop('required',false);
+            }
+        }
+        ;
+    </script>
 </html>

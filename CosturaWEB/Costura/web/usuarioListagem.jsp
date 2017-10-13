@@ -20,7 +20,7 @@
         <div class="box-header">
             <h3 class="box-title">Listagem</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar/Maximizar">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Expandir/Contrair">
                     <i class="fa fa-minus"></i></button>
             </div>
         </div>

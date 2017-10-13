@@ -1,11 +1,12 @@
 <%-- 
-    Document   : categoriaListagem
-    Created on : 02/09/2017, 21:10:34
+    Document   : clienteListagem
+    Created on : 13/10/2017, 14:13:05
     Author     : Morgana
 --%>
 
-<%@page import="dao.CategoriaDAO"%>
-<%@page import="entidade.Categoria"%>
+<%@page import="dao.ClienteDAO"%>
+<%@page import="dao.ClienteDAO"%>
+<%@page import="entidade.Cliente"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +16,6 @@
         <!-- DataTables -->
         <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
     </head>
-
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -32,22 +32,26 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Descrição</th>
+                                <th>Nome</th>
+                                <th>CPF/CNPJ</th>
+                                <th>Consultar</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                                ArrayList<Categoria> categorias = new CategoriaDAO().consultarTodos();
+                                ArrayList<Cliente> clientes = new ClienteDAO().consultarTodos();
 
-                                for (int i = 0; i < categorias.size(); i++) {
+                                for (int i = 0; i < clientes.size(); i++) {
                             %>
                             <tr>
-                                <td><%= categorias.get(i).getCodigo()%></td>
-                                <td><%= categorias.get(i).getDescricao()%></td>
-                                <td><a href="/Costura/Controle?parametro=categoria&manut=upd&id=<%= categorias.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
-                                <td><a href="/Costura/Controle?parametro=categoria&manut=del&id=<%= categorias.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
+                                <td><%= clientes.get(i).getCodigo()%></td>
+                                <td><%= clientes.get(i).getNome()%></td>
+                                <td><%= clientes.get(i).getCpf()+""+clientes.get(i).getCnpj()%></td>
+                                <td>Teste</td>
+                                <td><a href="/Costura/Controle?parametro=cliente&manut=upd&id=<%= clientes.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
+                                <td><a href="/Costura/Controle?parametro=cliente&manut=del&id=<%= clientes.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
                             </tr>
                             <%
                                 }

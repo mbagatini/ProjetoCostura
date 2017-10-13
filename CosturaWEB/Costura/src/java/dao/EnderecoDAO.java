@@ -20,7 +20,22 @@ public class EnderecoDAO implements IDAO<Endereco> {
 
     @Override
     public String salvar(Endereco objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "INSERT INTO endereco VALUES("
+                    + " DEFAULT, "
+                    + "'" + objeto.getLogradouro() + "', "
+                    + "'" + objeto.getBairro() + "', "
+                    + objeto.getCidade().getCodigo()
+                    + ")";
+            
+            int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
+            
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar endereço: " + e);
+            return e.toString();
+        }
+        
+        return null;
     }
 
     @Override
@@ -75,6 +90,33 @@ public class EnderecoDAO implements IDAO<Endereco> {
     @Override
     public boolean consultar(Endereco o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Endereco consultarEndereco(Endereco o){
+        Endereco e = (Endereco) o;
+        
+        try {
+            String sql = "SELECT * "
+                    + " FROM endereco "
+                    + "WHERE lower(logradouro) = lower('" + e.getLogradouro() + "') "
+                    + "  AND lower(bairro) = lower('" + e.getBairro() + "')"
+                    + "  AND codigo_cidade = " + e.getCidade().getCodigo();
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            if (resultado.next()) {
+                e.setCodigo(resultado.getInt("codigo"));
+                e.setLogradouro(resultado.getString("logradouro"));
+                e.setBairro(resultado.getString("bairro"));
+                e.setCidade((Cidade) new CidadeDAO().consultarId(resultado.getInt("codigo_cidade")));
+                return e;
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Erro ao consultar endereço: " + ex);
+        }
+
+        return null;
     }
     
 }

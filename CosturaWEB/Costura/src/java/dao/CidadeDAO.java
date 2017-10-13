@@ -35,7 +35,28 @@ public class CidadeDAO implements IDAO<Cidade> {
 
     @Override
     public ArrayList<Cidade> consultarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Cidade> cidades = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM cidade ORDER BY nome";
+
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            while (resultado.next()) {                
+                Cidade cid=  new Cidade();
+                
+                cid.setCodigo(resultado.getInt("codigo"));
+                cid.setNome(resultado.getString("nome"));
+                cid.setEstado((Estado) new EstadoDAO().consultarId(resultado.getInt("codigo_estado")));
+                
+                cidades.add(cid);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Erro ao consultar cidades: " + e);
+        }
+
+        return cidades;
     }
 
     @Override

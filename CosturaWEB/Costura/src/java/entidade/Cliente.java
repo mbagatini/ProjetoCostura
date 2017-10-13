@@ -100,7 +100,7 @@ public class Cliente {
         this.email = email;
     }
 
-    public Date getData_cadastro() {
+    public Date getDataCadastro() {
         return dataCadastro;
     }
 
