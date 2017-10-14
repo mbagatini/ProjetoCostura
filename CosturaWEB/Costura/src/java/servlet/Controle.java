@@ -161,7 +161,6 @@ public class Controle extends HttpServlet {
         try {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
-
         } catch (Exception e) {
             System.out.println("Erro ao encaminhar: " + e);
         }
@@ -175,7 +174,6 @@ public class Controle extends HttpServlet {
         } else {
             pagina = Constantes.PAGINA_ERRO;
         }
-        
         return pagina;
     }
 

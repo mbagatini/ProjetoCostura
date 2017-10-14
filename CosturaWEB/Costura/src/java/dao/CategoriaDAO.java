@@ -93,7 +93,7 @@ public class CategoriaDAO implements IDAO<Categoria>{
         try {
             String sql = "SELECT * "
                     + "FROM categoria "
-                    + "WHERE UPPER(descricao) = UPPER('" + o.getDescricao() + "')";
+                    + "WHERE lower(descricao) = lower('" + o.getDescricao() + "')";
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 

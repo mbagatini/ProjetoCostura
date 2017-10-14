@@ -46,9 +46,9 @@ public class ClienteDAO implements IDAO<Cliente> {
     public String atualizar(Cliente o) {
         try {
             String sql = "UPDATE cliente SET "
-                    + "nome = " + o.getNome()+ ", "
+                    + "nome = '" + o.getNome()+ "', "
                     + "cnpj = '" + o.getCnpj()+ "', "
-                    + "cpf = " + o.getCpf()+ ", "
+                    + "cpf = '" + o.getCpf()+ "', "
                     + "codigo_endereco = " + o.getEndereco().getCodigo()+ ", "
                     + "telefone = '" + o.getTelefone()+ "', "
                     + "celular = '" + o.getCelular()+ "', "
@@ -101,7 +101,7 @@ public class ClienteDAO implements IDAO<Cliente> {
                 cli.setTelefone(resultado.getString("telefone"));
                 cli.setCelular(resultado.getString("celular"));
                 cli.setEmail(resultado.getString("email"));
-                cli.setDataCadastro(resultado.getTime("data_cadastro"));
+                cli.setDataCadastro(resultado.getDate("data_cadastro"));
 
                 clientes.add(cli);
             }

@@ -61,7 +61,7 @@
                         <!-- form start -->
                         <form class="form-horizontal" name="cadastroCliente" action="/Costura/Controle?parametro=cliente&manut=ins" method="post">
                             <div class="box-body">
-                                <input type="hidden" name="id" value="<%= cliente.getCodigo()%>">
+                                <input type="hidden" name="id" id="id" value="<%= cliente.getCodigo()%>">
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Nome*</label>
@@ -75,7 +75,7 @@
                                     <label class="col-sm-1 control-label">Tipo*</label>
                                     <div class="col-sm-3">
                                         <!-- select -->
-                                        <select class="form-control" id="tipo_pessoa" name="tipo_pessoa" required onchange="exibir_ocultar()">
+                                        <select class="form-control" id="tipo_pessoa" name="tipo_pessoa" required >
                                             <option value="-1" disabled selected>Selecione</option>
                                             <option value="juridica" <%= !cliente.getCnpj().trim().equals("") ? "selected" : ""%>>Pessoa jurídica</option>
                                             <option value="fisica" <%= !cliente.getCpf().trim().equals("") ? "selected" : ""%>>Pessoa física</option>
@@ -202,28 +202,35 @@
 
             //Money Euro
             $("[data-mask]").inputmask();
-            
+
             //Desabilita e habilita conforme a manutencao
+            $(document).ready(ajustaInterface);
+            $(document).ready(habilitarCampos);
 
             //Ajusta o CNPJ/CPF conforme o tipo de pessoa
-            exibir_ocultar();
+            $("#tipo_pessoa").on("change", ajustaInterface);
         });
 
-        function exibir_ocultar() {
-            var valor = $("#tipo_pessoa").val();
-
-            if (valor == 'fisica') {
+        function ajustaInterface() {
+            if ($("#tipo_pessoa").val() === 'fisica') {
                 $("#grupo_cnpj").hide();
                 $("#grupo_cpf").show();
-                $("#cnpj").prop('required',false);
-                $("#cpf").prop('required',true);
+                $("#cnpj").prop('required', false);
+                $("#cpf").prop('required', true);
             } else {
                 $("#grupo_cnpj").show();
                 $("#grupo_cpf").hide();
-                $("#cnpj").prop('required',true);
-                $("#cpf").prop('required',false);
+                $("#cnpj").prop('required', true);
+                $("#cpf").prop('required', false);
             }
         }
-        ;
+
+        function habilitarCampos() {
+            if ($("#id").val() == 0) {
+                $("#tipo_pessoa").prop("disabled", false);
+            } else {
+                $("#tipo_pessoa").prop("disabled", true);
+            }
+        }
     </script>
 </html>

@@ -561,3 +561,7 @@ insert into tamanho (codigo, tamanho) values (DEFAULT, '50');
 -- Table produto
 -- -----------------------------------------------------
 insert into produto (codigo, referencia, descricao, preco, genero, codigo_categoria) values (DEFAULT, 10, 'Produto teste', '35.50', 'Unisex', 3);
+
+-- -----------------------------------------------------
+-- Table endereco
+-- -----------------------------------------------------
