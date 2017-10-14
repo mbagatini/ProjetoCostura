@@ -9,6 +9,7 @@ import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
 import apoio.Criptografia;
+import controle.ControleCliente;
 import controle.ControleProduto;
 import controle.ControleTamanho;
 import dao.UsuarioDAO;
@@ -97,6 +98,15 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleTamanho().excluir(request)), request, response);
             }
         }
+        
+        if (parametro.equals("cliente")) {
+            if (manutencao.equals("upd")) {
+                encaminharPagina(Constantes.CADASTRO_CLIENTE, new ControleCliente().editar(request), response);
+            } else if (manutencao.equals("del")) {
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_CLIENTE);
+                encaminharPagina(retornaPagina(new ControleCliente().excluir(request)), request, response);
+            }
+        }
     }
 
     @Override
@@ -148,6 +158,11 @@ public class Controle extends HttpServlet {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_TAMANHO);
             encaminharPagina(retornaPagina(new ControleTamanho().cadastrar(request)), request, response);
        }
+        
+        if (parametro.equals("cliente")) {
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_CLIENTE);
+            encaminharPagina(retornaPagina(new ControleCliente().cadastrar(request)), request, response);
+       }
 
     }
 
@@ -173,7 +188,6 @@ public class Controle extends HttpServlet {
         } else {
             pagina = Constantes.PAGINA_ERRO;
         }
-        
         return pagina;
     }
 }

@@ -50,7 +50,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Cadastro</h3>
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar/Maximizar">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Expandir/Contrair">
                                     <i class="fa fa-minus"></i></button>
                             </div>
                         </div>
@@ -62,11 +62,11 @@
                                 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Referência*</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-2">
                                         <input type="number" min="1" class="form-control" name="referencia" value="<%= (produto.getReferencia() == 0) ? "" : produto.getReferencia()%>" required placeholder="Referência">
                                     </div>
                                 </div>
-
+                                    
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Descrição*</label>
                                     <div class="col-sm-10">
@@ -76,31 +76,27 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Preço*</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-2">
                                         <input type="number" min="1" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco()%>" required placeholder="Preço">
                                     </div>
-                                </div>
-
-                                <div class="form-group">
+                                    
                                     <label class="col-sm-1 control-label">Gênero*</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" name="genero" required placeholder="Gênero">
-                                            <option value="0">Selecione</option>
+                                            <option value="-1" disabled selected>Selecione</option>
                                             <option value="Feminino" <%= produto.getGenero().equals("Feminino") ? "selected" : ""%>>Feminino</option>
                                             <option value="Masculino" <%= produto.getGenero().equals("Masculino") ? "selected" : ""%>>Masculino</option>
                                             <option value="Unisex" <%= produto.getGenero().equals("Unisex") ? "selected" : ""%>>Unisex</option>
                                         </select>
                                         <!-- /.select -->
                                     </div>
-                                </div>
-
-                                <div class="form-group">
+                                        
                                     <label class="col-sm-1 control-label">Categoria*</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" name="categoria" required placeholder="Categoria">
-                                            <option value="0">Selecione</option>
+                                            <option value="-1" disabled selected>Selecione</option>
 
                                             <%
                                                 ArrayList<Categoria> cat = new CategoriaDAO().consultarTodos();

@@ -46,13 +46,13 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">Cadastro</h3>
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Minimizar/Maximizar">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Expandir/Contrair">
                                     <i class="fa fa-minus"></i></button>
                             </div>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" name="cadastroTamanho" action="/Costura/Controle?parametro=tamanho&manut=ins" method="post" onsubmit="return validar()">
+                        <form class="form-horizontal" name="cadastroTamanho" action="/Costura/Controle?parametro=tamanho&manut=ins" method="post">
                             <div class="box-body">
                                 <input type="hidden" name="id" value="<%= tamanho.getCodigo()%>">
                                 <div class="form-group">
@@ -84,7 +84,4 @@
         </div>
         <!-- ./wrapper -->
     </body>
-    
-    <!-- Importacao do arquivo de validacao -->
-    <script language="JavaScript" src="JS/validacao.js"></script>
 </html>

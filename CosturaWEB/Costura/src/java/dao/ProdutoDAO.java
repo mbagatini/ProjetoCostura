@@ -68,7 +68,7 @@ public class ProdutoDAO implements IDAO<Produto> {
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar produto: " + e);
+            System.out.println("Erro ao excluir produto: " + e);
             return e.toString();
         }
         return null;

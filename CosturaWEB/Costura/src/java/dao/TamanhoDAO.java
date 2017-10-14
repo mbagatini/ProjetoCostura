@@ -57,7 +57,7 @@ public class TamanhoDAO implements IDAO<Tamanho> {
             int resultado = ConexaoBD.getInstance().getConnection().createStatement().executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("Erro ao salvar tamanho: " + e);
+            System.out.println("Erro ao excluir tamanho: " + e);
             return e.toString();
         }
         return null;

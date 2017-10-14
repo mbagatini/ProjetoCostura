@@ -37,11 +37,6 @@
 
             if (usuario == null) {
                 response.sendRedirect("login.jsp");
-                
-
-        %>               
-
-        <%
             }
         %>
 
@@ -136,12 +131,9 @@
 
                         <!-- clientes -->
                         <li>
-                            <a href="#">
+                            <a href="<%= Constantes.CADASTRO_CLIENTE %>">
                                 <i class="fa fa-users"></i> 
                                 <span>Clientes</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
                             </a>
                         </li>
 
@@ -150,22 +142,11 @@
                             <a href="#">
                                 <i class="fa  fa-cubes"></i> 
                                 <span>Pedidos</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- notas fiscais -->
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-money"></i> 
-                                <span>Notas fiscais</span>
                             </a>
                         </li>
 
                         <!-- configuracoes -->
-                        <li class="treeview">
+                        <li class="treeview active">
                             <a href="#">
                                 <i class="fa fa-gears"></i> 
                                 <span>Configurações</span>

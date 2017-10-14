@@ -45,7 +45,7 @@
                                         <h4 class="modal-title">Ops&hellip;</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Não foi possível concluir a operação. Tente novamente.</p>
+                                        <p>Não foi possível concluir a operação. Por favor, tente novamente.</p>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="<%= request.getAttribute("paginaRetorno")%>" type="button" class="btn btn-outline" >Voltar</a>
