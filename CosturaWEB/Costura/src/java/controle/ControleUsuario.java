@@ -5,14 +5,11 @@
  */
 package controle;
 
-import apoio.Constantes;
 import apoio.Criptografia;
 import dao.UsuarioDAO;
 import entidade.Usuario;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import static servlet.Controle.encaminharPagina;
 
 /**
  *

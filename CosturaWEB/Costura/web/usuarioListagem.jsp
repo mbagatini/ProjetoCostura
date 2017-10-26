@@ -68,7 +68,9 @@
     <!-- page script -->
     <script>
         $(function () {
-            $("#example1").DataTable();
+            $("#example1").DataTable({
+                "order": [[1, "asc"]]
+            });
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
