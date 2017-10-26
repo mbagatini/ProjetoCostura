@@ -27,4 +27,6 @@ public class Constantes {
     public static final String LISTAGEM_PRODUTO   = "produtoListagem.jsp";
     public static final String LISTAGEM_CATEGORIA = "categoriaListagem.jsp";
     public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
+    
+    public static final char PEDIDO_SITUACAO_PENDENTE = 'P';
 }
