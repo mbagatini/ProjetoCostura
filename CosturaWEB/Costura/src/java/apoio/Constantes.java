@@ -22,6 +22,7 @@ public class Constantes {
     public static final String CADASTRO_CATEGORIA = "categoria.jsp";
     public static final String CADASTRO_TAMANHO   = "tamanho.jsp";
     public static final String CADASTRO_CLIENTE   = "cliente.jsp";
+    public static final String CADASTRO_PEDIDO   = "pedido.jsp";
     
     public static final String LISTAGEM_USUARIO   = "usuarioListagem.jsp";
     public static final String LISTAGEM_PRODUTO   = "produtoListagem.jsp";
@@ -29,4 +30,6 @@ public class Constantes {
     public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
     
     public static final char PEDIDO_SITUACAO_PENDENTE = 'P';
+    public static final char PEDIDO_SITUACAO_EM_PRODUCAO = 'P';
+    public static final char PEDIDO_SITUACAO_FINALIZADO = 'P';
 }

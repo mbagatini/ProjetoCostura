@@ -139,14 +139,14 @@
 
                         <!-- pedidos -->
                         <li>
-                            <a href="#">
-                                <i class="fa  fa-cubes"></i> 
+                            <a href="<%= Constantes.CADASTRO_PEDIDO %>">
+                                <i class="fa fa-cubes"></i> 
                                 <span>Pedidos</span>
                             </a>
                         </li>
 
                         <!-- configuracoes -->
-                        <li class="treeview active">
+                        <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-gears"></i> 
                                 <span>Configurações</span>
