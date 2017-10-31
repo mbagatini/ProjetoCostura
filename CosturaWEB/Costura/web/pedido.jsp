@@ -66,7 +66,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Cliente*</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-2">
                                         <!-- select -->
                                         <select class="form-control select2" name="cliente" required style="width: 100%;">
                                             <option value="-1" disabled selected>Selecione</option>
@@ -86,11 +86,20 @@
                                     </div>
 
                                     <label class="col-sm-1 control-label">Data de emissão*</label>
-                                    <div class="input-group date">
+                                    <div class="input-group date col-sm-2">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <input type="text" class="form-control pull-right" id="datepicker" name="data" value="<%= pedido.getDataEmissao()%>" required>
+                                    </div>
+                                    
+                                    <label class="col-sm-1 control-label">Status*</label>
+                                    <div class="col-sm-2">
+                                        <!-- select -->
+                                        <select class="form-control select2" name="situacao" required>
+                                            <option value="-1" disabled selected>Situacao</option>
+                                        </select>
+                                        <!-- /.select -->
                                     </div>
                                 </div>
                             </div>
