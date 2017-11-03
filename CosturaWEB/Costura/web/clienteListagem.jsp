@@ -16,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- DataTables -->
         <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="plugins/datatables/buttons.dataTables.min.css">
     </head>
     <div class="row">
         <div class="col-xs-12">
@@ -36,6 +37,7 @@
                                 <th>Nome</th>
                                 <th>CPF/CNPJ</th>
                                 <th>Cidade</th>
+                                <th>Telefone</th>
                                 <th>Perfil</th>
                                 <th>Editar</th>
                                 <th>Excluir</th>
@@ -52,7 +54,8 @@
                                 <td><%= clientes.get(i).getCodigo()%></td>
                                 <td><%= clientes.get(i).getNome()%></td>
                                 <td><%= clientes.get(i).getCpf() + "" + clientes.get(i).getCnpj()%></td>
-                                <td><%= clientes.get(i).getEndereco().getCidade().getNome() %></td>
+                                <td><%= clientes.get(i).getEndereco().getCidade().getNome()%></td>
+                                <td><%= clientes.get(i).getTelefone()%></td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o">
                                         <% cli = clientes.get(i);%>
@@ -121,17 +124,17 @@
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Telefone</label>
-                                    <p><%= cli.getTelefone().equals("") ? "Não cadastrado" : cli.getTelefone() %></p>
+                                    <p><%= cli.getTelefone().equals("") ? "Não cadastrado" : cli.getTelefone()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Celular</label>
-                                    <p><%= cli.getCelular().equals("") ? "Não cadastrado" : cli.getCelular() %></p>
+                                    <p><%= cli.getCelular().equals("") ? "Não cadastrado" : cli.getCelular()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">E-mail</label>
-                                    <p><%= cli.getEmail().equals("") ? "Não cadastrado" : cli.getEmail() %></p>
+                                    <p><%= cli.getEmail().equals("") ? "Não cadastrado" : cli.getEmail()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
@@ -156,12 +159,64 @@
     <!-- DataTables -->
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables/buttons.flash.min.js"></script>
+    <script src="plugins/datatables/jszip.min.js"></script>
+    <script src="plugins/datatables/pdfmake.min.js"></script>
+    <script src="plugins/datatables/pvfs_fonts.js"></script>
+    <script src="plugins/datatables/buttons.print.min.js"></script>
+    <script src="plugins/datatables/buttons.html5.min.js"></script>
     <!-- page script -->
     <script>
         $(function () {
+            var titulo = 'Listagem de clientes';
+            var subtitulo = 'SistemaCostura';
+            var colunas = '0,1,2,3,4';
+
             $("#example1").DataTable({
-                "order": [[1, "asc"]]
+                order: [[1, "asc"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        title: titulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    }
+                ]
             });
+
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,

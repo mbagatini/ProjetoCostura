@@ -14,6 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- DataTables -->
         <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="plugins/datatables/buttons.dataTables.min.css">
     </head>
 
     <div class="row">
@@ -74,12 +75,66 @@
     <!-- DataTables -->
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables/buttons.flash.min.js"></script>
+    <script src="plugins/datatables/jszip.min.js"></script>
+    <script src="plugins/datatables/pdfmake.min.js"></script>
+    <script src="plugins/datatables/pvfs_fonts.js"></script>
+    <script src="plugins/datatables/buttons.print.min.js"></script>
+    <script src="plugins/datatables/buttons.html5.min.js"></script>
     <!-- page script -->
+    
     <script>
         $(function () {
+            
+            var titulo = 'Listagem de produtos';
+            var subtitulo = 'SistemaCostura';
+            var colunas = '0,1,2,3,4';
+            
             $("#example1").DataTable({
-                "order": [[1, "asc"]]
+                order: [[1, "asc"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        title: titulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    }
+                ]
             });
+            
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
