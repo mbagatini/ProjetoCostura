@@ -29,7 +29,9 @@ public class Constantes {
     public static final String LISTAGEM_CATEGORIA = "categoriaListagem.jsp";
     public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
     
-    public static final char PEDIDO_SITUACAO_PENDENTE = 'P';
+    public static final char PEDIDO_SITUACAO_RECEBIDO = 'R';
     public static final char PEDIDO_SITUACAO_EM_PRODUCAO = 'P';
-    public static final char PEDIDO_SITUACAO_FINALIZADO = 'P';
+    public static final char PEDIDO_SITUACAO_FINALIZADO = 'F';
+    public static final char PEDIDO_SITUACAO_CANCELADO = 'C';
+    
 }

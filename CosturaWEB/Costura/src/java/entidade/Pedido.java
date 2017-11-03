@@ -5,6 +5,7 @@
  */
 package entidade;
 
+import apoio.Constantes;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
  * @author Morgana
  */
 public class Pedido {
-    
+
     private int codigo;
     private Date data_emissao;
     private char situacao;
@@ -22,11 +23,11 @@ public class Pedido {
     private double desconto;
     private double preco;
     private ArrayList<ItensPedido> itens;
-    
-    public Pedido(){
+
+    public Pedido() {
         codigo = 0;
         data_emissao = Calendar.getInstance().getTime();
-        situacao = ' ';
+        situacao = Constantes.PEDIDO_SITUACAO_RECEBIDO;
         cliente = new Cliente();
         desconto = 0;
         preco = 0;
@@ -87,5 +88,23 @@ public class Pedido {
     public void setItens(ArrayList<ItensPedido> itens) {
         this.itens = itens;
     }
-    
+
+    public String retornaDescricaoSituacao(char situacao) {
+        String descricao = "";
+        switch (situacao) {
+            case Constantes.PEDIDO_SITUACAO_RECEBIDO:
+                descricao = "Recebido";
+                break;
+            case Constantes.PEDIDO_SITUACAO_EM_PRODUCAO:
+                descricao = "Em produção";
+                break;
+            case Constantes.PEDIDO_SITUACAO_FINALIZADO:
+                descricao = "Finalizado";
+                break;
+            case Constantes.PEDIDO_SITUACAO_CANCELADO:
+                descricao = "Cancelado";
+                break;
+        }
+        return descricao;
+    }
 }

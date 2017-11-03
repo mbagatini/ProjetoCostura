@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-1 control-label">Preço*</label>
                                     <div class="col-sm-2">
-                                        <input type="number" min="1" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco()%>" required placeholder="Preço">
+                                        <input type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="preco" value="<%= (produto.getPreco() == 0) ? "" : produto.getPreco()%>" required placeholder="Preço">
                                     </div>
                                     
                                     <label class="col-sm-1 control-label">Gênero*</label>

@@ -52,7 +52,7 @@
                                 <td><%= clientes.get(i).getCodigo()%></td>
                                 <td><%= clientes.get(i).getNome()%></td>
                                 <td><%= clientes.get(i).getCpf() + "" + clientes.get(i).getCnpj()%></td>
-                                <td><%= clientes.get(i).getEndereco().getCidade().getNome() %></td>
+                                <td><%= clientes.get(i).getEndereco().getCidade().getNome()%></td>
                                 <td>
                                     <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o">
                                         <% cli = clientes.get(i);%>
@@ -121,17 +121,17 @@
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Telefone</label>
-                                    <p><%= cli.getTelefone().equals("") ? "Não cadastrado" : cli.getTelefone() %></p>
+                                    <p><%= cli.getTelefone().equals("") ? "Não cadastrado" : cli.getTelefone()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Celular</label>
-                                    <p><%= cli.getCelular().equals("") ? "Não cadastrado" : cli.getCelular() %></p>
+                                    <p><%= cli.getCelular().equals("") ? "Não cadastrado" : cli.getCelular()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">E-mail</label>
-                                    <p><%= cli.getEmail().equals("") ? "Não cadastrado" : cli.getEmail() %></p>
+                                    <p><%= cli.getEmail().equals("") ? "Não cadastrado" : cli.getEmail()%></p>
                                 </div>
 
                                 <div class="col-sm-6">
@@ -143,7 +143,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
