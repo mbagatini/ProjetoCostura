@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" href="https://ih0.redbubble.net/image.192636235.8300/sticker,220x200-bg,ffffff-pad,220x200,ffffff.u2.jpg" type="image/gif" sizes="16x16">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Costura | Log in</title>

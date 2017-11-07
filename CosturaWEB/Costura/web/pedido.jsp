@@ -200,25 +200,43 @@
                                                         var table = document.getElementById("produtos");
                                                         var rowCount = table.rows.length;
                                                         var row = table.insertRow(rowCount);
-
-                                                        row.insertCell(0).innerHTML = getHTML('produto');
-                                                        row.insertCell(1).innerHTML = getHTML('tamanho');
-                                                        row.insertCell(2).innerHTML = getHTML('quantidade');
-                                                        row.insertCell(3).innerHTML = getHTML('preco');
-                                                        row.insertCell(4).innerHTML = getHTML('subtotal');
-                                                        row.insertCell(5).innerHTML = getHTML('remover');
+                                                        
+                                                        updateRow(row);
 
                                                         $(".select2").select2();
 
                                                     }
                                                     ;
-
+                                                       
+                                                    function editRow(){
+                                                        
+                                                        var table = document.getElementById("produtos");
+                                                        var rowCount = table.rows.length;
+                                                        var row = table.insertRow(rowCount);
+                                                        
+                                                        updateRow(row);
+                                                        
+                                                    }
+                                                    ;
+                                                    
                                                     function deleteRow(obj) {
 
                                                         var index = obj.parentNode.parentNode.rowIndex;
                                                         var table = document.getElementById("produtos");
                                                         table.deleteRow(index);
 
+                                                    }
+                                                    ;
+                                                    
+                                                    function updateRow(row){
+                                                        
+                                                        row.insertCell(0).innerHTML = getHTML('produto');
+                                                        row.insertCell(1).innerHTML = getHTML('tamanho');
+                                                        row.insertCell(2).innerHTML = getHTML('quantidade');
+                                                        row.insertCell(3).innerHTML = getHTML('preco');
+                                                        row.insertCell(4).innerHTML = getHTML('subtotal');
+                                                        row.insertCell(5).innerHTML = getHTML('remover');
+                                                        
                                                     }
                                                     ;
 
@@ -240,7 +258,7 @@
 
                                                         switch (campo) {
                                                             case 'produto':
-                                                                html = '<select class="form-control select2" id="produto" required style="width: 100%;" onChange="atualizaPreco(this)"> ';
+                                                                html = '<select class="form-control select2" id="produto" required style="width: 100%;" onChange="editRow()"> ';
         <%
             ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
             for (int i = 0; i < prod.size(); i++) {
