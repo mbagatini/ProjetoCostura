@@ -215,19 +215,11 @@
         function editRow(obj){
             
             var index = obj.parentNode.parentNode.rowIndex;
-            var table = document.getElementById("produtos");
-            
-            var row = table.rows[index].cells;
             
             // Atualiza o preço do produto
             var produto = document.getElementById("produto_"+index).value;
-             
-            <%
-                int codigo = %> produto;
-            <% Produto p = (Produto) new ProdutoDAO().consultarId(codigo); %>
-                    
-                 
             
+            getPrecoProduto(produto, index);
             
             alert(preco);
             

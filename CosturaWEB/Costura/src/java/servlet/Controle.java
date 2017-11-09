@@ -12,6 +12,8 @@ import controle.ControleCliente;
 import controle.ControlePedido;
 import controle.ControleProduto;
 import controle.ControleTamanho;
+import dao.ProdutoDAO;
+import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -126,7 +128,6 @@ public class Controle extends HttpServlet {
         System.out.println("Entrei no POST!");
 
         String parametro = request.getParameter("parametro");
-        String manutencao = request.getParameter("manut");
 
         // AQUI DEVE SER FEITA A VALIDACAO
         // ANTES DE GRAVAR NO BANCO
@@ -175,6 +176,17 @@ public class Controle extends HttpServlet {
         if (parametro.equals("pedido")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
             encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
+        }
+        
+        if (parametro.equals("precoProduto")){
+            int produto = Integer.parseInt(request.getParameter("codigoProduto"));
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
+            
+            Produto product = (Produto) new ProdutoDAO().consultarId(produto);
+            
+            System.out.println(product.getPreco());
+                    
+            //encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
         }
 
     }
