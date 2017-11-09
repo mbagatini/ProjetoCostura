@@ -182,148 +182,144 @@
 
     <!-- Page script -->
     <script>
-                                                    $(function () {
-                                                        //Initialize Select2 Elements
-                                                        $(".select2").select2();
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
 
-                                                        //Money Euro
-                                                        $("[data-mask]").inputmask();
+            //Money Euro
+            $("[data-mask]").inputmask();
 
-                                                        //Date picker
-                                                        $('#datepicker').datepicker({
-                                                            autoclose: true
-                                                        });
-                                                    });
+            //Date picker
+            $("#datepicker").datepicker({
+                autoclose: true
+            });
+        });
 
-                                                    function addRow() {
+        function addRow() {
 
-                                                        var table = document.getElementById("produtos");
-                                                        var rowCount = table.rows.length;
-                                                        var row = table.insertRow(rowCount);
-                                                        
-                                                        updateRow(row);
+            var table = document.getElementById("produtos");
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
 
-                                                        $(".select2").select2();
+            row.insertCell(0).innerHTML = getHTML('produto', rowCount);
+            row.insertCell(1).innerHTML = getHTML('tamanho', rowCount);
+            row.insertCell(2).innerHTML = getHTML('quantidade', rowCount);
+            row.insertCell(3).innerHTML = getHTML('preco', rowCount);
+            row.insertCell(4).innerHTML = getHTML('subtotal', rowCount);
+            row.insertCell(5).innerHTML = getHTML('remover', rowCount);
 
-                                                    }
-                                                    ;
-                                                       
-                                                    function editRow(){
-                                                        
-                                                        var table = document.getElementById("produtos");
-                                                        var rowCount = table.rows.length;
-                                                        var row = table.insertRow(rowCount);
-                                                        
-                                                        updateRow(row);
-                                                        
-                                                    }
-                                                    ;
-                                                    
-                                                    function deleteRow(obj) {
+            $(".select2").select2();
 
-                                                        var index = obj.parentNode.parentNode.rowIndex;
-                                                        var table = document.getElementById("produtos");
-                                                        table.deleteRow(index);
+        }
 
-                                                    }
-                                                    ;
-                                                    
-                                                    function updateRow(row){
-                                                        
-                                                        row.insertCell(0).innerHTML = getHTML('produto');
-                                                        row.insertCell(1).innerHTML = getHTML('tamanho');
-                                                        row.insertCell(2).innerHTML = getHTML('quantidade');
-                                                        row.insertCell(3).innerHTML = getHTML('preco');
-                                                        row.insertCell(4).innerHTML = getHTML('subtotal');
-                                                        row.insertCell(5).innerHTML = getHTML('remover');
-                                                        
-                                                    }
-                                                    ;
+        function editRow(obj){
+            
+            var index = obj.parentNode.parentNode.rowIndex;
+            var table = document.getElementById("produtos");
+            
+            var row = table.rows[index].cells;
+            
+            // Atualiza o preço do produto
+            var produto = document.getElementById("produto_"+index).value;
+             
+            <%
+                int codigo = %> produto;
+            <% Produto p = (Produto) new ProdutoDAO().consultarId(codigo); %>
+                    
+                 
+            
+            
+            alert(preco);
+            
+        }
 
-                                                    function atualizaPreco(obj) {
+        function deleteRow(obj) {
 
-                                                        var index = obj.parentNode.parentNode.rowIndex;
-                                                        var table = document.getElementById("produtos");
+            var index = obj.parentNode.parentNode.rowIndex;
+            var table = document.getElementById("produtos");
+            table.deleteRow(index);
 
-                                                        table.rows[index].cells[3].innerHTML = getHTML('preco');
+        }
 
-                                                        alert("entrei aquiiiii");
+        function updateRow(row){
 
-                                                    }
-                                                    ;
+            row.insertCell(0).innerHTML = getHTML('produto');
+            row.insertCell(1).innerHTML = getHTML('tamanho');
+            row.insertCell(2).innerHTML = getHTML('quantidade');
+            row.insertCell(3).innerHTML = getHTML('preco');
+            row.insertCell(4).innerHTML = getHTML('subtotal');
+            row.insertCell(5).innerHTML = getHTML('remover');
 
-                                                    function getHTML(campo) {
+        }
 
-                                                        var html;
+        function getHTML(campo, index) {
 
-                                                        switch (campo) {
-                                                            case 'produto':
-                                                                html = '<select class="form-control select2" id="produto" required style="width: 100%;" onChange="editRow()"> ';
-        <%
-            ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
-            for (int i = 0; i < prod.size(); i++) {
-        %>
-                                                                html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
-                                                                        + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
-                                                                        + '</option>';
-                                                                preco = <%= prod.get(i).getPreco()%>
-        <%  }%>
-                                                                html = html + '</select>';
-                                                                break;
+            var html;
 
-                                                            case 'tamanho':
-                                                                html = '<select class="form-control select2" id="tamanho" required style="width: 100%;">  ';
-        <%
-            ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
-            for (int i = 0; i < tam.size(); i++) {
-        %>
-                                                                html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
-                                                                        + '<%= tam.get(i).getTamanho()%>'
-                                                                        + '</option>';
-        <%  }%>
-                                                                html = html + '</select>';
-                                                                break;
+            switch (campo) {
+                case 'produto':
+                    html = '<select class="form-control select2" id="produto_'+ index +'" required style="width: 100%;" onChange="editRow(this)"> ';
+                    <%
+                        ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
+                        for (int i = 0; i < prod.size(); i++) {
+                    %>
+                    html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
+                            + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
+                            + '</option>';
+                    preco = <%= prod.get(i).getPreco()%>
+                    <%  }%>
+                    html = html + '</select>';
+                    break;
 
-                                                            case 'quantidade':
-                                                                html = '<input class="form-control" type="number" min="1" id="quantidade">';
-                                                                break;
+                case 'tamanho':
+                    html = '<select class="form-control select2" id="tamanho_'+ index +'" required style="width: 100%;">  ';
+                    <%
+                        ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
+                        for (int i = 0; i < tam.size(); i++) {
+                    %>
+                    html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
+                            + '<%= tam.get(i).getTamanho()%>'
+                            + '</option>';
+                    <%  }%>
+                    html = html + '</select>';
+                    break;
 
-                                                            case 'preco':
-                                                                html = '<input class="form-control" type="number" min="1" id="preco" value="' + preco + '" disabled>';
-                                                                alert("o preco e" + preco);
-                                                                break;
+                case 'quantidade':
+                    html = '<input class="form-control" type="number" min="1" id="quantidade_'+ index +'">';
+                    break;
 
-                                                            case 'subtotal':
-                                                                html = '<input class="form-control" type="number" min="1" id="subtotal" disabled>';
-                                                                break;
+                case 'preco':
+                    html = '<input class="form-control" type="number" min="1" id="preco_'+ index +'" value="' + preco + '" disabled>';
+                    break;
 
-                                                            case 'remover':
-                                                                html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
-                                                                break;
-                                                        }
-                                                        ;
+                case 'subtotal':
+                    html = '<input class="form-control" type="number" min="1" id="subtotal_'+ index +'" disabled>';
+                    break;
 
-                                                        return html;
+                case 'remover':
+                    html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
+                    break;
+            }
 
-                                                    }
-                                                    ;
+            return html;
 
-                                                    function getTable() {
+        }
 
-                                                        var array = [];
-                                                        var headers = [];
-                                                        $('#produtos th').each(function (index, item) {
-                                                            headers[index] = $(item).html();
-                                                        });
-                                                        $('#produtos tr').has('td').each(function () {
-                                                            var arrayItem = {};
-                                                            $('td', $(this)).each(function (index, item) {
-                                                                arrayItem[headers[index]] = $(item).html();
-                                                            });
-                                                            array.push(arrayItem);
-                                                        });
+        function getTable() {
 
-                                                    }
-                                                    ;
+            var array = [];
+            var headers = [];
+            $('#produtos th').each(function (index, item) {
+                headers[index] = $(item).html();
+            });
+            $('#produtos tr').has('td').each(function () {
+                var arrayItem = {};
+                $('td', $(this)).each(function (index, item) {
+                    arrayItem[headers[index]] = $(item).html();
+                });
+                array.push(arrayItem);
+            });
+
+        }
     </script>
 </html>
