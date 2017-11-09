@@ -179,6 +179,8 @@
     <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- bootstrap datepicker -->
     <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+    <!-- Importacao do arquivo comas funções AJAX -->
+    <script language="JavaScript" src="js/funcoesPedido.js"></script>
 
     <!-- Page script -->
     <script>

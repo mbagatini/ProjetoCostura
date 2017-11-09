@@ -181,12 +181,9 @@ public class Controle extends HttpServlet {
         if (parametro.equals("precoProduto")){
             int produto = Integer.parseInt(request.getParameter("codigoProduto"));
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
-            
             Produto product = (Produto) new ProdutoDAO().consultarId(produto);
-            
-            System.out.println(product.getPreco());
+            System.out.println("Preço do produto: "+product.getPreco());
                     
-            //encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
         }
 
     }
