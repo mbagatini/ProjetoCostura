@@ -17,12 +17,15 @@ import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONObject;
 
 /**
  *
@@ -172,18 +175,14 @@ public class Controle extends HttpServlet {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_CLIENTE);
             encaminharPagina(retornaPagina(new ControleCliente().cadastrar(request)), request, response);
         }
-        
+
         if (parametro.equals("pedido")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
             encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
         }
-        
-        if (parametro.equals("precoProduto")){
-            int produto = Integer.parseInt(request.getParameter("codigoProduto"));
-            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
-            Produto product = (Produto) new ProdutoDAO().consultarId(produto);
-            System.out.println("Preço do produto: "+product.getPreco());
-                    
+
+        if (parametro.equals("precoProduto")) {
+            carregaPrecoProduto(request, response);
         }
 
     }
@@ -211,5 +210,17 @@ public class Controle extends HttpServlet {
             pagina = Constantes.PAGINA_ERRO;
         }
         return pagina;
+    }
+
+    private void carregaPrecoProduto(HttpServletRequest request, HttpServletResponse response) {
+
+        int produto = Integer.parseInt(request.getParameter("codigoProduto"));
+        String preco = String.valueOf(((Produto) new ProdutoDAO().consultarId(produto)).getPreco());
+        
+        try {
+            response.getWriter().write(preco);
+        } catch (IOException ex) {
+            System.out.println("Erro ao pegar o preço do produto: "+ex.getMessage()); 
+       }
     }
 }

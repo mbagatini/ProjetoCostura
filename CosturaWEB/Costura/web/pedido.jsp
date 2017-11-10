@@ -119,7 +119,7 @@
                                         <br>
 
                                         <div class="box-group">
-                                            <div class="col-sm-12" style="width:100%; height:250px; overflow:auto;">
+                                            <div class="col-sm-12" style="overflow:auto; max-height: 300px">
                                                 <table class="table table-striped table-hover" id="produtos">
                                                     <tr>
                                                         <th>Produto</th>
@@ -140,8 +140,10 @@
                                                 </a>
                                             </div>
 
-                                            <label class="col-sm-8 control-label">Valor total </label>
-                                            <label class="col-sm-1">0,00</label>
+                                            <label class="col-sm-8 control-label">Valor total</label>
+                                            <input type="number" class="col-sm-1" id="valorTotal" value="0.00" disabled></input>
+                                            
+                                            </div>
 
                                         </div>
 
@@ -198,7 +200,6 @@
         });
 
         function addRow() {
-
             var table = document.getElementById("produtos");
             var rowCount = table.rows.length;
             var row = table.insertRow(rowCount);
@@ -209,41 +210,45 @@
             row.insertCell(3).innerHTML = getHTML('preco', rowCount);
             row.insertCell(4).innerHTML = getHTML('subtotal', rowCount);
             row.insertCell(5).innerHTML = getHTML('remover', rowCount);
-
-            $(".select2").select2();
-
         }
 
-        function editRow(obj){
-            
-            var index = obj.parentNode.parentNode.rowIndex;
-            
+        function atualizaPreco(obj){
             // Atualiza o preço do produto
+            var index = obj.parentNode.parentNode.rowIndex;
             var produto = document.getElementById("produto_"+index).value;
             
             getPrecoProduto(produto, index);
-            
-            alert(preco);
-            
+            atualizaSubtotal(obj);
         }
-
+        
+        function atualizaSubtotal(obj){
+            // Atualiza o subtotal do produto
+            var index = obj.parentNode.parentNode.rowIndex;
+            var preco = document.getElementById("preco_"+index).value;
+            var qtde = document.getElementById("quantidade_"+index).value;
+            
+            var subtotal = preco * qtde;
+            
+            $('#subtotal_'+index).val(subtotal);
+            
+            atualizaTotal();
+        }
+        
+        function atualizaTotal(){
+            var table = document.getElementById("produtos");
+            var total = 0;
+            
+            for (i = 1; i < table.rows.length; i++) { 
+                total += Number(document.getElementById("subtotal_"+ i ).value);
+            }
+            
+            $('#valorTotal').val(total);
+        }
+        
         function deleteRow(obj) {
-
             var index = obj.parentNode.parentNode.rowIndex;
             var table = document.getElementById("produtos");
             table.deleteRow(index);
-
-        }
-
-        function updateRow(row){
-
-            row.insertCell(0).innerHTML = getHTML('produto');
-            row.insertCell(1).innerHTML = getHTML('tamanho');
-            row.insertCell(2).innerHTML = getHTML('quantidade');
-            row.insertCell(3).innerHTML = getHTML('preco');
-            row.insertCell(4).innerHTML = getHTML('subtotal');
-            row.insertCell(5).innerHTML = getHTML('remover');
-
         }
 
         function getHTML(campo, index) {
@@ -252,7 +257,8 @@
 
             switch (campo) {
                 case 'produto':
-                    html = '<select class="form-control select2" id="produto_'+ index +'" required style="width: 100%;" onChange="editRow(this)"> ';
+                    html = '<select class="form-control select2" id="produto_'+ index +'" required style="width: 100%;" onChange="atualizaPreco(this)"> '+
+                           '<option value="-1" disabled selected>Selecione</option>';
                     <%
                         ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
                         for (int i = 0; i < prod.size(); i++) {
@@ -260,13 +266,14 @@
                     html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
                             + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
                             + '</option>';
-                    preco = <%= prod.get(i).getPreco()%>
+                    
                     <%  }%>
                     html = html + '</select>';
                     break;
 
                 case 'tamanho':
-                    html = '<select class="form-control select2" id="tamanho_'+ index +'" required style="width: 100%;">  ';
+                    html = '<select class="form-control select2" id="tamanho_'+ index +'" required style="width: 100%;"> ' +
+                           '<option value="-1" disabled selected>Selecione</option>';
                     <%
                         ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
                         for (int i = 0; i < tam.size(); i++) {
@@ -279,15 +286,15 @@
                     break;
 
                 case 'quantidade':
-                    html = '<input class="form-control" type="number" min="1" id="quantidade_'+ index +'">';
+                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" id="quantidade_'+ index +'" required onChange="atualizaSubtotal(this)">';
                     break;
 
                 case 'preco':
-                    html = '<input class="form-control" type="number" min="1" id="preco_'+ index +'" value="' + preco + '" disabled>';
+                    html = '<input class="form-control" type="number" min="1" id="preco_'+ index +'" value="0" disabled>';
                     break;
 
                 case 'subtotal':
-                    html = '<input class="form-control" type="number" min="1" id="subtotal_'+ index +'" disabled>';
+                    html = '<input class="form-control" type="number" min="1" id="subtotal_'+ index +'" value="0" disabled>';
                     break;
 
                 case 'remover':
@@ -300,7 +307,7 @@
         }
 
         function getTable() {
-
+            
             var array = [];
             var headers = [];
             $('#produtos th').each(function (index, item) {
@@ -313,7 +320,7 @@
                 });
                 array.push(arrayItem);
             });
-
-        }
+            
+            }
     </script>
 </html>

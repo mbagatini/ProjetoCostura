@@ -11,19 +11,12 @@ function getPrecoProduto(codigo, index) {
         $.ajax({
             url: "/Costura/Controle?parametro=precoProduto&codigoProduto=" + codigo,
             type: "POST",
-            dataType: "json",
-            data: {produto: codigo},
-            success: function (precos) {
+            dataType: "text",
+            data: {codigoProduto: codigo},
+            success: function (preco) {
                 var campo = "#preco_" + index;
-                
-                $(campo).html(""); // clear before appending new list
-                var string = "";
-                $.each(precos, function (i, preco) {
-                    string = '<input class="form-control" type="number" min="1" id="preco_'+ index +'" value="' + preco.valor + '" disabled>';
-                });
-                $(campo).html("" + string);
+                $(campo).val(preco);
             }
         });
-        
     });
 }
