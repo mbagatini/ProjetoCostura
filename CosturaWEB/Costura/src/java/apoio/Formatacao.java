@@ -7,10 +7,10 @@ import java.util.Locale;
 
 public class Formatacao {
 
-    static DecimalFormat df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+    static DecimalFormat df = new DecimalFormat("##,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
 
     public static String retornaDecimalFormatado(double valor) {
-        NumberFormat formatter = new DecimalFormat("#,##0.00");
+        NumberFormat formatter = new DecimalFormat("##,##0.00");
         return (formatter.format(valor));
     }
 
