@@ -73,61 +73,6 @@ function deleteRow(obj) {
     table.deleteRow(index);
 }
 
-function getHTML(campo, index) {
-
-    var html;
-
-    switch (campo) {
-        case 'produto':
-            html = '<select class="form-control select2" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
-                    '<option value="-1" disabled selected>Selecione</option>';
-            <%
-                ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
-                for (int i = 0; i < prod.size(); i++) {
-            %>
-            html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
-                    + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
-                    + '</option>';
-
-            <%  }%>
-            html = html + '</select>';
-            break;
-
-        case 'tamanho':
-            html = '<select class="form-control select2" id="tamanho_' + index + '" required style="width: 100%;"> ' +
-                    '<option value="-1" disabled selected>Selecione</option>';
-<%
-                ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
-                for (int i = 0; i < tam.size(); i++) {
-%>
-            html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
-                    + '<%= tam.get(i).getTamanho()%>'
-                    + '</option>';
-<%  }%>
-            html = html + '</select>';
-            break;
-
-        case 'quantidade':
-            html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
-            break;
-
-        case 'preco':
-            html = '<input class="form-control" type="number" min="1" id="preco_' + index + '" value="0" disabled>';
-            break;
-
-        case 'subtotal':
-            html = '<input class="form-control" type="number" min="1" id="subtotal_' + index + '" value="0" disabled>';
-            break;
-
-        case 'remover':
-            html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
-            break;
-    }
-
-    return html;
-
-}
-
 function getTable() {
 
     var array = [];
