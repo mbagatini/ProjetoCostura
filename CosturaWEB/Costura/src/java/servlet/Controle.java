@@ -17,15 +17,12 @@ import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONObject;
 
 /**
  *
@@ -183,6 +180,11 @@ public class Controle extends HttpServlet {
 
         if (parametro.equals("precoProduto")) {
             carregaPrecoProduto(request, response);
+        }
+        
+        if (parametro.equals("pedido")) {
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
+            encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
         }
 
     }

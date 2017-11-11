@@ -6,6 +6,7 @@
 package entidade;
 
 import apoio.Constantes;
+import dao.PedidoDAO;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class Pedido {
     private ArrayList<ItensPedido> itens;
 
     public Pedido() {
-        codigo = 0;
+        codigo = new PedidoDAO().proximoNumero();
         data_emissao = Calendar.getInstance().getTime();
         situacao = Constantes.PEDIDO_SITUACAO_RECEBIDO;
         cliente = new Cliente();

@@ -67,15 +67,20 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form class="form-horizontal" name="cadastroCliente" action="/Costura/Controle?parametro=cliente&manut=ins" method="post">
+                                <form class="form-horizontal" name="cadastroPedido" action="/Costura/Controle?parametro=pedido&manut=ins" method="post">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <input type="hidden" name="id" id="id" value="<%= pedido.getCodigo()%>">
+                                            <label class="col-sm-1 control-label">Pedido</label>
+                                            <div class="col-sm-1">
+                                                <input class="form-control" type="number" name="id" id="id" value="<%= pedido.getCodigo()%>" disabled>
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group">
                                             <label class="col-sm-1 control-label">Cliente*</label>
                                             <div class="col-sm-4">
                                                 <!-- select -->
-                                                <select class="form-control select2" name="cliente" required style="width: 100%;">
+                                                <select class="form-control select2" name="cliente" id="cliente" required style="width: 100%;">
                                                     <option value="-1" disabled selected>Selecione</option>
 
                                                     <%
@@ -99,15 +104,15 @@
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
                                                     <input type="text" class="form-control pull-right" id="datepicker" name="data" 
-                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required>
+                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required disabled>
                                                 </div>
                                             </div>
 
                                             <label class="col-sm-1 control-label">Status*</label>
                                             <div class="col-sm-2">
                                                 <!-- select -->
-                                                <select class="form-control" name="situacao" required>
-                                                    <option class="label-warning" value="<%= Constantes.PEDIDO_SITUACAO_RECEBIDO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_RECEBIDO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_RECEBIDO)%></option>
+                                                <select class="form-control" name="situacao" id="situacao" required <%= pedido.getCodigo() == 0 ? "disabled" : ""%>>
+                                                    <option value="<%= Constantes.PEDIDO_SITUACAO_RECEBIDO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_RECEBIDO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_RECEBIDO)%></option>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_EM_PRODUCAO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_EM_PRODUCAO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_EM_PRODUCAO)%></option>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_FINALIZADO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_FINALIZADO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_FINALIZADO)%></option>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_CANCELADO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_CANCELADO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_CANCELADO)%></option>
@@ -116,9 +121,9 @@
                                             </div>
                                         </div>
 
+                                        <!-- Produtos -->
                                         <br>
-
-                                        <div class="box-group">
+                                        <div class="form-group">
                                             <div class="col-sm-12" style="overflow:auto; max-height: 300px">
                                                 <table class="table table-striped table-hover" id="produtos">
                                                     <tr>
@@ -132,20 +137,24 @@
                                                 </table>
                                             </div>
 
-                                            <div class="col-sm-3">
-                                                <a class="btn btn-block btn-default" onclick="addRow()">
-                                                    <i class="fa fa-plus"></i> Adicionar um produto
-                                                </a>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-3">
+                                                    <a class="btn btn-block btn-default" onclick="addRow()">
+                                                        <i class="fa fa-plus"></i> Adicionar um produto
+                                                    </a>
+                                                </div>
                                             </div>
-
                                         </div>
+                                        <br>
+
+                                        <!-- Totais -->
 
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Valor total</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="number" class="col-sm-6 form-control" id="valorTotal" value="<%= Formatacao.retornaDecimalFormatado(pedido.getPreco())%>" disabled>
+                                                    <input type="number" class="col-sm-6 form-control" id="valorTotal" value="<%= Formatacao.retornaDecimalFormatado(0)%>" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,7 +164,7 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control pull-right" name="desconto" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getDesconto())%>">
+                                                    <input type="text" class="form-control pull-right" id="desconto" name="desconto" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getDesconto())%>" onChange="atualizaTotalLiquido()">
                                                 </div>
                                             </div>
                                         </div>
@@ -165,11 +174,11 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control pull-right" name="desconto" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getDesconto())%>">
+                                                    <input type="text" class="form-control pull-right" id="valorLiquido" name="valorLiquido" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getPreco())%>" disabled>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="submit" name="enviar" class="btn btn-info pull-right">Salvar</button>
@@ -208,72 +217,72 @@
 
     <!-- Page script -->
     <script>
-                                                    $(function () {
-                                                        //Initialize Select2 Elements
-                                                        $(".select2").select2();
+                                                        $(function () {
+                                                            //Initialize Select2 Elements
+                                                            $(".select2").select2();
 
-                                                        //Money Euro
-                                                        $("[data-mask]").inputmask();
+                                                            //Money Euro
+                                                            $("[data-mask]").inputmask();
 
-                                                        //Date picker
-                                                        $("#datepicker").datepicker({
-                                                            autoclose: true
+                                                            //Date picker
+                                                            $("#datepicker").datepicker({
+                                                                autoclose: true
+                                                            });
                                                         });
-                                                    });
 
-                                                    function getHTML(campo, index) {
+                                                        function getHTML(campo, index) {
 
-                                                        var html;
+                                                            var html;
 
-                                                        switch (campo) {
-                                                            case 'produto':
-                                                                html = '<select class="form-control select2" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
-                                                                        '<option value="-1" disabled selected>Selecione</option>';
+                                                            switch (campo) {
+                                                                case 'produto':
+                                                                    html = '<select class="form-control select2" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
+                                                                            '<option value="-1" disabled selected>Selecione</option>';
         <%
-                        ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
-                        for (int i = 0; i < prod.size(); i++) {
+            ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
+            for (int i = 0; i < prod.size(); i++) {
         %>
-                                                                html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
-                                                                        + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
-                                                                        + '</option>';
+                                                                    html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
+                                                                            + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
+                                                                            + '</option>';
 
         <%  }%>
-                                                                html = html + '</select>';
-                                                                break;
+                                                                    html = html + '</select>';
+                                                                    break;
 
-                                                            case 'tamanho':
-                                                                html = '<select class="form-control select2" id="tamanho_' + index + '" required style="width: 100%;"> ' +
-                                                                        '<option value="-1" disabled selected>Selecione</option>';
+                                                                case 'tamanho':
+                                                                    html = '<select class="form-control select2" id="tamanho_' + index + '" required style="width: 100%;"> ' +
+                                                                            '<option value="-1" disabled selected>Selecione</option>';
         <%
-                        ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
-                        for (int i = 0; i < tam.size(); i++) {
+            ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
+            for (int i = 0; i < tam.size(); i++) {
         %>
-                                                                html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
-                                                                        + '<%= tam.get(i).getTamanho()%>'
-                                                                        + '</option>';
+                                                                    html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
+                                                                            + '<%= tam.get(i).getTamanho()%>'
+                                                                            + '</option>';
         <%  }%>
-                                                                html = html + '</select>';
-                                                                break;
+                                                                    html = html + '</select>';
+                                                                    break;
 
-                                                            case 'quantidade':
-                                                                html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
-                                                                break;
+                                                                case 'quantidade':
+                                                                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
+                                                                    break;
 
-                                                            case 'preco':
-                                                                html = '<input class="form-control" type="number" min="1" id="preco_' + index + '" value="0" disabled>';
-                                                                break;
+                                                                case 'preco':
+                                                                    html = '<input class="form-control" type="number" min="1" id="preco_' + index + '" value="0" disabled>';
+                                                                    break;
 
-                                                            case 'subtotal':
-                                                                html = '<input class="form-control" type="number" min="1" id="subtotal_' + index + '" value="0" disabled>';
-                                                                break;
+                                                                case 'subtotal':
+                                                                    html = '<input class="form-control" type="number" min="1" id="subtotal_' + index + '" value="0" disabled>';
+                                                                    break;
 
-                                                            case 'remover':
-                                                                html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
-                                                                break;
+                                                                case 'remover':
+                                                                    html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
+                                                                    break;
+                                                            }
+
+                                                            return html;
+
                                                         }
-
-                                                        return html;
-
-                                                    }
     </script>
 </html>

@@ -5,8 +5,10 @@
  */
 package dao;
 
+import apoio.ConexaoBD;
 import apoio.IDAO;
 import entidade.Pedido;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -53,6 +55,24 @@ public class PedidoDAO implements IDAO<Pedido> {
     @Override
     public boolean consultar(Pedido o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public int proximoNumero(){
+        int numero = 0;
+        try {
+            String sql = "SELECT coalesce(MAX(codigo),0)+1 numero FROM pedido";
+            
+            ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+
+            while (resultado.next()) {
+                numero = (resultado.getInt("numero"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao pegar o próximo numero de pedido:" + e);
+            return 0;
+        }
+        return numero;
     }
     
 }

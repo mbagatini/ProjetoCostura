@@ -65,6 +65,14 @@ function atualizaTotal() {
     }
 
     $('#valorTotal').val(total);
+    
+    atualizaTotalLiquido();
+}
+
+function atualizaTotalLiquido() {
+    var total = Number(document.getElementById("valorTotal").value);
+    var desconto = Number(document.getElementById("desconto").value);
+    $('#valorLiquido').val(total-desconto);
 }
 
 function deleteRow(obj) {

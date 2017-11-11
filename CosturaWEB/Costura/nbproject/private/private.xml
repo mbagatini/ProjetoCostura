@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/src/java/servlet/Controle.java</file>
-            <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/web/js/funcoesPedido.js</file>
+            <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/src/java/controle/ControlePedido.java</file>
+            <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/src/java/entidade/Pedido.java</file>
             <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/web/pedido.jsp</file>
+            <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/src/java/controle/ControleProduto.java</file>
             <file>file:/C:/Users/morgana.elis/Documents/GitHub/Desktop/ProjetoCostura/CosturaWEB/Costura/src/java/apoio/Formatacao.java</file>
         </group>
     </open-files>
