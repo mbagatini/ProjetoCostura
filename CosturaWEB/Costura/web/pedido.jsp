@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Pedido</label>
                                             <div class="col-sm-1">
-                                                <input class="form-control" type="number" name="id" id="id" value="<%= pedido.getCodigo()%>" disabled>
+                                                <input class="form-control" type="number" name="id" id="id" value="<%= pedido.getCodigo()%>" readonly>
                                             </div>
                                         </div>
 
@@ -81,7 +81,7 @@
                                             <div class="col-sm-4">
                                                 <!-- select -->
                                                 <select class="form-control select2" name="cliente" id="cliente" required style="width: 100%;">
-                                                    <option value="-1" disabled selected>Selecione</option>
+                                                    <option value="-1" readonly selected>Selecione</option>
 
                                                     <%
                                                         ArrayList<Cliente> clis = new ClienteDAO().consultarTodos();
@@ -104,14 +104,14 @@
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
                                                     <input type="text" class="form-control pull-right" id="datepicker" name="data" 
-                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required disabled>
+                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required readonly>
                                                 </div>
                                             </div>
 
                                             <label class="col-sm-1 control-label">Status*</label>
                                             <div class="col-sm-2">
                                                 <!-- select -->
-                                                <select class="form-control" name="situacao" id="situacao" required <%= pedido.getCodigo() == 0 ? "disabled" : ""%>>
+                                                <select class="form-control" name="situacao" id="situacao" required <%= pedido.getCodigo() == 0 ? "readonly" : ""%>>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_RECEBIDO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_RECEBIDO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_RECEBIDO)%></option>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_EM_PRODUCAO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_EM_PRODUCAO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_EM_PRODUCAO)%></option>
                                                     <option value="<%= Constantes.PEDIDO_SITUACAO_FINALIZADO%>" <%= pedido.getSituacao() == Constantes.PEDIDO_SITUACAO_FINALIZADO ? "selected" : ""%>><%= pedido.retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_FINALIZADO)%></option>
@@ -154,7 +154,7 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="number" class="col-sm-6 form-control" id="valorTotal" value="<%= Formatacao.retornaDecimalFormatado(0)%>" disabled>
+                                                    <input type="number" class="col-sm-6 form-control" id="valorTotal" value="<%= (0)%>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +164,7 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control pull-right" id="desconto" name="desconto" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getDesconto())%>" onChange="atualizaTotalLiquido()">
+                                                    <input type="text" class="form-control pull-right" id="desconto" name="desconto" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= (pedido.getDesconto())%>" onChange="atualizaTotalLiquido()">
                                                 </div>
                                             </div>
                                         </div>
@@ -174,7 +174,7 @@
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
-                                                    <input type="text" class="form-control pull-right" id="valorLiquido" name="valorLiquido" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= Formatacao.retornaDecimalFormatado(pedido.getPreco())%>" disabled>
+                                                    <input type="text" class="form-control pull-right" id="valorLiquido" name="valorLiquido" type="number" min="1" pattern="^\d+(?:\.\d{1,2})?$" value="<%= (pedido.getPreco())%>" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,7 +236,7 @@
 
                                                             switch (campo) {
                                                                 case 'produto':
-                                                                    html = '<select class="form-control select2" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
+                                                                    html = '<select class="form-control select2" name="produto" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
                                                                             '<option value="-1" disabled selected>Selecione</option>';
         <%
             ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
@@ -251,8 +251,8 @@
                                                                     break;
 
                                                                 case 'tamanho':
-                                                                    html = '<select class="form-control select2" id="tamanho_' + index + '" required style="width: 100%;"> ' +
-                                                                            '<option value="-1" disabled selected>Selecione</option>';
+                                                                    html = '<select class="form-control select2" name="tamanho" id="tamanho_' + index + '" required style="width: 100%;"> ' +
+                                                                            '<option value="-1" readonly selected>Selecione</option>';
         <%
             ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
             for (int i = 0; i < tam.size(); i++) {
@@ -265,15 +265,15 @@
                                                                     break;
 
                                                                 case 'quantidade':
-                                                                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
+                                                                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" name="quantidade" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
                                                                     break;
 
                                                                 case 'preco':
-                                                                    html = '<input class="form-control" type="number" min="1" id="preco_' + index + '" value="0" disabled>';
+                                                                    html = '<input class="form-control" type="number" min="1" name="preco" id="preco_' + index + '" value="0" readonly>';
                                                                     break;
 
                                                                 case 'subtotal':
-                                                                    html = '<input class="form-control" type="number" min="1" id="subtotal_' + index + '" value="0" disabled>';
+                                                                    html = '<input class="form-control" type="number" min="1" name="subtotal" id="subtotal_' + index + '" value="0" readonly>';
                                                                     break;
 
                                                                 case 'remover':

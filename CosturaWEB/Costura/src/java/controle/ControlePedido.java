@@ -7,16 +7,18 @@ package controle;
 
 import apoio.ConexaoBD;
 import dao.ClienteDAO;
+import dao.TamanhoDAO;
 import entidade.Cliente;
 import entidade.ItensPedido;
 import entidade.Pedido;
+import entidade.Produto;
+import entidade.Tamanho;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -42,21 +44,77 @@ public class ControlePedido {
         
         // Itens do pedido
         ArrayList<ItensPedido> itens = new ArrayList<ItensPedido>();
-        String[] posicoes = request.getParameterValues("produtos");
+        String[] produtos = request.getParameterValues("produto");
+        String[] tamanhos = request.getParameterValues("tamanho");
+        String[] quantidades = request.getParameterValues("quantidade");
+        String[] precos = request.getParameterValues("preco");
         
+        for (int i = 0; i < produtos.length; i++) {
+            Produto p = new Produto();
+            p.setCodigo(Integer.parseInt(produtos[i])); //(Produto) new ProdutoDAO().consultarId(Integer.parseInt(produtos[i]));
+            p.setPreco(Double.parseDouble(precos[i]));
+            Tamanho t = (Tamanho) new TamanhoDAO().consultarId(Integer.parseInt(tamanhos[i]));
+            int qtde  = Integer.parseInt(quantidades[i]);
+            
+            ItensPedido item = new ItensPedido();
+            item.setProduto(p);
+            item.setTamanho(t);
+            item.setQuantidade(qtde);
+            
+            itens.add(item);
+        }
         
         try {
             // BLOQUEAR O AUTO COMMIT
             conn = ConexaoBD.getInstance().getConnection();
             conn.setAutoCommit(false);
             
+            // Grava o pedido
+            int codigoPedido;
+            
+            String sql = "INSERT INTO produto VALUES ("
+                        + "DEFAULT, "
+                        + "'" + ped.getDataEmissao().getTime() + "', "
+                        + "'" + ped.getSituacao()+ "', "
+                              + ped.getCliente().getCodigo() + ", "
+                        + "'" + ped.getDesconto()+ "', "
+                        + "'" + ped.getPreco()+ "'"
+                        + ") returning codigo";
+            
+            ResultSet resul = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+            resul.next();
+
+            codigoPedido = resul.getInt(1);
+            
+            // Grava os itens do pedido
+            st = ConexaoBD.getInstance().getConnection().createStatement();
+            for (int i = 0; i < itens.size(); i++) {
+                sql = "INSERT INTO item_pedido VALUES ("
+                        + codigoPedido + ", "
+                        + itens.get(i).getProduto().getCodigo() + ", "
+                        + itens.get(i).getTamanho().getCodigo() + ", "
+                        + itens.get(i).getQuantidade() + ", "
+                        + "'" + itens.get(i).getProduto().getPreco() + "'"
+                        + ") ";
+                
+                int resultado = st.executeUpdate(sql);
+            }
+            
+            // Comita os dados
+            conn.commit();
+            return true;
             
         } catch (SQLException ex) {
-            Logger.getLogger(ControlePedido.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro salvar pedido: " + ex);
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex1) {
+                System.out.println("Erro ao atualizar pedido: " + ex1);
+            }
+            return false;
         }
-        String retorno = null;
-        
-        return (retorno == null);
     }
     
     public HttpServletRequest editar(HttpServletRequest request) {

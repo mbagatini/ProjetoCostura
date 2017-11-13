@@ -181,11 +181,6 @@ public class Controle extends HttpServlet {
         if (parametro.equals("precoProduto")) {
             carregaPrecoProduto(request, response);
         }
-        
-        if (parametro.equals("pedido")) {
-            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
-            encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
-        }
 
     }
 
