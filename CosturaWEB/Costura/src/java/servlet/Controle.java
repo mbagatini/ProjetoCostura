@@ -17,6 +17,9 @@ import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -175,7 +178,14 @@ public class Controle extends HttpServlet {
 
         if (parametro.equals("pedido")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
-            encaminharPagina(retornaPagina(new ControlePedido().cadastrar(request)), request, response);
+            boolean erro;
+            try {
+                erro = new ControlePedido().cadastrar(request);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao cadastrar pedido: "+ex); 
+                erro = true;
+            }
+            encaminharPagina(retornaPagina(erro), request, response);
         }
 
         if (parametro.equals("precoProduto")) {

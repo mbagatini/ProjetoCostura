@@ -30,9 +30,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ControlePedido {
     
-    Connection conn = null;
-    Statement st = null;
-    
     public boolean cadastrar(HttpServletRequest request) throws ParseException {
         int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
         
@@ -54,7 +51,7 @@ public class ControlePedido {
         
         for (int i = 0; i < produtos.length; i++) {
             Produto p = new Produto();
-            p.setCodigo(Integer.parseInt(produtos[i])); //(Produto) new ProdutoDAO().consultarId(Integer.parseInt(produtos[i]));
+            p.setCodigo(Integer.parseInt(produtos[i]));
             p.setPreco(Double.parseDouble(precos[i]));
             Tamanho t = (Tamanho) new TamanhoDAO().consultarId(Integer.parseInt(tamanhos[i]));
             int qtde  = Integer.parseInt(quantidades[i]);
@@ -67,71 +64,29 @@ public class ControlePedido {
             itens.add(item);
         }
         
+        ped.setItens(itens);
+        
         PedidoDAO pedDAO = new PedidoDAO();
         String retorno = null;
         
-        if ((pedDAO.consultarId(ped.getCodigo())) != null ) { // é uma inserção
-            //retorno = new ProdutoDAO().salvar(pro);
+        if ((pedDAO.consultarId(ped.getCodigo())) == null ) { // é uma inserção
+            retorno = pedDAO.salvar(ped);
         } else {
-            //retorno = new ProdutoDAO().atualizar(pro);
+            retorno = pedDAO.atualizar(ped);
         }
         
-        try {
-            // BLOQUEAR O AUTO COMMIT
-            conn = ConexaoBD.getInstance().getConnection();
-            conn.setAutoCommit(false);
-            
-            // Grava o pedido
-            int codigoPedido;
-            
-            String sql = "INSERT INTO pedido VALUES ("
-                        + "DEFAULT, "
-                        + "'" + Formatacao.retornaDataFormatadaAMD(ped.getDataEmissao()) + "', "
-                        + "'" + ped.getSituacao()+ "', "
-                              + ped.getCliente().getCodigo() + ", "
-                        + "'" + ped.getDesconto()+ "', "
-                        + "'" + ped.getPreco()+ "'"
-                        + ") returning codigo";
-            
-            ResultSet resul = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
-            resul.next();
-
-            codigoPedido = resul.getInt(1);
-            
-            // Grava os itens do pedido
-            st = ConexaoBD.getInstance().getConnection().createStatement();
-            for (int i = 0; i < itens.size(); i++) {
-                sql = "INSERT INTO item_pedido VALUES ("
-                        + codigoPedido + ", "
-                        + itens.get(i).getProduto().getCodigo() + ", "
-                        + itens.get(i).getTamanho().getCodigo() + ", "
-                        + itens.get(i).getQuantidade() + ", "
-                        + "'" + itens.get(i).getProduto().getPreco() + "'"
-                        + ") ";
-                
-                int resultado = st.executeUpdate(sql);
-            }
-            
-            // Comita os dados
-            conn.commit();
-            return true;
-            
-        } catch (SQLException ex) {
-            System.out.println("Erro salvar pedido: " + ex);
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex1) {
-                System.out.println("Erro ao atualizar pedido: " + ex1);
-            }
-            return false;
-        }
+        return (retorno == null);
     }
     
     public HttpServletRequest editar(HttpServletRequest request) {
 
         int id = Integer.parseInt(request.getParameter("id"));
+        
+        Pedido ped = (Pedido) new PedidoDAO().consultarId(id);
+        
+        if (ped != null) {
+            request.setAttribute("atributo", ped);
+        }
 
         return request;
     }
@@ -140,7 +95,7 @@ public class ControlePedido {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        String retorno = null;
+        String retorno = new PedidoDAO().excluir(id);
 
         return (retorno == null);
     }

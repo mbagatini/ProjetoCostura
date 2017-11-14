@@ -150,7 +150,7 @@
                                         <!-- Totais -->
 
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">Valor total</label>
+                                            <label class="col-sm-10 control-label">Valor total</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
@@ -160,7 +160,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">Desconto</label>
+                                            <label class="col-sm-10 control-label">Desconto</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
@@ -170,7 +170,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">Total líquido</label>
+                                            <label class="col-sm-10 control-label">Total líquido</label>
                                             <div class="col-sm-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">R$</span>
