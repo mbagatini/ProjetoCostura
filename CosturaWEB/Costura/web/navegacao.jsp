@@ -10,7 +10,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" href="https://ih0.redbubble.net/image.192636235.8300/sticker,220x200-bg,ffffff-pad,220x200,ffffff.u2.jpg" type="image/gif" sizes="16x16">
+        <link rel="icon" href="http://downloadicons.net/sites/default/files/scissor-icon-64459.png">
+        
         <title>Costura</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

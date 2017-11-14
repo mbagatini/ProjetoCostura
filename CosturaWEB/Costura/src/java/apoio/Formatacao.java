@@ -34,6 +34,12 @@ public class Formatacao {
         String data_formatada = df.format(data);
         return data_formatada;
     }
+    
+    public static String retornaDataFormatadaAMD(Date data) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String data_formatada = df.format(data);
+        return data_formatada;
+    }
 
     public static Time retornaHoraString(String hora_formatada) throws ParseException {
 
@@ -59,5 +65,4 @@ public class Formatacao {
         }
         return (dataFormatada);
     }
-
 }

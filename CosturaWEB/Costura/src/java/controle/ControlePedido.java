@@ -6,7 +6,9 @@
 package controle;
 
 import apoio.ConexaoBD;
+import apoio.Formatacao;
 import dao.ClienteDAO;
+import dao.PedidoDAO;
 import dao.TamanhoDAO;
 import entidade.Cliente;
 import entidade.ItensPedido;
@@ -17,6 +19,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +33,7 @@ public class ControlePedido {
     Connection conn = null;
     Statement st = null;
     
-    public boolean cadastrar(HttpServletRequest request) {
+    public boolean cadastrar(HttpServletRequest request) throws ParseException {
         int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
         
         // Cabeçalho do pedido
@@ -64,6 +67,15 @@ public class ControlePedido {
             itens.add(item);
         }
         
+        PedidoDAO pedDAO = new PedidoDAO();
+        String retorno = null;
+        
+        if ((pedDAO.consultarId(ped.getCodigo())) != null ) { // é uma inserção
+            //retorno = new ProdutoDAO().salvar(pro);
+        } else {
+            //retorno = new ProdutoDAO().atualizar(pro);
+        }
+        
         try {
             // BLOQUEAR O AUTO COMMIT
             conn = ConexaoBD.getInstance().getConnection();
@@ -72,9 +84,9 @@ public class ControlePedido {
             // Grava o pedido
             int codigoPedido;
             
-            String sql = "INSERT INTO produto VALUES ("
+            String sql = "INSERT INTO pedido VALUES ("
                         + "DEFAULT, "
-                        + "'" + ped.getDataEmissao().getTime() + "', "
+                        + "'" + Formatacao.retornaDataFormatadaAMD(ped.getDataEmissao()) + "', "
                         + "'" + ped.getSituacao()+ "', "
                               + ped.getCliente().getCodigo() + ", "
                         + "'" + ped.getDesconto()+ "', "
