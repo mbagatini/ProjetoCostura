@@ -8,14 +8,16 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
-import apoio.Criptografia;
 import controle.ControleCliente;
+import controle.ControlePedido;
 import controle.ControleProduto;
 import controle.ControleTamanho;
-import dao.UsuarioDAO;
+import dao.ProdutoDAO;
+import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,12 +53,12 @@ public class Controle extends HttpServlet {
             throws ServletException, IOException {
 //        processRequest(request, response);
         request.setCharacterEncoding("UTF-8");
-        
+
         System.out.println("Entrei no GET!");
 
         String parametro = request.getParameter("parametro");
         String manutencao = request.getParameter("manut");
-        
+
         if (parametro.equals("logout")) {
             HttpSession sessao = request.getSession();
             sessao.invalidate();
@@ -71,7 +73,7 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleUsuario().excluir(request)), request, response);
             }
         }
-        
+
         if (parametro.equals("produto")) {
             if (manutencao.equals("upd")) {
                 encaminharPagina(Constantes.CADASTRO_PRODUTO, new ControleProduto().editar(request), response);
@@ -89,7 +91,7 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleCategoria().excluir(request)), request, response);
             }
         }
-        
+
         if (parametro.equals("tamanho")) {
             if (manutencao.equals("upd")) {
                 encaminharPagina(Constantes.CADASTRO_TAMANHO, new ControleTamanho().editar(request), response);
@@ -98,7 +100,7 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleTamanho().excluir(request)), request, response);
             }
         }
-        
+
         if (parametro.equals("cliente")) {
             if (manutencao.equals("upd")) {
                 encaminharPagina(Constantes.CADASTRO_CLIENTE, new ControleCliente().editar(request), response);
@@ -107,18 +109,26 @@ public class Controle extends HttpServlet {
                 encaminharPagina(retornaPagina(new ControleCliente().excluir(request)), request, response);
             }
         }
+
+        if (parametro.equals("pedido")) {
+            if (manutencao.equals("upd")) {
+                encaminharPagina(Constantes.CADASTRO_PEDIDO, new ControlePedido().editar(request), response);
+            } else if (manutencao.equals("del")) {
+                request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
+                encaminharPagina(retornaPagina(new ControlePedido().excluir(request)), request, response);
+            }
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("UTF-8");
 
         System.out.println("Entrei no POST!");
 
         String parametro = request.getParameter("parametro");
-        String manutencao = request.getParameter("manut");
 
         // AQUI DEVE SER FEITA A VALIDACAO
         // ANTES DE GRAVAR NO BANCO
@@ -143,7 +153,7 @@ public class Controle extends HttpServlet {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_USUARIO);
             encaminharPagina(retornaPagina(new ControleUsuario().cadastrar(request)), request, response);
         }
-        
+
         if (parametro.equals("produto")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_PRODUTO);
             encaminharPagina(retornaPagina(new ControleProduto().cadastrar(request)), request, response);
@@ -153,16 +163,32 @@ public class Controle extends HttpServlet {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_CATEGORIA);
             encaminharPagina(retornaPagina(new ControleCategoria().cadastrar(request)), request, response);
         }
-        
+
         if (parametro.equals("tamanho")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_TAMANHO);
             encaminharPagina(retornaPagina(new ControleTamanho().cadastrar(request)), request, response);
-       }
-        
+        }
+
         if (parametro.equals("cliente")) {
             request.setAttribute("paginaRetorno", Constantes.CADASTRO_CLIENTE);
             encaminharPagina(retornaPagina(new ControleCliente().cadastrar(request)), request, response);
-       }
+        }
+
+        if (parametro.equals("pedido")) {
+            request.setAttribute("paginaRetorno", Constantes.CADASTRO_PEDIDO);
+            boolean erro;
+            try {
+                erro = new ControlePedido().cadastrar(request);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao cadastrar pedido: " + ex);
+                erro = true;
+            }
+            encaminharPagina(retornaPagina(erro), request, response);
+        }
+
+        if (parametro.equals("precoProduto")) {
+            carregaPrecoProduto(request, response);
+        }
 
     }
 
@@ -179,15 +205,27 @@ public class Controle extends HttpServlet {
             System.out.println("Erro ao encaminhar: " + e);
         }
     }
-    
+
     private String retornaPagina(boolean flag) {
         String pagina;
-        
+
         if (flag) {
             pagina = Constantes.PAGINA_SUCESSO;
         } else {
             pagina = Constantes.PAGINA_ERRO;
         }
         return pagina;
+    }
+
+    private void carregaPrecoProduto(HttpServletRequest request, HttpServletResponse response) {
+
+        int produto = Integer.parseInt(request.getParameter("codigoProduto"));
+        String preco = String.valueOf(((Produto) new ProdutoDAO().consultarId(produto)).getPreco());
+
+        try {
+            response.getWriter().write(preco);
+        } catch (IOException ex) {
+            System.out.println("Erro ao pegar o preço do produto: " + ex.getMessage());
+        }
     }
 }

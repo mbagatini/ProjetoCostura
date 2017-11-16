@@ -64,17 +64,6 @@ ALTER SEQUENCE endereco_codigo_seq OWNED BY endereco.codigo;
 -- -----------------------------------------------------
 -- Table cliente
 -- -----------------------------------------------------
-<<<<<<< HEAD
-CREATE SEQUENCE usuario_codigo_seq;
-CREATE TABLE IF NOT EXISTS usuario (
-  codigo INT NOT NULL DEFAULT nextval('usuario_codigo_seq'),
-  nome VARCHAR(45) NOT NULL,
-  email VARCHAR(45) NOT NULL,
-  senha VARCHAR(70) NOT NULL,
-  PRIMARY KEY (codigo))
-;
-ALTER SEQUENCE usuario_codigo_seq OWNED BY usuario.codigo;
-=======
 CREATE SEQUENCE cliente_codigo_seq;
 CREATE TABLE IF NOT EXISTS cliente (
   codigo INT NOT NULL DEFAULT nextval('cliente_codigo_seq'),
@@ -90,7 +79,6 @@ CREATE TABLE IF NOT EXISTS cliente (
   CONSTRAINT fk_pessoa_endereco1
     FOREIGN KEY (codigo_endereco)
     REFERENCES endereco (codigo));
->>>>>>> issue_6
 
 CREATE INDEX fk_pessoa_endereco1_idx ON cliente (codigo_endereco ASC);
 
@@ -141,3 +129,50 @@ CREATE TABLE IF NOT EXISTS produto (
 CREATE INDEX fk_produto_categoria1_idx ON produto (codigo_categoria ASC);
 
 ALTER SEQUENCE produto_codigo_seq OWNED BY produto.codigo;
+
+-- -----------------------------------------------------
+-- Table pedido
+-- -----------------------------------------------------
+CREATE SEQUENCE pedido_codigo_seq;
+CREATE TABLE IF NOT EXISTS pedido (
+  codigo INT NOT NULL DEFAULT nextval('pedido_codigo_seq'),
+  data_emissao DATE NOT NULL,
+  situacao CHAR(1) NOT NULL,
+  codigo_cliente INT NOT NULL,
+  desconto DECIMAL(11,2) NOT NULL,
+  preco DECIMAL(11,2) NOT NULL,
+  PRIMARY KEY (codigo),
+  CONSTRAINT fk_pedido_cliente1
+    FOREIGN KEY (codigo_cliente)
+    REFERENCES cliente (codigo));
+
+CREATE INDEX fk_pedido_cliente_idx ON pedido (codigo_cliente ASC);
+
+ALTER SEQUENCE pedido_codigo_seq OWNED BY pedido.codigo;
+
+-- -----------------------------------------------------
+-- Table item_pedido
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS item_pedido (
+  codigo_pedido INT NOT NULL,
+  codigo_produto INT NOT NULL,
+  codigo_tamanho INT NOT NULL,
+  quantidade INT NOT NULL,
+  preco_unitario DECIMAL(11,2) NOT NULL,
+  PRIMARY KEY (codigo_pedido, codigo_produto, codigo_tamanho),
+  CONSTRAINT fk_item_pedido_pedido
+    FOREIGN KEY (codigo_pedido)
+    REFERENCES pedido (codigo),
+  CONSTRAINT fk_item_pedido_tamanho
+    FOREIGN KEY (codigo_tamanho)
+    REFERENCES tamanho (codigo),
+  CONSTRAINT fk_item_pedido_produto
+    FOREIGN KEY (codigo_produto)
+    REFERENCES produto (codigo));
+
+CREATE INDEX fk_item_pedido_pedido_idx ON item_pedido (codigo_pedido ASC);
+
+CREATE INDEX fk_item_pedido_tamanho_idx ON item_pedido (codigo_tamanho ASC);
+
+CREATE INDEX fk_item_pedido_produto_idx ON item_pedido (codigo_produto ASC);
+

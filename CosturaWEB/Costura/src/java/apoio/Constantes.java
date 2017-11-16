@@ -22,9 +22,16 @@ public class Constantes {
     public static final String CADASTRO_CATEGORIA = "categoria.jsp";
     public static final String CADASTRO_TAMANHO   = "tamanho.jsp";
     public static final String CADASTRO_CLIENTE   = "cliente.jsp";
+    public static final String CADASTRO_PEDIDO   = "pedido.jsp";
     
     public static final String LISTAGEM_USUARIO   = "usuarioListagem.jsp";
     public static final String LISTAGEM_PRODUTO   = "produtoListagem.jsp";
     public static final String LISTAGEM_CATEGORIA = "categoriaListagem.jsp";
     public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
+    
+    public static final char PEDIDO_SITUACAO_RECEBIDO = 'R';
+    public static final char PEDIDO_SITUACAO_EM_PRODUCAO = 'P';
+    public static final char PEDIDO_SITUACAO_FINALIZADO = 'F';
+    public static final char PEDIDO_SITUACAO_CANCELADO = 'C';
+    
 }

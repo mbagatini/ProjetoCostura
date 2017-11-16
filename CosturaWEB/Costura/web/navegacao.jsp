@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" href="http://downloadicons.net/sites/default/files/scissor-icon-64459.png">
+        
         <title>Costura</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -139,14 +141,14 @@
 
                         <!-- pedidos -->
                         <li>
-                            <a href="#">
-                                <i class="fa  fa-cubes"></i> 
+                            <a href="<%= Constantes.CADASTRO_PEDIDO %>">
+                                <i class="fa fa-cubes"></i> 
                                 <span>Pedidos</span>
                             </a>
                         </li>
 
                         <!-- configuracoes -->
-                        <li class="treeview active">
+                        <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-gears"></i> 
                                 <span>Configurações</span>
