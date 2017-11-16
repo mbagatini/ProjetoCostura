@@ -81,7 +81,7 @@
                                             <div class="col-sm-4">
                                                 <!-- select -->
                                                 <select class="form-control select2" name="cliente" id="cliente" required style="width: 100%;">
-                                                    <option value="-1" disabled selected>Selecione</option>
+                                                    <option value="" disabled selected>Selecione</option>
 
                                                     <%
                                                         ArrayList<Cliente> clis = new ClienteDAO().consultarTodos();
@@ -266,7 +266,7 @@
             switch (campo) {
                 case 'produto':
                     html = '<select class="form-control select2" name="produto" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
-                            '<option value="-1" disabled selected>Selecione</option>';
+                            '<option value="" disabled selected>Selecione</option>';
         <%
             ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
             for (int i = 0; i < prod.size(); i++) {
@@ -285,7 +285,7 @@
 
                 case 'tamanho':
                     html = '<select class="form-control select2" name="tamanho" id="tamanho_' + index + '" required style="width: 100%;"> ' +
-                            '<option value="-1" readonly selected>Selecione</option>';
+                            '<option value="" disabled selected>Selecione</option>';
         <%
             ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
             for (int i = 0; i < tam.size(); i++) {

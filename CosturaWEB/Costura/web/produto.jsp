@@ -84,7 +84,7 @@
                                     <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" name="genero" required placeholder="Gênero">
-                                            <option value="-1" disabled selected>Selecione</option>
+                                            <option value="" disabled selected>Selecione</option>
                                             <option value="Feminino" <%= produto.getGenero().equals("Feminino") ? "selected" : ""%>>Feminino</option>
                                             <option value="Masculino" <%= produto.getGenero().equals("Masculino") ? "selected" : ""%>>Masculino</option>
                                             <option value="Unisex" <%= produto.getGenero().equals("Unisex") ? "selected" : ""%>>Unisex</option>
@@ -96,7 +96,7 @@
                                     <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" name="categoria" required placeholder="Categoria">
-                                            <option value="-1" disabled selected>Selecione</option>
+                                            <option value="" disabled selected>Selecione</option>
 
                                             <%
                                                 ArrayList<Categoria> cat = new CategoriaDAO().consultarTodos();

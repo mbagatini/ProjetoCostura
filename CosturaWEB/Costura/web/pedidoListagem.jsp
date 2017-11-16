@@ -16,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- DataTables -->
         <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="plugins/datatables/buttons.dataTables.min.css">
     </head>
     <div class="row">
         <div class="col-xs-12">
@@ -58,9 +59,7 @@
                                 <td><%= Formatacao.retornaDecimalFormatado(pedidos.get(i).getPreco())%></td>
                                 <td><%= pedidos.get(i).retornaDescricaoSituacao(pedidos.get(i).getSituacao())%></td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o">
-                                        <% pedidoConsulta = pedidos.get(i);%>
-                                    </a>
+                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o" onclick="carregaPedido(<%= pedidos.get(i).getCodigo()%>)" id="pedidoConsulta" data-index-number="<%= pedidoConsulta = pedidos.get(i)%>"></a>
                                 </td>
                                 <td><a href="/Costura/Controle?parametro=pedido&manut=upd&id=<%= pedidos.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
                                 <td><a href="/Costura/Controle?parametro=pedido&manut=del&id=<%= pedidos.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
@@ -208,12 +207,64 @@
     <!-- DataTables -->
     <script src="plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="plugins/datatables/buttons.flash.min.js"></script>
+    <script src="plugins/datatables/jszip.min.js"></script>
+    <script src="plugins/datatables/pdfmake.min.js"></script>
+    <script src="plugins/datatables/pvfs_fonts.js"></script>
+    <script src="plugins/datatables/buttons.print.min.js"></script>
+    <script src="plugins/datatables/buttons.html5.min.js"></script>
     <!-- page script -->
     <script>
         $(function () {
+            var titulo = 'Listagem de pedidos';
+            var subtitulo = 'SistemaCostura';
+            var colunas = '0,1,2,3,4,5';
+            
             $("#example1").DataTable({
-                "order": [[0, "asc"]]
+                "order": [[0, "asc"]],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        title: titulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        title: titulo,
+                        messageTop: subtitulo,
+                        exportOptions: {
+                            columns: [colunas]
+                        }
+                    }
+                ]
             });
+            
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -223,5 +274,10 @@
                 "autoWidth": false
             });
         });
+        
+        function carregaPedido(codigo){
+            alert("eu aooaoaoa"+codigo);
+            // Preciso de ajax aqui
+        }
     </script>
 </html>

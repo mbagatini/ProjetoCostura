@@ -76,7 +76,7 @@
                                     <div class="col-sm-3">
                                         <!-- select -->
                                         <select class="form-control" id="tipo_pessoa" name="tipo_pessoa" required >
-                                            <option value="-1" disabled selected>Selecione</option>
+                                            <option value="" disabled selected>Selecione</option>
                                             <option value="juridica" <%= !cliente.getCnpj().trim().equals("") ? "selected" : ""%>>Pessoa jurídica</option>
                                             <option value="fisica" <%= !cliente.getCpf().trim().equals("") ? "selected" : ""%>>Pessoa física</option>
                                         </select>
@@ -115,7 +115,7 @@
                                     <div class="col-sm-4">
                                         <!-- select -->
                                         <select class="form-control select2" name="cidade" required style="width: 100%;">
-                                            <option value="-1" disabled selected>Selecione</option>
+                                            <option value="" disabled selected>Selecione</option>
 
                                             <%
                                                 ArrayList<Cidade> cid = new CidadeDAO().consultarTodos();
