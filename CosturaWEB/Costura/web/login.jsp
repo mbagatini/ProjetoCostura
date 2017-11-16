@@ -9,7 +9,7 @@
 <html>
     <head>
         <link rel="icon" href="http://downloadicons.net/sites/default/files/scissor-icon-64459.png"> 
-        
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Costura | Log in</title>
@@ -107,13 +107,13 @@
         <!-- iCheck -->
         <script src="plugins/iCheck/icheck.min.js"></script>
         <script>
-                    $(function () {
-                        $('input').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue',
-                            increaseArea: '20%' // optional
-                        });
-                    });
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+            });
         </script>
     </body>
 </html>

@@ -139,7 +139,6 @@ public class Controle extends HttpServlet {
                 // usuario validado: cria coloca seu nome na sessao
                 // setando um atributo da sessao
                 HttpSession sessao = request.getSession();
-                // setando um atributo da sessao
                 sessao.setAttribute("usuarioLogado", user);
                 encaminharPagina(Constantes.PAGINA_MENU, request, response);
             } else {
