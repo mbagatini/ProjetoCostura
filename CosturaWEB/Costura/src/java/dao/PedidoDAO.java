@@ -217,27 +217,14 @@ public class PedidoDAO implements IDAO<Pedido> {
 
                 // Carrega os itens
                 ArrayList<ItensPedido> itens = new ArrayList<ItensPedido>();
-
-                sql = "SELECT * "
-                        + "FROM item_pedido "
-                        + "WHERE codigo_pedido = " + ped.getCodigo()
-                        + "ORDER BY codigo_produto";
-
-                ResultSet resultadoItem = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
-
-                while (resultadoItem.next()) {
-                    ItensPedido item = new ItensPedido();
-                    Produto p = (Produto) new ProdutoDAO().consultarId(resultadoItem.getInt("codigo_produto"));
-                    p.setPreco(resultadoItem.getDouble("preco_unitario"));
-                    item.setProduto(p);
-                    item.setTamanho((Tamanho) new TamanhoDAO().consultarId(resultadoItem.getInt("codigo_tamanho")));
-                    item.setQuantidade(resultadoItem.getInt("quantidade"));
-                    
-                    itens.add(item);
+                itens = retornaItensPedido(ped);
+                if (itens == null) {
+                    throw new Exception("Erro ao carregar itens");
                 }
 
                 ped.setItens(itens);
                 
+                // Adiciona o pedido do array
                 pedidos.add(ped);
             }
 
@@ -268,16 +255,25 @@ public class PedidoDAO implements IDAO<Pedido> {
 
             ResultSet resultado = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
 
-            if (resultado.next()) {
+            if (!resultado.next()) {
+                return null;
+            } else {
                 pedido.setCodigo(resultado.getInt("codigo"));
                 pedido.setDataEmissao(resultado.getDate("data_emissao"));
                 pedido.setSituacao(resultado.getString("situacao").charAt(0));
                 pedido.setCliente((Cliente) new ClienteDAO().consultarId(resultado.getInt("codigo_cliente")));
                 pedido.setDesconto(resultado.getDouble("desconto"));
                 pedido.setPreco(resultado.getDouble("preco"));
-            } else {
-                return null;
-            }
+                
+                // Carrega os itens
+                ArrayList<ItensPedido> itens = new ArrayList<ItensPedido>();
+                itens = retornaItensPedido(pedido);
+                if (itens == null) {
+                    throw new Exception("Erro ao carregar itens");
+                }
+                
+                pedido.setItens(itens);
+            } 
 
         } catch (Exception e) {
             System.out.println("Erro ao consultar pedido: " + e);
@@ -310,4 +306,33 @@ public class PedidoDAO implements IDAO<Pedido> {
         return numero;
     }
 
+    public ArrayList<ItensPedido> retornaItensPedido(Pedido ped){
+        
+        ArrayList<ItensPedido> itens = new ArrayList<ItensPedido>();
+
+        try {
+            String sql = "SELECT * "
+                        + "FROM item_pedido "
+                        + "WHERE codigo_pedido = " + ped.getCodigo()
+                        + "ORDER BY codigo_produto";
+
+            ResultSet resultadoItem = ConexaoBD.getInstance().getConnection().createStatement().executeQuery(sql);
+            
+            while (resultadoItem.next()) {
+                ItensPedido item = new ItensPedido();
+                Produto p = (Produto) new ProdutoDAO().consultarId(resultadoItem.getInt("codigo_produto"));
+                p.setPreco(resultadoItem.getDouble("preco_unitario"));
+                item.setProduto(p);
+                item.setTamanho((Tamanho) new TamanhoDAO().consultarId(resultadoItem.getInt("codigo_tamanho")));
+                item.setQuantidade(resultadoItem.getInt("quantidade"));
+
+                itens.add(item);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar itens do pedido: " + ex);
+        }
+        
+        return itens;
+    }
 }

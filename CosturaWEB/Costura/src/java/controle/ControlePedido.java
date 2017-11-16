@@ -5,7 +5,6 @@
  */
 package controle;
 
-import apoio.ConexaoBD;
 import apoio.Formatacao;
 import dao.ClienteDAO;
 import dao.PedidoDAO;
@@ -15,10 +14,6 @@ import entidade.ItensPedido;
 import entidade.Pedido;
 import entidade.Produto;
 import entidade.Tamanho;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +31,7 @@ public class ControlePedido {
         // Cabeçalho do pedido
         Pedido ped = new Pedido();
         ped.setCodigo(id);
-        ped.setDataEmissao(Calendar.getInstance().getTime());
+        ped.setDataEmissao(Formatacao.retornaDataString(String.valueOf(request.getParameter("dataEmissao"))));
         ped.setSituacao((request.getParameter("situacao")).charAt(0));
         ped.setCliente((Cliente) new ClienteDAO().consultarId(Integer.parseInt(String.valueOf(request.getParameter("cliente")))));
         ped.setDesconto(Double.parseDouble(String.valueOf(request.getParameter("desconto"))));

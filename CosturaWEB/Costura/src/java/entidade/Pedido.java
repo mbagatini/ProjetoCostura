@@ -32,6 +32,7 @@ public class Pedido {
         cliente = new Cliente();
         desconto = 0;
         preco = 0;
+        itens = new ArrayList<ItensPedido>();
     }
 
     public int getCodigo() {

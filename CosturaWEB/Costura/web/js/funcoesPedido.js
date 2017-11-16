@@ -26,12 +26,13 @@ function addRow() {
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
 
-    row.insertCell(0).innerHTML = getHTML('produto', rowCount);
-    row.insertCell(1).innerHTML = getHTML('tamanho', rowCount);
-    row.insertCell(2).innerHTML = getHTML('quantidade', rowCount);
-    row.insertCell(3).innerHTML = getHTML('preco', rowCount);
-    row.insertCell(4).innerHTML = getHTML('subtotal', rowCount);
-    row.insertCell(5).innerHTML = getHTML('remover', rowCount);
+    row.insertCell(0).innerHTML = getHTML('produto', rowCount, '');
+    row.insertCell(1).innerHTML = getHTML('tamanho', rowCount, '');
+    row.insertCell(2).innerHTML = getHTML('quantidade', rowCount, '');
+    row.insertCell(3).innerHTML = getHTML('preco', rowCount, '');
+    row.insertCell(4).innerHTML = getHTML('subtotal', rowCount, '');
+    row.insertCell(5).innerHTML = getHTML('remover', rowCount, '');
+
 }
 
 function atualizaPreco(obj) {
@@ -65,35 +66,18 @@ function atualizaTotal() {
     }
 
     $('#valorTotal').val(total);
-    
+
     atualizaTotalLiquido();
 }
 
 function atualizaTotalLiquido() {
     var total = Number(document.getElementById("valorTotal").value);
     var desconto = Number(document.getElementById("desconto").value);
-    $('#valorLiquido').val(total-desconto);
+    $('#valorLiquido').val(total - desconto);
 }
 
 function deleteRow(obj) {
     var index = obj.parentNode.parentNode.rowIndex;
     var table = document.getElementById("produtos");
     table.deleteRow(index);
-}
-
-function getTable() {
-
-    var array = [];
-    var headers = [];
-    $('#produtos th').each(function (index, item) {
-        headers[index] = $(item).html();
-    });
-    $('#produtos tr').has('td').each(function () {
-        var arrayItem = {};
-        $('td', $(this)).each(function (index, item) {
-            arrayItem[headers[index]] = $(item).html();
-        });
-        array.push(arrayItem);
-    });
-
 }

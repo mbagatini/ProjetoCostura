@@ -81,7 +81,7 @@
                                             <div class="col-sm-4">
                                                 <!-- select -->
                                                 <select class="form-control select2" name="cliente" id="cliente" required style="width: 100%;">
-                                                    <option value="-1" readonly selected>Selecione</option>
+                                                    <option value="-1" disabled selected>Selecione</option>
 
                                                     <%
                                                         ArrayList<Cliente> clis = new ClienteDAO().consultarTodos();
@@ -89,7 +89,7 @@
                                                     %>
                                                     <option 
                                                         value="<%= clis.get(i).getCodigo()%>"  
-                                                        <%= pedido.getCliente().getCodigo() == clis.get(i).getCodigo() ? "selected" : ""%> >
+                                                        <%= pedido.getCliente().getCodigo() == clis.get(i).getCodigo() ? "selected" : ""%>>
                                                         <%= clis.get(i).getNome() + " - " + clis.get(i).getCnpj() + "" + clis.get(i).getCpf()%> 
                                                     </option>
                                                     <%  }%>
@@ -103,8 +103,8 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control pull-right" id="datepicker" name="data" 
-                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required readonly>
+                                                    <input type="text" class="form-control pull-right" id="datepicker" name="dataEmissao" 
+                                                           value="<%= Formatacao.retornaDataFormatada(pedido.getDataEmissao())%>" required>
                                                 </div>
                                             </div>
 
@@ -212,77 +212,126 @@
     <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- bootstrap datepicker -->
     <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="plugins/datepicker/locales/bootstrap-datepicker.pt-BR.js" charset="UTF-8"></script>
     <!-- Importacao do arquivo comas funções AJAX -->
     <script language="JavaScript" src="js/funcoesPedido.js"></script>
 
     <!-- Page script -->
     <script>
-                                                        $(function () {
-                                                            //Initialize Select2 Elements
-                                                            $(".select2").select2();
+        $(function () {
+            // Carrega os itens do pedido
+            $(document).ready(carregarTabela());
+            
+            //Initialize Select2 Elements
+            $(".select2").select2({
+                width: '100%',
+                dropdownAutoWidth : true
+            });
 
-                                                            //Money Euro
-                                                            $("[data-mask]").inputmask();
+            //Money Euro
+            $("[data-mask]").inputmask();
 
-                                                            //Date picker
-                                                            $("#datepicker").datepicker({
-                                                                autoclose: true
-                                                            });
-                                                        });
+            //Date picker
+            $("#datepicker").datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                language: 'pt-BR'
+            });
+        });
+        
+        function carregarTabela(){
+            var table = document.getElementById("produtos");
+            
+            <%
+                for (ItensPedido ip : pedido.getItens()) {
+            %>
+                    var rowCount = table.rows.length;
+                    var row = table.insertRow(rowCount);
 
-                                                        function getHTML(campo, index) {
+                    row.insertCell(0).innerHTML = getHTML('produto', rowCount, <%= ip.getProduto().getCodigo() %>);
+                    row.insertCell(1).innerHTML = getHTML('tamanho', rowCount, <%= ip.getTamanho().getCodigo() %>);
+                    row.insertCell(2).innerHTML = getHTML('quantidade', rowCount, <%= ip.getQuantidade() %>);
+                    row.insertCell(3).innerHTML = getHTML('preco', rowCount, <%= ip.getProduto().getPreco() %>);
+                    row.insertCell(4).innerHTML = getHTML('subtotal', rowCount, <%= ip.getQuantidade() * ip.getProduto().getPreco() %>);
+                    row.insertCell(5).innerHTML = getHTML('remover', rowCount, '');
+            <%  } %>
+                
+            atualizaTotal();
+        }
+        
+        function getHTML(campo, index, valor) {
 
-                                                            var html;
+            var html;
 
-                                                            switch (campo) {
-                                                                case 'produto':
-                                                                    html = '<select class="form-control select2" name="produto" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
-                                                                            '<option value="-1" disabled selected>Selecione</option>';
+            switch (campo) {
+                case 'produto':
+                    html = '<select class="form-control select2" name="produto" id="produto_' + index + '" required style="width: 100%;" onChange="atualizaPreco(this)"> ' +
+                            '<option value="-1" disabled selected>Selecione</option>';
         <%
             ArrayList<Produto> prod = new ProdutoDAO().consultarTodos();
             for (int i = 0; i < prod.size(); i++) {
         %>
-                                                                    html = html + '<option value="<%= prod.get(i).getCodigo()%>" >'
-                                                                            + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>'
-                                                                            + '</option>';
+                    html = html + '<option value="<%= prod.get(i).getCodigo()%>" ';
+                                    if (valor == <%= prod.get(i).getCodigo()%>){
+                                        html = html + " selected ";
+                                    };
+                    html = html + '>' 
+                                + '<%= prod.get(i).getReferencia() + " - " + prod.get(i).getDescricao()%>';
+                    html = html + '</option>';
 
         <%  }%>
-                                                                    html = html + '</select>';
-                                                                    break;
+                    html = html + '</select>';
+                    break;
 
-                                                                case 'tamanho':
-                                                                    html = '<select class="form-control select2" name="tamanho" id="tamanho_' + index + '" required style="width: 100%;"> ' +
-                                                                            '<option value="-1" readonly selected>Selecione</option>';
+                case 'tamanho':
+                    html = '<select class="form-control select2" name="tamanho" id="tamanho_' + index + '" required style="width: 100%;"> ' +
+                            '<option value="-1" readonly selected>Selecione</option>';
         <%
             ArrayList<Tamanho> tam = new TamanhoDAO().consultarTodos();
             for (int i = 0; i < tam.size(); i++) {
         %>
-                                                                    html = html + '<option value="<%= tam.get(i).getCodigo()%>" >'
-                                                                            + '<%= tam.get(i).getTamanho()%>'
-                                                                            + '</option>';
+                    html = html + '<option value="<%= tam.get(i).getCodigo()%>" ';
+                                    if (valor == <%= tam.get(i).getCodigo()%>){
+                                        html = html + " selected ";
+                                    };
+                    html = html + '>' 
+                                + '<%= tam.get(i).getTamanho()%>'
+                                + '</option>';
         <%  }%>
-                                                                    html = html + '</select>';
-                                                                    break;
+                    html = html + '</select>';
+                    break;
 
-                                                                case 'quantidade':
-                                                                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" name="quantidade" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
-                                                                    break;
+                case 'quantidade':
+                    html = '<input class="form-control" type="number" min="1" pattern="^\d+(?:\d{1,2})?$" '
+                         + 'value="' + valor + '" '
+                         + 'name="quantidade" id="quantidade_' + index + '" required onChange="atualizaSubtotal(this)">';
+                    break;
 
-                                                                case 'preco':
-                                                                    html = '<input class="form-control" type="number" min="1" name="preco" id="preco_' + index + '" value="0" readonly>';
-                                                                    break;
+                case 'preco':
+                    html = '<input class="form-control" type="number" min="1" '
+                         + 'value="' + valor + '" '
+                         + 'name="preco" id="preco_' + index + '" value="0" readonly>';
+                    break;
 
-                                                                case 'subtotal':
-                                                                    html = '<input class="form-control" type="number" min="1" name="subtotal" id="subtotal_' + index + '" value="0" readonly>';
-                                                                    break;
+                case 'subtotal':
+                    html = '<input class="form-control" type="number" min="1" '
+                         + 'value="' + valor + '" '
+                         + 'name="subtotal" id="subtotal_' + index + '" value="0" readonly>';
+                    break;
 
-                                                                case 'remover':
-                                                                    html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
-                                                                    break;
-                                                            }
+                case 'remover':
+                    html = '<a class="fa fa-trash-o" onClick="deleteRow(this)"></a>';
+                    break;
+            }
+            
+            //Initialize Select2 Elements
+            $(".select2").select2({
+                width: '100%',
+                dropdownAutoWidth : true
+            });
 
-                                                            return html;
+            return html;
 
-                                                        }
+        }
     </script>
 </html>

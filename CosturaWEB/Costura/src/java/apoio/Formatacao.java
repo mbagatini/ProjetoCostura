@@ -28,7 +28,7 @@ public class Formatacao {
         Date data = df.parse(data_formatada);
         return data;
     }
-
+    
     public static String retornaDataFormatada(Date data) throws ParseException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String data_formatada = df.format(data);

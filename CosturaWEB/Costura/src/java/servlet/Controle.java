@@ -18,8 +18,6 @@ import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -182,7 +180,7 @@ public class Controle extends HttpServlet {
             try {
                 erro = new ControlePedido().cadastrar(request);
             } catch (ParseException ex) {
-                System.out.println("Erro ao cadastrar pedido: "+ex); 
+                System.out.println("Erro ao cadastrar pedido: " + ex);
                 erro = true;
             }
             encaminharPagina(retornaPagina(erro), request, response);
@@ -223,11 +221,11 @@ public class Controle extends HttpServlet {
 
         int produto = Integer.parseInt(request.getParameter("codigoProduto"));
         String preco = String.valueOf(((Produto) new ProdutoDAO().consultarId(produto)).getPreco());
-        
+
         try {
             response.getWriter().write(preco);
         } catch (IOException ex) {
-            System.out.println("Erro ao pegar o preço do produto: "+ex.getMessage()); 
-       }
+            System.out.println("Erro ao pegar o preço do produto: " + ex.getMessage());
+        }
     }
 }
