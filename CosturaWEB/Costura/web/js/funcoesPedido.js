@@ -39,7 +39,7 @@ function atualizaPreco(obj) {
     // Atualiza o preço do produto
     var index = obj.parentNode.parentNode.rowIndex;
     var produto = document.getElementById("produto_" + index).value;
-
+    
     getPrecoProduto(produto, index);
     atualizaSubtotal(obj);
 }
@@ -60,11 +60,13 @@ function atualizaSubtotal(obj) {
 function atualizaTotal() {
     var table = document.getElementById("produtos");
     var total = 0;
-
+    
     for (i = 1; i < table.rows.length; i++) {
-        total += Number(document.getElementById("subtotal_" + i).value);
+        if (document.getElementById("subtotal_" + i) !== null) {
+            total += Number(document.getElementById("subtotal_" + i).value);
+        } 
     }
-
+    
     $('#valorTotal').val(total);
 
     atualizaTotalLiquido();
@@ -80,4 +82,6 @@ function deleteRow(obj) {
     var index = obj.parentNode.parentNode.rowIndex;
     var table = document.getElementById("produtos");
     table.deleteRow(index);
+    
+    atualizaTotal();
 }
