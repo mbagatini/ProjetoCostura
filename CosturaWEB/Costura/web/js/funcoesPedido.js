@@ -25,6 +25,10 @@ function addRow() {
     var table = document.getElementById("produtos");
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
+    
+    while (document.getElementById("produto_" + rowCount) !== null){
+        rowCount++;
+    }
 
     row.insertCell(0).innerHTML = getHTML('produto', rowCount, '');
     row.insertCell(1).innerHTML = getHTML('tamanho', rowCount, '');
@@ -37,7 +41,8 @@ function addRow() {
 
 function atualizaPreco(obj) {
     // Atualiza o preço do produto
-    var index = obj.parentNode.parentNode.rowIndex;
+    var index = obj.id;
+    var index = index.match(/\d+/)[0];
     var produto = document.getElementById("produto_" + index).value;
     
     getPrecoProduto(produto, index);
@@ -46,7 +51,8 @@ function atualizaPreco(obj) {
 
 function atualizaSubtotal(obj) {
     // Atualiza o subtotal do produto
-    var index = obj.parentNode.parentNode.rowIndex;
+    var index = obj.id;
+    var index = index.match(/\d+/)[0];
     var preco = document.getElementById("preco_" + index).value;
     var qtde = document.getElementById("quantidade_" + index).value;
 
@@ -58,10 +64,9 @@ function atualizaSubtotal(obj) {
 }
 
 function atualizaTotal() {
-    var table = document.getElementById("produtos");
     var total = 0;
     
-    for (i = 1; i < table.rows.length; i++) {
+    for (i = 1; i < 50; i++) {
         if (document.getElementById("subtotal_" + i) !== null) {
             total += Number(document.getElementById("subtotal_" + i).value);
         } 

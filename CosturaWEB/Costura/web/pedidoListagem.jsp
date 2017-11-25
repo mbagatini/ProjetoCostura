@@ -214,6 +214,8 @@
     <script src="plugins/datatables/pvfs_fonts.js"></script>
     <script src="plugins/datatables/buttons.print.min.js"></script>
     <script src="plugins/datatables/buttons.html5.min.js"></script>
+    <!-- Importacao do arquivo comas funções javascript -->
+    <script language="JavaScript" src="js/relatoriosDataTables.js"></script>
     <!-- page script -->
     <script>
         $(function () {
@@ -221,58 +223,7 @@
             var subtitulo = 'SistemaCostura';
             var colunas = '0,1,2,3,4,5';
             
-            $("#example1").DataTable({
-                "order": [[0, "asc"]],
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        exportOptions: {
-                            columns: [colunas]
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        title: titulo,
-                        exportOptions: {
-                            columns: [colunas]
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        title: titulo,
-                        messageTop: subtitulo,
-                        exportOptions: {
-                            columns: [colunas]
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        title: titulo,
-                        messageTop: subtitulo,
-                        exportOptions: {
-                            columns: [colunas]
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        title: titulo,
-                        messageTop: subtitulo,
-                        exportOptions: {
-                            columns: [colunas]
-                        }
-                    }
-                ]
-            });
-            
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
+            configuraRelatorios(titulo, subtitulo, colunas);
         });
         
         function carregaPedido(codigo){

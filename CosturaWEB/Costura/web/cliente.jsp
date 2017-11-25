@@ -133,7 +133,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">Telefone*</label>
+                                    <label class="col-sm-1 control-label">Telefone</label>
                                     <div class="col-sm-3">
                                         <div class="input-group">
                                             <div class="input-group-addon">
@@ -144,7 +144,7 @@
                                         <!-- /.input group -->
                                     </div>
 
-                                    <label class="col-sm-1 control-label">Celular*</label>
+                                    <label class="col-sm-1 control-label">Celular</label>
                                     <div class="col-sm-4">
                                         <div class="input-group">
                                             <div class="input-group-addon">
@@ -157,7 +157,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-1 control-label">E-mail*</label>
+                                    <label class="col-sm-1 control-label">E-mail</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="email" value="<%= cliente.getEmail()%>" placeholder="E-mail">
