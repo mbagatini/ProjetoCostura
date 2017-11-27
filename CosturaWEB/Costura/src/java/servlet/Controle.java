@@ -8,22 +8,30 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
+import apoio.Formatacao;
 import controle.ControleCliente;
 import controle.ControlePedido;
 import controle.ControleProduto;
 import controle.ControleTamanho;
+import dao.ClienteDAO;
+import dao.PedidoDAO;
 import dao.ProdutoDAO;
+import entidade.Cliente;
+import entidade.Pedido;
 import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONObject;
 
 /**
  *
@@ -186,7 +194,15 @@ public class Controle extends HttpServlet {
         }
 
         if (parametro.equals("precoProduto")) {
-            carregaPrecoProduto(request, response);
+            new ControleProduto().carregaPrecoProduto(request, response);
+        }
+        
+        if (parametro.equals("consultaCliente")) {
+            new ControleCliente().carregaConsultaCliente(request, response);
+        }
+        
+        if (parametro.equals("consultaPedido")) {
+            new ControlePedido().carregaConsultaPedido(request, response);
         }
 
     }
@@ -216,15 +232,4 @@ public class Controle extends HttpServlet {
         return pagina;
     }
 
-    private void carregaPrecoProduto(HttpServletRequest request, HttpServletResponse response) {
-
-        int produto = Integer.parseInt(request.getParameter("codigoProduto"));
-        String preco = String.valueOf(((Produto) new ProdutoDAO().consultarId(produto)).getPreco());
-
-        try {
-            response.getWriter().write(preco);
-        } catch (IOException ex) {
-            System.out.println("Erro ao pegar o preço do produto: " + ex.getMessage());
-        }
-    }
 }

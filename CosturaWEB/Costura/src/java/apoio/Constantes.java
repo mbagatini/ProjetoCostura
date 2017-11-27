@@ -28,6 +28,8 @@ public class Constantes {
     public static final String LISTAGEM_PRODUTO   = "produtoListagem.jsp";
     public static final String LISTAGEM_CATEGORIA = "categoriaListagem.jsp";
     public static final String LISTAGEM_TAMANHO   = "tamanhoListagem.jsp";
+    public static final String LISTAGEM_CLIENTE   = "clienteListagem.jsp";
+    public static final String LISTAGEM_PEDIDO    = "pedidoListagem.jsp";
     
     public static final char PEDIDO_SITUACAO_RECEBIDO = 'R';
     public static final char PEDIDO_SITUACAO_EM_PRODUCAO = 'P';

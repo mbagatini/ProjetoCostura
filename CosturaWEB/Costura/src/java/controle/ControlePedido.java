@@ -14,10 +14,17 @@ import entidade.ItensPedido;
 import entidade.Pedido;
 import entidade.Produto;
 import entidade.Tamanho;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import servlet.Controle;
 
 /**
  *
@@ -93,5 +100,55 @@ public class ControlePedido {
         String retorno = new PedidoDAO().excluir(id);
 
         return (retorno == null);
+    }
+    
+    public void carregaConsultaPedido(HttpServletRequest request, HttpServletResponse response) {
+
+        // Alguma coisa que serve pra devolver pro browser
+        PrintWriter out = null;
+        try {
+            int pedido = Integer.parseInt(request.getParameter("codigoPedido"));
+            Pedido ped = (Pedido) new PedidoDAO().consultarId(pedido);
+            
+            out = response.getWriter();
+            try {
+                // Objeto para o pedido
+                JSONObject jsonPedido = new JSONObject();
+                
+                String cnpj_cpf = ped.getCliente().getCnpj()+ ped.getCliente().getCpf();
+                
+                jsonPedido.put("cliente", ped.getCliente().getNome());
+                jsonPedido.put("cnpj_cpf", cnpj_cpf);
+                jsonPedido.put("data_emissao", Formatacao.retornaDataFormatada(ped.getDataEmissao()));
+                jsonPedido.put("situacao", ped.retornaDescricaoSituacao(ped.getSituacao()));
+                jsonPedido.put("valor_total", Formatacao.retornaDecimalFormatado(ped.getPreco() + ped.getDesconto()));
+                jsonPedido.put("desconto", Formatacao.retornaDecimalFormatado(ped.getDesconto()));
+                jsonPedido.put("total_liquido", Formatacao.retornaDecimalFormatado(ped.getPreco()));
+                
+                // Itens do pedido
+                JSONArray arrayJsonItens = new JSONArray();
+                
+                for (ItensPedido item : ped.getItens()) {
+                    JSONObject jsonItem = new JSONObject();
+                    jsonItem.put("produto", item.getProduto().getReferencia() + " - " + item.getProduto().getDescricao());
+                    jsonItem.put("tamanho", item.getTamanho().getTamanho());
+                    jsonItem.put("quantidade", item.getQuantidade());
+                    jsonItem.put("valor", Formatacao.retornaDecimalFormatado(item.getProduto().getPreco()));
+                    jsonItem.put("subtotal", Formatacao.retornaDecimalFormatado(item.getProduto().getPreco() * item.getQuantidade()));
+                    arrayJsonItens.put(jsonItem);
+                }
+                
+                // Adiciona os itens no JSON do pedido
+                jsonPedido.put("itens", arrayJsonItens);
+                
+                out.print(jsonPedido);
+            } catch (Exception ex) {
+                System.out.println("Erro ao pegar o pedido: " + ex.getMessage());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
+        }
     }
 }

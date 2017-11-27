@@ -45,7 +45,6 @@
                         </thead>
                         <tbody>
                             <%
-                                Cliente cli = new Cliente();
                                 ArrayList<Cliente> clientes = new ClienteDAO().consultarTodos();
 
                                 for (int i = 0; i < clientes.size(); i++) {
@@ -57,9 +56,7 @@
                                 <td><%= clientes.get(i).getEndereco().getCidade().getNome() %></td>
                                 <td><%= clientes.get(i).getTelefone()%></td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o">
-                                        <% cli = clientes.get(i);%>
-                                    </a>
+                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o" onclick="consultarCliente(<%= clientes.get(i).getCodigo()%>)"></a>
                                 </td>
                                 <td><a href="/Costura/Controle?parametro=cliente&manut=upd&id=<%= clientes.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
                                 <td><a href="/Costura/Controle?parametro=cliente&manut=del&id=<%= clientes.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
@@ -97,49 +94,49 @@
                             <div class="form-group">
                                 <div class="col-sm-6">
                                     <label class="control-label">Nome</label>
-                                    <h4><%= cli.getNome()%></h4>
+                                    <h4 id="consulta_cliente"></h4>
                                     <br>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">CNPJ/CPF</label>
-                                    <h4><%= cli.getCnpj() + cli.getCpf()%></h4>
+                                    <h4 id="consulta_cnpj_cpf"></h4>
                                     <br>
                                 </div>
 
                                 <div class="col-sm-12">
                                     <label class="control-label">Endereço</label>
-                                    <p><%= cli.getEndereco().getLogradouro()%></p>
+                                    <p id="consulta_endereco"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Bairro</label>
-                                    <p><%= cli.getEndereco().getBairro()%></p>
+                                    <p id="consulta_bairro"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Cidade</label>
-                                    <p><%= cli.getEndereco().getCidade().getNome()%></p>
+                                    <p id="consulta_cidade"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Telefone</label>
-                                    <p><%= cli.getTelefone().equals("") ? "Não cadastrado" : cli.getTelefone()%></p>
+                                    <p id="consulta_telefone"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Celular</label>
-                                    <p><%= cli.getCelular().equals("") ? "Não cadastrado" : cli.getCelular()%></p>
+                                    <p id="consulta_celular"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">E-mail</label>
-                                    <p><%= cli.getEmail().equals("") ? "Não cadastrado" : cli.getEmail()%></p>
+                                    <p id="consulta_email"></p>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="control-label">Data de cadastro</label>
-                                    <p><%= new SimpleDateFormat("dd/MM/yyyy").format(cli.getDataCadastro().getTime())%></p>
+                                    <p id="consulta_data_cadastro"></p>
                                 </div>
                             </div>
                         </div>
@@ -168,6 +165,7 @@
     <script src="plugins/datatables/buttons.html5.min.js"></script>
     <!-- Importacao do arquivo comas funções javascript -->
     <script language="JavaScript" src="js/relatoriosDataTables.js"></script>
+    <script language="JavaScript" src="js/funcoesCliente.js"></script>
     <!-- page script -->
     <script>
         $(function () {

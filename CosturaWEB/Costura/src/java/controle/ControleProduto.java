@@ -9,7 +9,9 @@ import dao.CategoriaDAO;
 import dao.ProdutoDAO;
 import entidade.Produto;
 import entidade.Categoria;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -64,4 +66,15 @@ public class ControleProduto {
         return (retorno == null);
     }
     
+    public void carregaPrecoProduto(HttpServletRequest request, HttpServletResponse response) {
+
+        int produto = Integer.parseInt(request.getParameter("codigoProduto"));
+        String preco = String.valueOf(((Produto) new ProdutoDAO().consultarId(produto)).getPreco());
+
+        try {
+            response.getWriter().write(preco);
+        } catch (IOException ex) {
+            System.out.println("Erro ao pegar o preço do produto: " + ex.getMessage());
+        }
+    }
 }

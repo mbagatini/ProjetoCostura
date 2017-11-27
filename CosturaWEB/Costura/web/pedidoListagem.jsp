@@ -28,6 +28,25 @@
                             <i class="fa fa-minus"></i></button>
                     </div>
                 </div>
+                
+                <div class="box-body">
+                    <div class="large-6 columns">
+                      <label for="start">Start Date</label>
+                      <input id="start" type="date" /><br />
+                    </div>
+                    <div class="large-6 columns">
+                      <label for="end">End Date</label>
+                      <input id="end" type="date" /><br />
+                    </div>
+                </div>
+                
+                <div class="box-body">
+                    <div class="large-12 columns">
+                      <button class="button radius" id="filter">Filter</button>
+                      <button id="clearFilter" class="button radius secondary">Clear Filter</button>
+                    </div>
+                </div>
+                
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -46,7 +65,6 @@
                         </thead>
                         <tbody>
                             <%
-                                Pedido pedidoConsulta = new Pedido();
                                 ArrayList<Pedido> pedidos = new PedidoDAO().consultarTodos();
 
                                 for (int i = 0; i < pedidos.size(); i++) {
@@ -59,7 +77,7 @@
                                 <td><%= Formatacao.retornaDecimalFormatado(pedidos.get(i).getPreco())%></td>
                                 <td><%= pedidos.get(i).retornaDescricaoSituacao(pedidos.get(i).getSituacao())%></td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o" onclick="carregaPedido(<%= pedidos.get(i).getCodigo()%>)" id="pedidoConsulta" data-index-number="<%= pedidoConsulta = pedidos.get(i)%>"></a>
+                                    <a data-toggle="modal" data-target="#modal-default" class="fa fa-file-text-o" onclick="consultarPedido(<%= pedidos.get(i).getCodigo()%>)"></a>
                                 </td>
                                 <td><a href="/Costura/Controle?parametro=pedido&manut=upd&id=<%= pedidos.get(i).getCodigo()%>" class="fa fa-pencil-square-o"></a></td>
                                 <td><a href="/Costura/Controle?parametro=pedido&manut=del&id=<%= pedidos.get(i).getCodigo()%>" class="fa fa-trash-o"></a></td>
@@ -79,7 +97,7 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-
+                    
     <!-- Main content -->
     <section class="content">
         <!-- Modal -->
@@ -97,26 +115,26 @@
                             <div class="box-group">
                                 <div class="col-sm-2">
                                     <label class="control-label">Pedido</label>
-                                    <h4><%= pedidoConsulta.getCodigo()%></h4>
+                                    <h4 id="consulta_pedido"></h4>
                                     <br>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <label class="control-label">Cliente</label>
-                                    <p><%= pedidoConsulta.getCliente().getCnpj() + pedidoConsulta.getCliente().getCpf()%></p>
-                                    <h4><%= pedidoConsulta.getCliente().getNome()%></h4>
+                                    <p id="consulta_cnpj_cpf"></p>
+                                    <h4 id="consulta_cliente"></h4>
                                     <br>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <label class="control-label">Data de emissão</label>
-                                    <h4><%= Formatacao.retornaDataFormatada(pedidoConsulta.getDataEmissao())%></h4>
+                                    <h4 id="consulta_data_emissao"></h4>
                                     <br>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <label class="control-label">Situação</label>
-                                    <h4><%= pedidoConsulta.retornaDescricaoSituacao(pedidoConsulta.getSituacao())%></h4>
+                                    <h4 id="consulta_situacao"></h4>
                                     <br>
                                 </div>
                             </div>
@@ -126,7 +144,7 @@
                             <!-- Itens -->
                             <div class="box-group">
                                 <div class="col-sm-12" style="overflow:auto; max-height: 300px">
-                                    <table class="table table-striped table-hover" id="produtos">
+                                    <table id="consulta_produtos" class="table table-striped table-hover" >
                                         <tr>
                                             <th>Produto</th>
                                             <th>Tamanho</th>
@@ -134,60 +152,28 @@
                                             <th>Valor</th>
                                             <th>Subtotal</th>
                                         </tr>
-                                        <%
-                                            for (ItensPedido item : pedidoConsulta.getItens()) {
-                                        %>
-                                        <tr>
-                                            <td><%= item.getProduto().getReferencia() + " - " + item.getProduto().getDescricao()%></td>
-                                            <td><%= item.getTamanho().getTamanho()%></td>
-                                            <td><%= item.getQuantidade()%></td>
-                                            <td><%= Formatacao.retornaDecimalFormatado(item.getProduto().getPreco())%></td>
-                                            <td><%= Formatacao.retornaDecimalFormatado(item.getProduto().getPreco() * item.getQuantidade())%></td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>
                                     </table>
                                 </div>
                             </div>
 
-                            <%--
-                            <div class="box-group">
-                                <div class="col-sm-4">
-                                    <label class="control-label">Valor total</label>
-                                    <h4><%= pedidoConsulta.getPreco() + pedidoConsulta.getDesconto()%></h4>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="control-label">Desconto</label>
-                                    <h4><%= pedidoConsulta.getDesconto()%></h4>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="control-label">Valor líquido</label>
-                                    <h4><%= pedidoConsulta.getPreco()%></h4>
-                                </div>
-                            </div>
-                            --%>
-
                             <div class="box-group">
                                 <label class="col-sm-10 control-label">Valor total</label>
                                 <div class="col-sm-2">
-                                    <h4><%= Formatacao.retornaDecimalFormatado(pedidoConsulta.getPreco() + pedidoConsulta.getDesconto())%></h4>
+                                    <h4 id="consulta_valor_total"></h4>
                                 </div>
                             </div>
 
                             <div class="box-group">
                                 <label class="col-sm-10 control-label">Desconto</label>
                                 <div class="col-sm-2">
-                                    <h4><%= Formatacao.retornaDecimalFormatado(pedidoConsulta.getDesconto())%></h4>
+                                    <h4 id="consulta_desconto"></h4>
                                 </div>
                             </div>
 
                             <div class="box-group">
                                 <label class="col-sm-10 control-label">Total líquido</label>
                                 <div class="col-sm-2">
-                                    <h4><%= Formatacao.retornaDecimalFormatado(pedidoConsulta.getPreco())%></h4>
+                                    <h4 id="consulta_total_liquido"></h4>
                                 </div>
                             </div>
                         </div>
@@ -216,6 +202,7 @@
     <script src="plugins/datatables/buttons.html5.min.js"></script>
     <!-- Importacao do arquivo comas funções javascript -->
     <script language="JavaScript" src="js/relatoriosDataTables.js"></script>
+    <script language="JavaScript" src="js/funcoesPedido.js"></script>
     <!-- page script -->
     <script>
         $(function () {
@@ -224,11 +211,6 @@
             var colunas = '0,1,2,3,4,5';
             
             configuraRelatorios(titulo, subtitulo, colunas);
-        });
-        
-        function carregaPedido(codigo){
-            alert("eu aooaoaoa"+codigo);
-            // Preciso de ajax aqui
-        }
+            });
     </script>
 </html>

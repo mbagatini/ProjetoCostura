@@ -50,7 +50,7 @@ function configuraRelatorios(titulo, subtitulo, colunas) {
             }
         ]
     });
-
+    
     $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,

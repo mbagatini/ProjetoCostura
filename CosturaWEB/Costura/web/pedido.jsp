@@ -221,6 +221,8 @@
         $(function () {
             // Carrega os itens do pedido
             $(document).ready(carregarTabela());
+            // Ajusta as situações
+            $(document).ready(controlaSituacao());
             
             //Initialize Select2 Elements
             $(".select2").select2({
@@ -256,7 +258,23 @@
                     row.insertCell(5).innerHTML = getHTML('remover', rowCount, '');
             <%  } %>
                 
-            atualizaTotal();
+            // Alteração de um pedido
+            if (table.rows.length > 1) {
+                atualizaTotal();
+            }
+        }
+        
+        function controlaSituacao(){
+            var table = document.getElementById("produtos");
+            var pedidoNovo = table.rows.length === 1;
+            
+            $("#situacao > option").each(function() {
+                if (pedidoNovo) {
+                    $(this).prop('disabled', (this.value !== '<%= Constantes.PEDIDO_SITUACAO_RECEBIDO%>'));
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
         }
         
         function getHTML(campo, index, valor) {
