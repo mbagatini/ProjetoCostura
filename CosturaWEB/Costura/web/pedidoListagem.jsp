@@ -4,6 +4,7 @@
     Author     : Morgana
 --%>
 
+<%@page import="apoio.Constantes"%>
 <%@page import="entidade.ItensPedido"%>
 <%@page import="apoio.Formatacao"%>
 <%@page import="dao.PedidoDAO"%>
@@ -28,25 +29,43 @@
                             <i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                
-                <div class="box-body">
-                    <div class="large-6 columns">
-                      <label for="start">Start Date</label>
-                      <input id="start" type="date" /><br />
+
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <div class="box-group">
+                            <label class="col-sm-1 control-label">Status</label>
+                            <div class="col-sm-2">
+                                <!-- select -->
+                                <select class="form-control" id="filtroSituacao">
+                                    <option value="">Todos</option>
+                                    <option value="<%= Constantes.PEDIDO_SITUACAO_RECEBIDO%>"><%= new Pedido().retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_RECEBIDO)%></option>
+                                    <option value="<%= Constantes.PEDIDO_SITUACAO_EM_PRODUCAO%>"><%= new Pedido().retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_EM_PRODUCAO)%></option>
+                                    <option value="<%= Constantes.PEDIDO_SITUACAO_FINALIZADO%>"><%= new Pedido().retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_FINALIZADO)%></option>
+                                    <option value="<%= Constantes.PEDIDO_SITUACAO_CANCELADO%>"><%= new Pedido().retornaDescricaoSituacao(Constantes.PEDIDO_SITUACAO_CANCELADO)%></option>
+                                </select>
+                                <!-- /.select -->
+                            </div>
+
+                            <label>Date range:</label>
+                            <span id="date-label-from" class="date-label">From: </span><input class="date_range_filter date" type="text" id="datepicker_from" />
+                            <span id="date-label-to" class="date-label">To:<input class="date_range_filter date" type="text" id="datepicker_to" />
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" id="reservation">
+                                    </div>
+                                </div>
+                        </div>
                     </div>
-                    <div class="large-6 columns">
-                      <label for="end">End Date</label>
-                      <input id="end" type="date" /><br />
+
+                    <div class="box-body">
+                        <a class="btn btn-default" id="filter">Filtrar</a>
+                        <a class="btn btn-default" id="clearFilter">Limpar filtros</a>
                     </div>
                 </div>
-                
-                <div class="box-body">
-                    <div class="large-12 columns">
-                      <button class="button radius" id="filter">Filter</button>
-                      <button id="clearFilter" class="button radius secondary">Clear Filter</button>
-                    </div>
-                </div>
-                
+
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
@@ -97,7 +116,7 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-                    
+
     <!-- Main content -->
     <section class="content">
         <!-- Modal -->
@@ -205,12 +224,62 @@
     <script language="JavaScript" src="js/funcoesPedido.js"></script>
     <!-- page script -->
     <script>
-        $(function () {
-            var titulo = 'Listagem de pedidos';
-            var subtitulo = 'SistemaCostura';
-            var colunas = '0,1,2,3,4,5';
-            
-            configuraRelatorios(titulo, subtitulo, colunas);
-            });
+                                        $(function () {
+                                            var titulo = 'Listagem de pedidos';
+                                            var subtitulo = 'SistemaCostura';
+                                            var colunas = '0,1,2,3,4,5';
+
+                                            configuraRelatorios(titulo, subtitulo, colunas);
+                                            
+                                            var $tableSel = $('#exampe1');
+
+                                            // Limpa todos os filtros da tabela
+                                            $('#clearFilter').on('click', function () {
+                                                $('#example1').DataTable().columns().search("").draw();
+                                            });
+
+                                            // Faz a filtragem dos dados na tabela
+                                            $('#filter').on('click', function () {
+                                                // Por situação
+                                                var status = $('#filtroSituacao').find(":selected").text();
+                                                if (status === "Todos") {
+                                                    $('#example1').DataTable().columns(5).search("").draw();
+                                                } else {
+                                                    $('#example1').DataTable().columns(5).search(status).draw();
+                                                }
+                                                
+                                                filterByDate(3, '11-15-2017', '11-15-2017'); // We call our filter function
+    
+                                                $tableSel.dataTable().fnDraw(); // Manually redraw the table after filtering
+
+                                            });
+
+                                        });
+
+
+                                        /* Our main filter function
+                                         * We pass the column location, the start date, and the end date
+                                         */
+                                        var filterByDate = function (column, startDate, endDate) {
+                                            // Custom filter syntax requires pushing the new filter to the global filter array
+                                            $.fn.dataTableExt.afnFiltering.push(
+                                                    function (oSettings, aData, iDataIndex) {
+                                                        var rowDate = (aData[column]),
+                                                                start = (startDate),
+                                                                end = (endDate);
+
+                                                        // If our date from the row is between the start and end
+                                                        if (start <= rowDate && rowDate <= end) {
+                                                            return true;
+                                                        } else if (rowDate >= start && end === '' && start !== '') {
+                                                            return true;
+                                                        } else if (rowDate <= end && start === '' && end !== '') {
+                                                            return true;
+                                                        } else {
+                                                            return false;
+                                                        }
+                                                    }
+                                            );
+                                        };
     </script>
 </html>

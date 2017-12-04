@@ -8,30 +8,20 @@ package servlet;
 import controle.ControleCategoria;
 import controle.ControleUsuario;
 import apoio.Constantes;
-import apoio.Formatacao;
 import controle.ControleCliente;
 import controle.ControlePedido;
 import controle.ControleProduto;
 import controle.ControleTamanho;
-import dao.ClienteDAO;
-import dao.PedidoDAO;
-import dao.ProdutoDAO;
-import entidade.Cliente;
-import entidade.Pedido;
-import entidade.Produto;
 import entidade.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONObject;
 
 /**
  *
@@ -137,6 +127,8 @@ public class Controle extends HttpServlet {
         System.out.println("Entrei no POST!");
 
         String parametro = request.getParameter("parametro");
+        
+        request.setAttribute("falhaLogin", true);
 
         // AQUI DEVE SER FEITA A VALIDACAO
         // ANTES DE GRAVAR NO BANCO
@@ -151,7 +143,8 @@ public class Controle extends HttpServlet {
                 encaminharPagina(Constantes.PAGINA_MENU, request, response);
             } else {
                 // setando um atributo da sessao
-                request.setAttribute("falhaLogin", true);
+                HttpSession sessao = request.getSession();
+                sessao.setAttribute("falhaLogin", true);
                 encaminharPagina(Constantes.PAGINA_LOGIN, request, response);
             }
         }
