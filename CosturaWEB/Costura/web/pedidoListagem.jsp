@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="col-xs-4">
-                            <label>Duplo clique para filtar</label><br>
+                            <label>Duplo clique</label><br>
                             <div class="btn-group">
                                 <a class="btn btn-default" id="filter">Filtrar</a>
                                 <a class="btn btn-default" id="clearFilter">Limpar filtros</a>
@@ -255,7 +255,9 @@
                         'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
                         'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
                         'Mês atual': [moment().startOf('month'), moment().endOf('month')],
-                        'Último mês': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
+                        'Último mês': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Últimos 3 meses': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                     },
                     "locale": {
                         "format": "DD/MM/YYYY",
@@ -270,8 +272,8 @@
                         "firstDay": 1
                     },
                     "alwaysShowCalendars": true,
-                    "startDate": moment().subtract(29, 'days'),
-                    "endDate": moment(),
+                    "startDate": moment().subtract(6, 'month').format('DD/MM/YYYY'),
+                    "endDate": moment().format('DD/MM/YYYY'),
                     "opens": "left"
                 });
                 
@@ -306,13 +308,15 @@
                     } else {
                         $('#example1').DataTable().columns(5).search(status).draw();
                     }
-
+                    
                     // Filtra um período
                     var dataIni = $('#periodo').data('daterangepicker').startDate.format('DD/MM/YYYY');
                     var dataFim = $('#periodo').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                    e.preventDefault();
+                    
+//                    e.preventDefault();
                     filterByDate(3, dataIni, dataFim); // We call our filter function
                     $tableSel.dataTable().fnDraw(); // Manually redraw the table after filtering
+
 
                 });
 
@@ -326,22 +330,33 @@
                 // Custom filter syntax requires pushing the new filter to the global filter array
                 $.fn.dataTableExt.afnFiltering.push(
                         function (oSettings, aData, iDataIndex) {
-                            var rowDate = (aData[column]),
-                                    start = (startDate),
-                                    end = (endDate);
+                            
+                            var dateStart = parseDateValue(($('#periodo').data('daterangepicker').startDate.format('DD/MM/YYYY')));
+                            var dateEnd = parseDateValue($('#periodo').data('daterangepicker').endDate.format('DD/MM/YYYY'));
 
-                            // If our date from the row is between the start and end
-                            if (start <= rowDate && rowDate <= end) {
-                                return true;
-                            } else if (rowDate >= start && end === '' && start !== '') {
-                                return true;
-                            } else if (rowDate <= end && start === '' && end !== '') {
-                                return true;
-                            } else {
-                                return false;
+                            
+                            // aData represents the table structure as an array of columns, so the script access the date value 
+                            // in the first column of the table via aData[0]
+                            var evalDate= parseDateValue(aData[3]);
+
+                            if (evalDate >= dateStart && evalDate <= dateEnd) {
+                                    return true;
                             }
+                            else {
+                                    return false;
+                            }
+
                         }
                 );
             };
+           
+           
+            // Function for converting a mm/dd/yyyy date value into a numeric string for comparison (example 08/12/2010 becomes 20100812
+            function parseDateValue(rawDate) {
+                    var dateArray= rawDate.split("/");
+                    var parsedDate= dateArray[2] + dateArray[1] + dateArray[0];
+                    return parsedDate;
+            }
+
         </script>
 </html>
